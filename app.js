@@ -2,6 +2,33 @@
 'use strict';
 
 /* ================= Datos de los casos ================= */
+/* ================= Íconos de tarjetas ================= */
+var P={
+ store:'<path d="M4 9l1.5-5h13L20 9"/><path d="M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9"/><path d="M5 12v8h14v-8M10 20v-5h4v5"/>',
+ car:'<path d="M4 15v-3l2-5h12l2 5v3z"/><circle cx="8" cy="16.5" r="1.8"/><circle cx="16" cy="16.5" r="1.8"/><path d="M4 12h16"/>',
+ bin:'<path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 11v6M14 11v6"/>',
+ chat:'<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/>',
+ trend:'<polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/>',
+ tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/>',
+ pin:'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+ shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5"/><circle cx="12" cy="16" r=".6"/>',
+ leaf:'<path d="M5 19C5 11 10 5 20 5c0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/>',
+ people:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6"/><circle cx="17" cy="9" r="2.2"/><path d="M16 14c3 0 5 2 5 5"/>',
+ bars:'<rect x="4" y="12" width="3" height="8"/><rect x="10.5" y="7" width="3" height="13"/><rect x="17" y="3" width="3" height="17"/>',
+ mega:'<path d="M3 10v4h3l7 4V6L6 10z"/><path d="M16 9c1.5 1 1.5 5 0 6"/>',
+ eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
+ scale:'<path d="M12 4v16M6 20h12M5 7h14"/><path d="M5 7l-3 7h6zM19 7l-3 7h6z"/>',
+ cluster:'<circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M8 7h8M7 9l4 6M17 9l-4 6"/>',
+ map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+ text:'<path d="M4 6h16M4 11h16M4 16h10"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+ line:'<path d="M3 19L21 5"/><circle cx="6" cy="16" r="1.3"/><circle cx="11" cy="14" r="1.3"/><circle cx="14" cy="9" r="1.3"/><circle cx="19" cy="7" r="1.3"/>',
+ split:'<circle cx="12" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M12 7v4M12 11L6 17M12 11l6 6"/>',
+ q:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7"/><circle cx="12" cy="17" r=".7"/>',
+ flag:'<path d="M5 21V4M5 5h13l-2 4 2 4H5"/>'
+};
+
 var BLOCKS=[
  {n:'Ventas',s:'Ventas',c:'var(--blue)'},
  {n:'Expansión geográfica',s:'Expansión',c:'var(--amber)'},
@@ -10,7 +37,7 @@ var BLOCKS=[
  {n:'Entorno ambiental',s:'Ambiental',c:'var(--green)'}
 ];
 var CASES=[
- {id:'k1',bi:0,n:1,t:'Preferencias del consumidor',em:'consumidor',sub:'Qué valora el cliente y qué lo deja satisfecho · Refaccionaria',
+ {id:'k1',b:['people','tag','q'],bi:0,n:1,t:'Preferencias del consumidor',em:'consumidor',sub:'Qué valora el cliente y qué lo deja satisfecho · Refaccionaria',
   q:'¿Qué atributos —precio, disponibilidad, atención, ubicación— prefieren los clientes y cuáles explican su satisfacción?',
   h:'La satisfacción depende de pocos atributos clave, y los clientes no son iguales: cada perfil valora distinto.',
   m:[['Conjoint basado en elección','Pide elegir entre paquetes de atributos para descubrir cuánto pesa cada uno.'],['Clases latentes','Encuentra grupos ocultos con preferencias parecidas.'],['Correspondencias múltiples (MCA)','Resume varias variables categóricas en un mapa de perfiles.'],['Logit ordinal','Modela una calificación ordenada (muy mal … muy bien) según sus causas.'],['Imputación de faltantes','Rellena respuestas vacías con ecuaciones encadenadas.']],
@@ -19,7 +46,7 @@ var CASES=[
   ev:{t:'Evidencia: tres perfiles de cliente',imgs:[['cons-mca','Mapa de correspondencias: grupos A, B y C de clientes']],
    r:['Cada punto es un taller; los puntos cercanos tienen perfiles parecidos.','Jóvenes/pequeños, maduros/medianos y adultos/grandes responden distinto.','Fortalezas: disponibilidad, calidad y atención. Debilidad: precio.'],
    w:'Lo que la gente dice en una encuesta no siempre coincide con lo que realmente compra.'}},
- {id:'k2',bi:0,n:2,t:'Predicción de ventas de una tienda nueva',em:'tienda nueva',sub:'¿Cuánto venderá algo que aún no existe?',
+ {id:'k2',b:['store','trend','cluster'],bi:0,n:2,t:'Predicción de ventas de una tienda nueva',em:'tienda nueva',sub:'¿Cuánto venderá algo que aún no existe?',
   q:'¿Cuánto venderá una tienda que todavía no existe?',
   h:'Las tiendas parecidas en tipo, entorno y ubicación venden parecido, así que se puede estimar por similitud.',
   m:[['Coeficiente de Gower','Mide qué tan parecidas son dos tiendas aunque sus variables sean numéricas y categóricas.'],['Escalamiento multidimensional','Convierte las similitudes en un mapa donde la cercanía significa parecido.'],['Agrupamiento k-means','Separa las tiendas en grupos (aquí, 5 segmentos).'],['Modelo de pronóstico por grupo','Cada segmento tiene su propio modelo de ventas.']],
@@ -28,7 +55,7 @@ var CASES=[
   ev:{t:'Evidencia: el mapa de similitud y la predicción',imgs:[['pred-mds','Cada punto es una tienda; cercanía = parecido'],['pred-cancun','Ventas reales vs. predichas (plaza Cancún)']],
    r:['Las variables mezcladas se convierten en «distancias» entre tiendas.','Los puntos cercanos se agrupan en segmentos, cada uno con su modelo.','Cuanto más cerca de la diagonal, mejor la predicción: error de clasificación de 0 % en Cancún y 4.8 % en Acapulco.'],
    w:'Es muy sensible a datos inconsistentes de la tienda nueva: si sus variables no son coherentes, la predicción se desvía.'}},
- {id:'k3',bi:1,n:3,t:'Competencia y zonas de influencia',em:'competencia',sub:'¿Qué tan competido está el mercado en cada zona?',
+ {id:'k3',b:['pin','target','map'],bi:1,n:3,t:'Competencia y zonas de influencia',em:'competencia',sub:'¿Qué tan competido está el mercado en cada zona?',
   q:'¿Qué tan competido está el mercado en cada zona y dónde queda población con una sola opción?',
   h:'El número y la concentración de competidores cercanos cambian el volumen y el monto de transacciones de una tienda.',
   m:[['Polígonos de influencia','Zonas alrededor de cada tienda: radio de 500 m, tiempo de traslado (isócronas) o AGEB del INEGI.'],['Índice Herfindahl-Hirschman','Mide concentración: más alto = menos competencia.'],['Contrastes de hipótesis y ANOVA','Comprueban si las diferencias entre zonas son reales o casualidad.'],['Regresión y machine learning','Cuantifican qué factores pesan más y con qué capacidad predictiva.']],
@@ -37,7 +64,7 @@ var CASES=[
   ev:{t:'Evidencia: concentración y zonas de influencia',imgs:[['comp-hhi','Índice HHI: sin y con presencia de la tienda'],['comp-isocronas','Isócronas: zonas por minutos de traslado']],
    r:['A mayor HHI, más concentrado el mercado (menos competencia).','La zona de influencia puede ser un círculo, un tiempo de traslado o un AGEB.','La oportunidad aparece donde la población tiene una sola alternativa.'],
    w:'Las distancias en línea recta ignoran calles, barreras y movilidad real.'}},
- {id:'k4',bi:2,n:4,t:'Impacto socioeconómico de una empresa',em:'socioeconómico',sub:'Derrama, empleo, impuestos y pequeños comercios',
+ {id:'k4',b:['people','doc','scale'],bi:2,n:4,t:'Impacto socioeconómico de una empresa',em:'socioeconómico',sub:'Derrama, empleo, impuestos y pequeños comercios',
   q:'¿Qué derrama económica genera la empresa y afecta a los pequeños comercios («changarros»)?',
   h:'La expansión de la cadena no desplaza directamente a los pequeños comercios: el efecto depende del entorno económico local.',
   m:[['Series de tiempo económicas','Siguen natalidad y mortalidad de negocios junto con variables económicas.'],['Índices de concentración','IC, ICE e ICEF: combinan establecimientos, empleo, gasto e ingreso.'],['Polígonos de influencia (Voronoi)','Dividen el territorio según la tienda más cercana.'],['Fuentes oficiales y gremiales','INEGI (DENUE, censos, encuestas) y ANTAD.']],
@@ -46,7 +73,7 @@ var CASES=[
   ev:{t:'Evidencia: áreas de influencia y cinco dimensiones',imgs:[['soc-voronoi','Polígonos de influencia: cada área, la tienda más cercana']],
    r:['Cinco dimensiones: competitividad, bienestar social, derrama, contribución fiscal e inclusión financiera.','Se compara el polígono contra el municipio, el estado y el país.','La relación inversa observada puede ser coyuntural: correlación no es causalidad.'],
    w:'Datos de 2014: las conclusiones deben actualizarse antes de usarse hoy.'}},
- {id:'k5',bi:2,n:5,t:'Percepción social: medios y redes',em:'medios y redes',sub:'¿Cómo se habla de nosotros y cuándo cambia la conversación?',
+ {id:'k5',b:['mega','chat','text'],bi:2,n:5,t:'Percepción social: medios y redes',em:'medios y redes',sub:'¿Cómo se habla de nosotros y cuándo cambia la conversación?',
   q:'¿Cómo se habla de nuestra organización y cuándo cambia la conversación?',
   h:'La percepción pública responde a los acontecimientos y puede medirse, compararse y anticiparse con monitoreo continuo.',
   m:[['Procesamiento de lenguaje natural','Enseña a la computadora a leer y entender texto.'],['Minería de textos','Extrae temas y patrones de miles de noticias.'],['Análisis de sentimiento','Clasifica el tono: positivo, neutral o negativo.'],['Clasificación automática','Agrupa noticias por tema sin etiquetas previas (no supervisado).']],
@@ -55,7 +82,7 @@ var CASES=[
   ev:{t:'Evidencia: del texto a la alerta',imgs:[['med-textmining','Minería de textos'],['med-red','Red de temas y entidades'],['med-sentimiento','Tono: negativo, neutral, positivo']],
    r:['Se extraen noticias, se clasifican por tema y se mide el tono.','Las alertas por correo avisan cuando un tema empieza a crecer.','Se pueden comparar dos entidades por los conceptos con que se asocian.'],
    w:'El tono automático puede fallar con ironía o contexto: se valida con revisión humana.'}},
- {id:'k6',bi:3,n:6,t:'Movilidad urbana: flujo vehicular',em:'flujo vehicular',sub:'¿Cuánto tránsito pasa frente a cada tienda?',
+ {id:'k6',b:['car','map','trend'],bi:3,n:6,t:'Movilidad urbana: flujo vehicular',em:'flujo vehicular',sub:'¿Cuánto tránsito pasa frente a cada tienda?',
   q:'¿Cuántos vehículos pasan frente a cada tienda en horas laborales y eso explica sus ventas?',
   h:'Un mayor flujo potencial frente a la tienda se asocia con mayores ventas, y existen horas críticas de congestión.',
   m:[['Tráfico en vivo (Google)','Tiempos de recorrido reales por vialidad y hora.'],['Velocidad = distancia / tiempo','Cada tramo vial tiene su velocidad según la hora.'],['Flujo = carriles × velocidad','Estima cuántos vehículos pueden pasar por un tramo.'],['Agrupamiento de tiendas','Perfila tiendas por su dinámica vial y entorno.']],
@@ -64,7 +91,7 @@ var CASES=[
   ev:{t:'Evidencia: la velocidad cambia con la hora',imgs:[['vial-velocidad','Velocidad por hora y vialidad (línea resaltada: un día)']],
    r:['La velocidad cae en horas pico: ahí están las horas críticas.','Cada panel es una vialidad; las líneas tenues son el resto de la semana.','Con carriles y velocidad se estima el flujo potencial de vehículos.'],
    w:'Es un flujo potencial estimado, no un conteo real de vehículos.'}},
- {id:'k7',bi:4,n:7,t:'Entorno ambiental: residuos sólidos',em:'residuos sólidos',sub:'¿Cuánta basura se genera y dónde conviene disponerla?',
+ {id:'k7',b:['leaf','bin','pin'],bi:4,n:7,t:'Entorno ambiental: residuos sólidos',em:'residuos sólidos',sub:'¿Cuánta basura se genera y dónde conviene disponerla?',
   q:'¿Cuánta basura se genera, dónde conviene disponerla y dónde aparecen basureros clandestinos?',
   h:'Factores sociales, económicos y urbanos explican el deterioro ambiental y permiten anticipar dónde aparecerán basureros clandestinos.',
   m:[['Estimación de residuos','Cuánta basura genera cada municipio, de qué tipo y de dónde viene.'],['Análisis multicriterio','Evalúa sitios contra los requisitos de la normatividad.'],['Agrupamiento geográfico','Reúne sitios cercanos para ver carencias por región.'],['Imágenes satelitales e IA','Detectan patrones asociados a basureros clandestinos.']],
@@ -75,10 +102,10 @@ var CASES=[
    w:'La detección por imagen no sustituye la verificación en campo.'}}
 ];
 var BRIDGES=[
- {after:'k2',from:0,to:1,s:'Ya sabemos qué valora el cliente y cuánto puede vender una tienda.',a:'¿<em>Dónde</em> conviene abrir la siguiente?'},
- {after:'k3',from:1,to:2,s:'Abrir tiendas también transforma el entorno donde operamos.',a:'¿Qué <em>efecto</em> tenemos y cómo nos perciben?'},
- {after:'k5',from:2,to:3,s:'La sociedad vive en ciudades, y las ciudades se mueven.',a:'¿Cómo influye la <em>movilidad</em> en la operación?'},
- {after:'k6',from:3,to:4,s:'La ciudad también deja huella en el ambiente.',a:'¿Cómo medimos y reducimos el <em>impacto ambiental</em>?'}
+ {after:'k2',art:'pin',from:0,to:1,s:'Ya sabemos qué valora el cliente y cuánto puede vender una tienda.',a:'¿<em>Dónde</em> conviene abrir la siguiente?'},
+ {after:'k3',art:'net',from:1,to:2,s:'Abrir tiendas también transforma el entorno donde operamos.',a:'¿Qué <em>efecto</em> tenemos y cómo nos perciben?'},
+ {after:'k5',art:'road',from:2,to:3,s:'La sociedad vive en ciudades, y las ciudades se mueven.',a:'¿Cómo influye la <em>movilidad</em> en la operación?'},
+ {after:'k6',art:'leaf',from:3,to:4,s:'La ciudad también deja huella en el ambiente.',a:'¿Cómo medimos y reducimos el <em>impacto ambiental</em>?'}
 ];
 var BID={k1:'',k3:'b1',k4:'b2',k6:'b3',k7:'b4'};
 
@@ -92,7 +119,8 @@ function ficha(x){
  '<h2 class="rv" style="--i:1">'+t+'</h2><p class="lead rv" style="--i:2">'+x.sub+'</p>'+
  '<div class="fiche"><div class="l">'+
   '<div class="pq q rv" style="--i:3"><small>PREGUNTA</small><p>'+x.q+'</p></div>'+
-  '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+x.h+'</p></div></div>'+
+  '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+x.h+'</p></div>'+
+  '<div class="spot rv" style="--i:5">'+x.b.map(function(k){return '<svg viewBox="0 0 24 24">'+P[k]+'</svg>';}).join('')+'</div></div>'+
  '<div class="r"><div class="rv" style="--i:5"><div class="lbl">MÉTODOS</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
  '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis">'+x.k.map(function(k){return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
  '<div class="strip rv" style="--i:7"><b>LECTURA PARA EL COMUNICADOR</b><span>'+x.l+'</span></div></section>';
@@ -109,7 +137,7 @@ function evid(x){
 function bridge(b){
  var f=BLOCKS[b.from],t=BLOCKS[b.to];
  return '<section class="slide content bridge" data-sec="3" data-block="Enlace" data-bi="'+b.to+'" data-title="Enlace · '+f.s+' → '+t.s+'" data-theme="light" style="--c:'+t.c+'">'+thread(b.to)+
- '<div class="from rv" style="--i:1">'+b.s+'</div><div class="ask rv" style="--i:2">'+b.a+'</div><div class="nxt rv" style="--i:3">SIGUIENTE BLOQUE · '+t.n.toUpperCase()+' →</div></section>';
+ '<div class="bart" data-bart="'+b.art+'"></div><div class="from rv" style="--i:1">'+b.s+'</div><div class="ask rv" style="--i:2">'+b.a+'</div><div class="nxt rv" style="--i:3">SIGUIENTE BLOQUE · '+t.n.toUpperCase()+' →</div></section>';
 }
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
@@ -121,6 +149,87 @@ var mount=document.getElementById('casesMount');
 mount.insertAdjacentHTML('beforebegin',stream);mount.remove();
 // el puente teórico necesita su rastreador
 [].forEach.call(document.querySelectorAll('.thread[data-bi]'),function(t){var bi=+t.dataset.bi;t.outerHTML=thread(bi).replace('class="thread"','class="thread"');});
+
+
+var ICMAP={'¿Cómo vender más?':'trend','¿A qué precio?':'tag','¿Dónde abrir?':'pin','¿Qué puede salir mal?':'shield','¿Qué pasará?':'bars','¿Qué impacto dejamos?':'leaf',
+ 'En una crisis':'shield','Al reportar impacto':'doc','Ante autoridades':'scale','Al planear':'bars',
+ 'Series de tiempo':'trend','Modelos lineales':'line','Clasificación':'split','Segmentación':'cluster','Geoespacial':'map','Texto y lenguaje':'text','Optimización':'target','Escenarios':'q',
+ 'Introducción':'eye','Enfoque analítico':'target','Casos de uso':'map','Visualizar y comunicar':'bars','El reto de los datos':'cluster','Cierre':'flag',
+ 'Pregunta primero':'q','Hipótesis explícita':'doc','Incertidumbre honesta':'scale','Comunicar con rigor':'mega',
+ 'Oficiales':'doc','Del sector':'people','Encuestas':'text','Digitales':'eye','Geoespaciales':'map'};
+[].forEach.call(document.querySelectorAll('.card h3'),function(h){
+ var k=ICMAP[h.textContent.trim()];if(!k||h.parentNode.querySelector('.ic'))return;
+ var card=h.closest('.card');
+ card.insertAdjacentHTML('afterbegin','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+P[k]+'</svg>');
+});
+
+
+/* ================= Ilustraciones propias ================= */
+function sv(inner,id,dark){return '<svg viewBox="0 0 500 500">'+(dark?'<defs><linearGradient id="'+id+'" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="500" y2="500"><stop offset="0" stop-color="#6FA2FF"/><stop offset="1" stop-color="#3FE0C9"/></linearGradient></defs>':'')+inner+'</svg>';}
+function dp(d,n,col,w){return '<path class="dr" pathLength="1" d="'+d+'" style="--d:'+n+'" stroke="'+col+'" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round"/>';}
+function de(cx,cy,rx,ry,n,col,rot){return '<ellipse class="dr" pathLength="1" cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" style="--d:'+n+'" stroke="'+col+'" stroke-width="1.6"'+(rot?' transform="rotate('+rot+' '+cx+' '+cy+')"':'')+'/>';}
+function dot(cx,cy,r,n,col){return '<circle class="pop" cx="'+cx+'" cy="'+cy+'" r="'+r+'" style="--d:'+n+'" fill="'+col+'"/>';}
+function rc(x,y,w,h,n,col){return '<rect class="dr" pathLength="1" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="5" style="--d:'+n+'" stroke="'+col+'" stroke-width="1.6"/>';}
+var G='url(#gx)';
+var ART={
+ cover:function(){var g='url(#gcover)',o='';
+  o+=dp('M20 330C110 330 130 170 230 190S360 330 480 120',0,g,2.4)+dp('M20 400C120 400 160 260 250 280S380 380 480 230',1,g,2)+dp('M20 260C100 260 150 120 260 120S400 220 480 60',2,g,1.6);
+  [[230,190],[480,120],[250,280],[480,230],[260,120]].forEach(function(c,i){o+=dot(c[0],c[1],7,i+3,g);});
+  for(var i=0;i<7;i++){var h=40+((i*53)%120);o+=rc(40+i*64,490-h,28,h,i,g);}
+  [[90,70],[170,40],[330,60],[420,320],[60,170]].forEach(function(c,i){o+='<circle class="fl" cx="'+c[0]+'" cy="'+c[1]+'" r="3" fill="#6FA2FF" opacity=".6" style="animation-delay:'+i*0.7+'s"/>';});
+  return sv(o,'gcover',1);},
+ qmark:function(){var g='url(#gq)',o='';
+  o+=dp('M170 180C170 80 340 80 340 175C340 240 252 238 252 305L252 330',0,g,3.2)+dot(252,385,15,3,g);
+  o+=de(250,250,215,215,1,g)+de(250,250,160,160,2,g,30);
+  [[60,250],[440,250],[250,40],[110,120],[400,380]].forEach(function(c,i){o+=dot(c[0],c[1],6+i%3*2,i+2,g);});
+  return sv(o,'gq',1);},
+ tree:function(){var g='url(#gt)',o='';
+  o+=dp('M250 455L250 335',0,g,3)+dp('M250 335C250 275 120 285 120 205',1,g,2.4)+dp('M250 335C250 260 250 240 250 170',1,g,2.4)+dp('M250 335C250 275 380 285 380 205',1,g,2.4);
+  o+=dp('M120 205C120 165 80 155 80 115',2,g,2)+dp('M120 205C120 165 160 155 160 115',2,g,2)+dp('M380 205C380 165 340 155 340 115',2,g,2)+dp('M380 205C380 165 420 155 420 115',2,g,2)+dp('M250 170L250 95',2,g,2);
+  [[250,455,9],[120,205,8],[250,170,8],[380,205,8],[80,115,10],[160,115,10],[250,95,10],[340,115,10],[420,115,10]].forEach(function(c,i){o+=dot(c[0],c[1],c[2],i%5+3,g);});
+  return sv(o,'gt',1);},
+ map:function(){var g='url(#gm)',o='';
+  [[200,130],[150,98],[100,66],[52,36]].forEach(function(r,i){o+=de(250,260,r[0],r[1],i,g,-15);});
+  o+=dp('M30 400L470 120',3,g,1.4)+dp('M60 140L440 400',3,g,1.4)+dp('M250 40L250 480',4,g,1)+dp('M20 260L480 260',4,g,1);
+  function pin(x,y,k,n){return '<g class="pop" style="--d:'+n+'" transform="translate('+x+' '+y+') scale('+k+')"><path d="M0 40c-18-22-30-38-30-56a30 30 0 0 1 60 0c0 18-12 34-30 56z" fill="'+g+'"/><circle cx="0" cy="-16" r="10" fill="#08142B"/></g>';}
+  o+=pin(250,265,1.2,5)+pin(130,350,.7,6)+pin(390,175,.7,7);
+  return sv(o,'gm',1);},
+ chart:function(){var g='url(#gc)',o='';
+  o+=dp('M50 450H460',0,g,2)+dp('M50 450V60',0,g,2);
+  [90,150,120,230,300].forEach(function(h,i){o+=rc(90+i*80,450-h,50,h,i+1,g);});
+  o+=dp('M115 330L195 270L275 300L355 190L435 120',3,g,3);
+  [[115,330],[195,270],[275,300],[355,190],[435,120]].forEach(function(c,i){o+=dot(c[0],c[1],8,i+4,g);});
+  o+=dp('M410 100L450 100L450 140',4,g,2.4);
+  return sv(o,'gc',1);},
+ clean:function(){var g='url(#gl)',o='';
+  var sc=[[40,80],[95,160],[60,260],[130,310],[30,380],[110,420],[170,110],[190,230],[150,350],[70,50],[200,400],[180,30]];
+  sc.forEach(function(c,i){o+='<circle class="fl" cx="'+c[0]+'" cy="'+c[1]+'" r="'+(4+i%3*2)+'" fill="#F2685B" opacity=".75" style="animation-delay:'+i*0.4+'s"/>';});
+  o+=dp('M215 250H300',1,g,2.6)+dp('M282 232L302 250L282 268',2,g,2.6);
+  for(var r=0;r<5;r++)for(var c=0;c<4;c++)o+=dot(340+c*46,150+r*46,8,r+c+2,g);
+  return sv(o,'gl',1);}
+};
+var BART={
+ pin:function(){var c='currentColor',o='';
+  o+=de(200,190,170,100,0,c,-12)+de(200,190,110,64,1,c,-12)+de(200,190,52,30,2,c,-12)+dp('M20 270L380 70',2,c,1.3)+dp('M40 80L360 270',3,c,1.3);
+  o+='<g class="pop" style="--d:4" transform="translate(200 200) scale(1.5)"><path d="M0 40c-18-22-30-38-30-56a30 30 0 0 1 60 0c0 18-12 34-30 56z" fill="currentColor"/><circle cx="0" cy="-16" r="10" fill="#fff"/></g>';
+  return '<svg viewBox="0 0 400 320">'+o+'</svg>';},
+ net:function(){var c='currentColor',o='',n=[[200,160],[90,90],[310,80],[70,220],[330,230],[200,280],[200,50],[140,200],[270,170]];
+  [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,6],[2,6],[1,3],[2,4],[3,7],[7,5],[8,4],[8,2],[0,7],[0,8]].forEach(function(l,i){o+=dp('M'+n[l[0]][0]+' '+n[l[0]][1]+'L'+n[l[1]][0]+' '+n[l[1]][1],i%4,c,1.3);});
+  n.forEach(function(p,i){o+=dot(p[0],p[1],i===0?16:9,i+3,c);});
+  return '<svg viewBox="0 0 400 320">'+o+'</svg>';},
+ road:function(){var c='currentColor',o='';
+  o+=dp('M40 300L170 30',0,c,2.4)+dp('M360 300L230 30',0,c,2.4)+dp('M200 300L200 30',1,c,1.4)+dp('M110 300L185 30',2,c,1)+dp('M290 300L215 30',2,c,1);
+  o+='<g class="pop" style="--d:4"><rect x="165" y="205" width="46" height="70" rx="12" fill="currentColor"/><rect x="175" y="215" width="26" height="20" rx="5" fill="#fff" opacity=".8"/></g>';
+  o+='<g class="pop" style="--d:6"><rect x="205" y="110" width="30" height="46" rx="9" fill="currentColor" opacity=".55"/></g>';
+  return '<svg viewBox="0 0 400 320">'+o+'</svg>';},
+ leaf:function(){var c='currentColor',o='';
+  o+=dp('M110 260C100 130 190 60 330 60C330 195 250 265 120 262',0,c,3)+dp('M110 262C170 180 230 120 300 88',1,c,2);
+  o+=dp('M70 290C70 330 120 330 150 305',2,c,2)+dp('M128 296L152 304L146 278',3,c,2)+dp('M350 250C350 220 320 200 295 215',3,c,2)+dp('M300 196L292 218L316 222',4,c,2);
+  [[330,60],[110,262]].forEach(function(p,i){o+=dot(p[0],p[1],8,i+5,c);});
+  return '<svg viewBox="0 0 400 320">'+o+'</svg>';}
+};
+[].forEach.call(document.querySelectorAll('.art[data-art]'),function(e){e.innerHTML=ART[e.dataset.art]();});
+[].forEach.call(document.querySelectorAll('.bart[data-bart]'),function(e){e.innerHTML=BART[e.dataset.bart]();});
 
 /* ================= Estado y menú ================= */
 var slides=[].slice.call(document.querySelectorAll('.slide')),N=slides.length,cur=-1;
