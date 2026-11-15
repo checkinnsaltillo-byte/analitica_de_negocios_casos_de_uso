@@ -385,3 +385,12 @@ input[type=range]{flex:1;accent-color:var(--blue)}
 .card:hover .ic{transform:scale(1.15) rotate(-6deg);opacity:1}
 .card.sm .ic{width:30px;height:30px}
 .fiche{grid-template-rows:minmax(0,1fr)}.fiche .l,.fiche .r{min-height:0}
+/* tarjetas con foto */
+.card.withph{padding-top:0}
+.card.withph .ph{height:210px;margin:0 -22px 16px;background-size:cover;position:relative;border-radius:18px 18px 0 0;overflow:hidden;transition:.5s}
+.card.withph .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,20,43,.55))}
+.card.withph .ph small{position:absolute;left:14px;bottom:8px;z-index:2;font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,.85)}
+.card.withph:hover .ph{background-size:112%}
+.card.withph .ic{z-index:3;top:14px;right:14px;width:40px;height:40px;padding:8px;background:#fff;border-radius:50%;box-shadow:0 6px 16px rgba(8,20,43,.2)}
+.card.withph::after{z-index:4}
+.card.withph .n{font-size:34px}.card.withph h3{margin-top:8px}
