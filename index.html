@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Analítica aplicada · Casos de uso</title>
-<meta name="description" content="Presentación ejecutiva: casos de uso de analítica aplicada a investigación de mercados, competencia, precios, expansión y riesgo.">
+<title>Datos para decidir · Probabilidad y estadística aplicada</title>
+<meta name="description" content="Presentación ejecutiva: casos de uso de probabilidad y estadística aplicada a ventas, expansión, entorno socioeconómico, urbano y ambiental.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -12,291 +12,370 @@
 <body data-theme="dark">
 
 <header class="topbar">
-  <div class="brand"><i></i>ANALÍTICA APLICADA</div>
+  <div class="brand"><i></i>DATOS PARA DECIDIR</div>
   <nav class="nav" id="nav"></nav>
   <button class="idx-btn" id="idxBtn">ÍNDICE · M</button>
 </header>
 
 <main id="stage">
 
-<!-- 01 PORTADA -->
+<!-- ============ INICIO ============ -->
 <section class="slide dark cover" data-sec="0" data-title="Portada" data-theme="dark">
   <div class="grid-bg"></div><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
   <div class="cover-in">
-    <div class="eyebrow rv" style="--i:0">Presentación ejecutiva · 60 min</div>
-    <h1 class="rv" style="--i:1">Decisiones de negocio<br>con <b>analítica</b> aplicada</h1>
-    <p class="rv" style="--i:2">Casos de uso en investigación de mercados, competencia, precios óptimos, expansión geográfica y gestión de riesgos.</p>
-    <div class="meta rv" style="--i:3"><span>PRESENTA<b>Nombre Apellido</b></span><span>ÁREA<b>Cargo / Empresa</b></span><span>FECHA<b>Mes 2026</b></span></div>
+    <div class="eyebrow rv" style="--i:0">Comunicación Corporativa · Probabilidad y Estadística</div>
+    <h1 class="rv" style="--i:1">Datos para <b>decidir</b></h1>
+    <p class="rv" style="--i:2">Casos reales de probabilidad y estadística aplicada a las ventas, la expansión y el entorno de una empresa.</p>
+    <div class="meta rv" style="--i:3"><span>PRESENTA<b>Nombre Apellido</b></span><span>SESIÓN<b>60 minutos</b></span><span>FECHA<b>Noviembre 2026</b></span></div>
   </div>
   <div class="hint">Usa → o espacio para avanzar <i>→</i></div>
 </section>
 
-<!-- 02 AGENDA -->
 <section class="slide content" data-sec="0" data-title="Agenda" data-theme="light">
   <div class="crumb rv" style="--i:0">Inicio</div>
-  <h2 class="rv" style="--i:1">Agenda de la <em>sesión</em></h2>
-  <p class="lead rv" style="--i:2">Del requerimiento del cliente a los hallazgos. Haz clic en un bloque para saltar a él.</p>
-  <div class="body">
-    <div class="cards" style="grid-template-columns:repeat(5,1fr);height:330px">
-      <a class="card sa rv" style="--c:var(--blue);--i:3;cursor:pointer" data-go="s1" data-tip="Contexto|Qué pidió el cliente y qué objetivos de negocio persigue."><div class="n">01</div><h3>Contexto</h3><p>Requerimiento y objetivos de negocio.</p><div class="tags"><span class="tag">8 min</span></div></a>
-      <a class="card sa rv" style="--c:var(--teal);--i:4;cursor:pointer" data-go="s2" data-tip="Datos y métodos|Fuentes disponibles, calidad de datos y técnicas matemáticas y estadísticas."><div class="n">02</div><h3>Datos y métodos</h3><p>Fuentes, integración y técnicas.</p><div class="tags"><span class="tag">12 min</span></div></a>
-      <a class="card sa rv" style="--c:var(--violet);--i:5;cursor:pointer" data-go="s3" data-tip="Casos de uso|Cinco casos aplicados: mercado, competencia, precios, expansión y riesgo."><div class="n">03</div><h3>Casos de uso</h3><p>Cinco casos aplicados.</p><div class="tags"><span class="tag">25 min</span></div></a>
-      <a class="card sa rv" style="--c:var(--amber);--i:6;cursor:pointer" data-go="s4" data-tip="Arquitectura|Back-end, front-end y flujo de datos de la solución."><div class="n">04</div><h3>Arquitectura</h3><p>Back-end y front-end.</p><div class="tags"><span class="tag">7 min</span></div></a>
-      <a class="card sa rv" style="--c:var(--coral);--i:7;cursor:pointer" data-go="s5" data-tip="Resultados|Impacto por enfoque, hallazgos clave y siguientes pasos."><div class="n">05</div><h3>Resultados</h3><p>Hallazgos y siguientes pasos.</p><div class="tags"><span class="tag">8 min</span></div></a>
-    </div>
-  </div>
+  <h2 class="rv" style="--i:1">Ruta de la <em>sesión</em></h2>
+  <p class="lead rv" style="--i:2">Sesenta minutos, seis bloques. Haz clic en uno para saltar a él.</p>
+  <div class="body" style="top:190px"><div class="s3x2">
+    <a class="card sm sa rv" style="--c:var(--blue);--i:3;cursor:pointer" data-go="s1" data-tip="Introducción|Las preguntas que toda empresa se hace y por qué te importan como comunicador."><div class="n">01</div><h3>Introducción</h3><p>Preguntas de negocio y tu papel como comunicador.</p><div class="q2">5 min</div></a>
+    <a class="card sm sa rv" style="--c:var(--teal);--i:4;cursor:pointer" data-go="s2" data-tip="Enfoque analítico|Por qué cuantificar y cómo un mismo objetivo tiene muchos caminos."><div class="n">02</div><h3>Enfoque analítico</h3><p>Un objetivo, muchos caminos.</p><div class="q2">10 min</div></a>
+    <a class="card sm sa rv" style="--c:var(--violet);--i:5;cursor:pointer" data-go="s3" data-tip="Casos de uso|Siete casos: ventas, expansión, entorno socioeconómico, urbano y ambiental."><div class="n">03</div><h3>Casos de uso</h3><p>De las ventas al medio ambiente.</p><div class="q2">30 min</div></a>
+    <a class="card sm sa rv" style="--c:var(--amber);--i:6;cursor:pointer" data-go="s4" data-tip="Visualizar y comunicar|Elegir bien el gráfico y explicar los límites del análisis."><div class="n">04</div><h3>Visualizar y comunicar</h3><p>Claro, simple y honesto.</p><div class="q2">6 min</div></a>
+    <a class="card sm sa rv" style="--c:var(--coral);--i:7;cursor:pointer" data-go="s5" data-tip="El reto de los datos|No siempre existen los datos que necesitas, y hay que prepararlos."><div class="n">05</div><h3>El reto de los datos</h3><p>Conseguirlos y limpiarlos.</p><div class="q2">6 min</div></a>
+    <a class="card sm sa rv" style="--c:var(--green);--i:8;cursor:pointer" data-go="z1" data-tip="Cierre|Síntesis, proyectos relacionados y preguntas."><div class="n">06</div><h3>Cierre</h3><p>Síntesis y proyectos.</p><div class="q2">3 min</div></a>
+  </div></div>
 </section>
 
-<!-- 03 SECCIÓN 1 -->
-<section class="slide dark section" id="s1" data-sec="1" data-secname="Contexto" data-title="Contexto" data-theme="dark" data-divider="1">
+<!-- ============ 1 INTRODUCCIÓN ============ -->
+<section class="slide dark section" id="s1" data-sec="1" data-secname="Introducción" data-title="Introducción" data-theme="dark">
   <div class="grid-bg"></div><div class="orb a"></div><div class="orb c"></div><div class="big">01</div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Sección 01</div><h1 class="rv" style="--i:1">Del requerimiento<br>al <b>objetivo</b></h1><p class="rv" style="--i:2">Entender qué necesita el cliente antes de elegir un solo dato o un solo modelo.</p><span class="time rv" style="--i:3">8 MIN</span></div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 01</div><h1 class="rv" style="--i:1">Las preguntas<br>de toda <b>empresa</b></h1><p class="rv" style="--i:2">Antes de hablar de métodos, hablemos de lo que realmente quieren saber las organizaciones.</p><span class="time rv" style="--i:3">5 MIN</span></div>
 </section>
 
-<!-- 04 REQUERIMIENTO -->
-<section class="slide content" data-sec="1" data-title="Requerimiento del cliente" data-theme="light">
-  <div class="crumb rv" style="--i:0">Contexto · Requerimiento</div>
-  <h2 class="rv" style="--i:1">El requerimiento del <em>cliente</em></h2>
-  <p class="lead rv" style="--i:2">Pasa el cursor sobre cada elemento para ver el detalle.</p>
-  <div class="body"><div class="two">
+<section class="slide content" data-sec="1" data-title="Preguntas críticas de negocio" data-theme="light">
+  <div class="crumb rv" style="--i:0">Introducción · Preguntas</div>
+  <h2 class="rv" style="--i:1">Seis preguntas que <em>toda empresa</em> se hace</h2>
+  <p class="lead rv" style="--i:2">Cada una se puede responder con datos. Pasa el cursor para ver un ejemplo.</p>
+  <div class="body" style="top:190px"><div class="s3x2">
+    <div class="card sm sa rv" style="--c:var(--blue);--i:3" data-tip="Ejemplo|¿Qué producto, canal o cliente explica el crecimiento? ¿Qué promoción funciona?"><div class="n">01</div><h3>¿Cómo vender más?</h3><p>Entender qué compran, quién y por qué.</p><div class="q2">Ventas</div></div>
+    <div class="card sm sa rv" style="--c:var(--violet);--i:4" data-tip="Ejemplo|¿Cuánto bajaría la demanda si subimos 5% el precio? ¿Y si lo hace la competencia?"><div class="n">02</div><h3>¿A qué precio?</h3><p>El precio que equilibra ingreso y demanda.</p><div class="q2">Precios óptimos</div></div>
+    <div class="card sm sa rv" style="--c:var(--amber);--i:5" data-tip="Ejemplo|¿En qué colonia abrir la siguiente tienda sin competir contra nosotros mismos?"><div class="n">03</div><h3>¿Dónde abrir?</h3><p>Elegir ubicaciones con mayor potencial.</p><div class="q2">Expansión geográfica</div></div>
+    <div class="card sm sa rv" style="--c:var(--coral);--i:6" data-tip="Ejemplo|¿Qué tan probable es que un cliente deje de pagar, que una máquina falle o que surja una crisis?"><div class="n">04</div><h3>¿Qué puede salir mal?</h3><p>Medir y reducir riesgos de toda naturaleza.</p><div class="q2">Riesgos</div></div>
+    <div class="card sm sa rv" style="--c:var(--teal);--i:7" data-tip="Ejemplo|¿Cuántas unidades venderemos el próximo trimestre? ¿Con qué margen de error?"><div class="n">05</div><h3>¿Qué pasará?</h3><p>Predecir variables clave para planear.</p><div class="q2">Planeación estratégica</div></div>
+    <div class="card sm sa rv" style="--c:var(--green);--i:8" data-tip="Ejemplo|¿Cuántos empleos genera? ¿Qué impuestos paga? ¿Qué huella ambiental deja?"><div class="n">06</div><h3>¿Qué impacto dejamos?</h3><p>Efectos sociales, económicos y ambientales.</p><div class="q2">Gobernanza y entorno</div></div>
+  </div></div>
+</section>
+
+<section class="slide content" data-sec="1" data-title="Por qué importa en Comunicación Corporativa" data-theme="light">
+  <div class="crumb rv" style="--i:0">Introducción · Tu perfil</div>
+  <h2 class="rv" style="--i:1">Por qué importa a la <em>comunicación corporativa</em></h2>
+  <p class="lead rv" style="--i:2">Comunicar bien es lograr coherencia entre lo que la organización es, hace, dice y cómo la perciben.</p>
+  <div class="body" style="top:200px"><div class="two" style="grid-template-columns:1fr 560px">
     <div class="pts">
-      <div class="rv" style="--i:3">Situación del cliente<small>Describir en una línea el contexto del negocio.</small></div>
-      <div class="rv" style="--i:4">Pregunta central<small>La decisión que debe tomarse con evidencia.</small></div>
-      <div class="rv" style="--i:5">Resultado esperado<small>Entregable y criterio de éxito acordado.</small></div>
+      <div class="rv" style="--i:3">Lo que se HACE se mide<small>Ventas, empleos, impuestos, residuos: son hechos cuantificables.</small></div>
+      <div class="rv" style="--i:4">Lo que se DICE se verifica<small>Un mensaje creíble se apoya en cifras que cualquiera puede comprobar.</small></div>
+      <div class="rv" style="--i:5">Lo PERCIBIDO se escucha<small>Encuestas y monitoreo de medios convierten opiniones en datos.</small></div>
     </div>
-    <div class="hub rv" style="--i:4">
-      <div class="ring" style="--R:190px"></div>
-      <div class="core">Cliente</div>
-      <div class="spoke" style="--a:-90deg;--c:var(--blue)"></div><div class="spoke" style="--a:-18deg;--c:var(--teal)"></div><div class="spoke" style="--a:54deg;--c:var(--violet)"></div><div class="spoke" style="--a:126deg;--c:var(--amber)"></div><div class="spoke" style="--a:198deg;--c:var(--coral)"></div>
-      <div class="node" style="--a:-90deg;--c:var(--blue)" data-tip="Contexto de negocio|Sector, tamaño, madurez y situación competitiva de la empresa.">Contexto de negocio</div>
-      <div class="node" style="--a:-18deg;--c:var(--teal)" data-tip="Pregunta central|La decisión concreta que el análisis debe habilitar.">Pregunta central</div>
-      <div class="node" style="--a:54deg;--c:var(--violet)" data-tip="Restricciones|Presupuesto, plazos, disponibilidad de datos y regulación.">Restricciones</div>
-      <div class="node" style="--a:126deg;--c:var(--amber)" data-tip="Alcance geográfico|Mercados, ciudades o regiones que se evaluarán.">Alcance geográfico</div>
-      <div class="node" style="--a:198deg;--c:var(--coral)" data-tip="Horizonte temporal|Corto, mediano o largo plazo para la decisión.">Horizonte temporal</div>
+    <div class="hub cycle rv" style="--i:4">
+      <div class="ring" style="--R:170px;animation-direction:normal"></div>
+      <div class="core">Confianza</div>
+      <div class="node" style="--a:-90deg;--R:170px;--c:var(--blue)" data-tip="Lo que ES|Identidad, valores y propósito de la organización.">Lo que ES</div>
+      <div class="node" style="--a:0deg;--R:170px;--c:var(--teal)" data-tip="Lo que HACE|Operación, impactos y resultados: se miden con datos.">Lo que HACE</div>
+      <div class="node" style="--a:90deg;--R:170px;--c:var(--violet)" data-tip="Lo que DICE|Mensajes comprensibles, coherentes y verificables.">Lo que DICE</div>
+      <div class="node" style="--a:180deg;--R:170px;--c:var(--amber)" data-tip="Cómo la PERCIBEN|Reputación: se estudia con encuestas y análisis de medios.">Cómo la PERCIBEN</div>
     </div>
   </div></div>
 </section>
 
-<!-- 05 OBJETIVOS -->
-<section class="slide content" data-sec="1" data-title="Objetivos de negocio" data-theme="light">
-  <div class="crumb rv" style="--i:0">Contexto · Objetivos</div>
-  <h2 class="rv" style="--i:1">Objetivos de <em>negocio</em></h2>
-  <p class="lead rv" style="--i:2">De la visión estratégica a las métricas operativas medibles.</p>
-  <div class="body"><div class="row">
-    <div class="pyr rv" style="--i:3">
-      <div class="band b1 sa" style="--c:var(--navy)" data-g="o1" data-tip="Estratégico|Crecimiento, rentabilidad y posición de mercado."><span>Estratégico</span></div>
-      <div class="band b2 sa" style="--c:var(--blue)" data-g="o2" data-tip="Táctico|Decisiones de precio, ubicación, segmento y portafolio."><span>Táctico</span></div>
-      <div class="band b3 sa" style="--c:var(--teal)" data-g="o3" data-tip="Operativo|KPIs, tableros y alertas de seguimiento diario."><span>Operativo</span></div>
+<!-- ============ 2 ENFOQUE ============ -->
+<section class="slide dark section" id="s2" data-sec="2" data-secname="Enfoque analítico" data-title="Enfoque analítico" data-theme="dark">
+  <div class="grid-bg"></div><div class="orb b"></div><div class="orb c"></div><div class="big">02</div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 02</div><h1 class="rv" style="--i:1">Un objetivo,<br>muchos <b>caminos</b></h1><p class="rv" style="--i:2">Por qué conviene cuantificar y cómo se elige el método adecuado.</p><span class="time rv" style="--i:3">10 MIN</span></div>
+</section>
+
+<section class="slide content" data-sec="2" data-title="Decidir con evidencia" data-theme="light">
+  <div class="crumb rv" style="--i:0">Enfoque analítico · Evidencia</div>
+  <h2 class="rv" style="--i:1">Cuando las cifras <em>sustentan</em> el mensaje</h2>
+  <p class="lead rv" style="--i:2">Cuatro escenarios donde un resultado cuantitativo es indispensable.</p>
+  <div class="body" style="top:190px"><div class="s4">
+    <div class="card sa rv" style="--c:var(--coral);--i:3" data-tip="En una crisis|Información clara, oportuna, coherente y verificable: sin cifras, se pierde credibilidad."><div class="n">01</div><h3>En una crisis</h3><p>Reconocer el problema y explicar con datos qué se está haciendo.</p><div class="q2">Verificable</div></div>
+    <div class="card sa rv" style="--c:var(--green);--i:4" data-tip="Sostenibilidad|Un reporte ambiental o social sin cifras es solo una declaración de intenciones."><div class="n">02</div><h3>Al reportar impacto</h3><p>Empleo, impuestos y huella ambiental respaldan la reputación.</p><div class="q2">Rendición de cuentas</div></div>
+    <div class="card sa rv" style="--c:var(--violet);--i:5" data-tip="Negociar|Autoridades y comunidades piden evidencia del beneficio y del costo de una operación."><div class="n">03</div><h3>Ante autoridades</h3><p>Justificar permisos, inversiones o expansión con evidencia.</p><div class="q2">Legitimidad</div></div>
+    <div class="card sa rv" style="--c:var(--blue);--i:6" data-tip="Planear|Pronósticos con intervalo de confianza permiten planear sin falsa certeza."><div class="n">04</div><h3>Al planear</h3><p>Anticipar ventas o riesgos y comunicarlos con su margen de error.</p><div class="q2">Estrategia</div></div>
+  </div></div>
+</section>
+
+<section class="slide content" data-sec="2" data-title="Un objetivo, muchos caminos" data-theme="light">
+  <div class="crumb rv" style="--i:0">Enfoque analítico · Caminos</div>
+  <h2 class="rv" style="--i:1">«Incrementar las ventas» no es <em>una</em> pregunta</h2>
+  <p class="lead rv" style="--i:2">Un mismo objetivo se descompone en sub-objetivos, y cada uno admite varios enfoques. Clic en un enfoque para ver un caso.</p>
+  <div class="body" style="top:215px"><div class="tree rv" style="--i:3">
+    <div class="root">Incrementar las ventas</div>
+    <div class="branches">
+      <div class="br sa" style="--c:var(--amber)" data-tip="Expansión geográfica|Decidir dónde abrir con base en competencia, población y entorno."><h4>Expansión geográfica</h4><small>ENFOQUES</small>
+        <span class="chip" data-go="k3" data-tip="Geoestadística|Mide competencia y cobertura por zonas de influencia.">Geoestadística</span><span class="chip" data-go="k6" data-tip="Modelos de flujo|Estima cuánto tránsito pasa frente a un punto.">Flujo vehicular</span><span class="chip" data-tip="Clasificación|Separa zonas de alto y bajo potencial.">Clasificación de zonas</span></div>
+      <div class="br sa" style="--c:var(--violet)" data-tip="Precios óptimos|Encontrar el precio que maximiza ingreso sin perder clientes."><h4>Precios óptimos</h4><small>ENFOQUES</small>
+        <span class="chip" data-go="b0" data-tip="Elección discreta|Probabilidad de elegir según precio y atributos.">Elección discreta (logit)</span><span class="chip" data-go="k1" data-tip="Conjoint|Estima cuánto valora el cliente cada atributo.">Análisis conjunto</span><span class="chip" data-tip="Modelos lineales|Estiman la elasticidad: cuánto cae la demanda si sube el precio.">Modelos lineales</span></div>
+      <div class="br sa" style="--c:var(--coral)" data-tip="Guerra de precios|Anticipar la reacción de competidores ante cambios de precio."><h4>Guerra de precios</h4><small>ENFOQUES</small>
+        <span class="chip" data-tip="Teoría de juegos|Modela decisiones que dependen de lo que haga el rival.">Teoría de juegos</span><span class="chip" data-tip="Series de tiempo|Sigue la evolución de precios propios y ajenos.">Series de tiempo</span><span class="chip" data-tip="Simulación|Compara escenarios hipotéticos antes de actuar.">Simulación de escenarios</span></div>
+      <div class="br sa" style="--c:var(--blue)" data-tip="Predicción de la demanda|Estimar cuánto se venderá, dónde y cuándo."><h4>Predicción de la demanda</h4><small>ENFOQUES</small>
+        <span class="chip" data-tip="Series de tiempo|Proyectan tendencia y estacionalidad.">Series de tiempo</span><span class="chip" data-go="k2" data-tip="Predicción por similitud|Estima ventas de una tienda nueva por parecido con otras.">Predicción por similitud</span><span class="chip" data-tip="Modelos de clasificación|Predicen si un cliente comprará o no.">Modelos de clasificación</span></div>
     </div>
-    <div class="stack">
-      <div class="li sa rv" style="--c:var(--navy);--i:4" data-g="o1"><span class="k">1</span><div><h4>Objetivo estratégico</h4><p>Qué valor de negocio se busca crear o proteger.</p></div></div>
-      <div class="li sa rv" style="--c:var(--blue);--i:5" data-g="o2"><span class="k">2</span><div><h4>Objetivos tácticos</h4><p>Decisiones concretas que el análisis debe informar.</p></div></div>
-      <div class="li sa rv" style="--c:var(--teal);--i:6" data-g="o3"><span class="k">3</span><div><h4>Indicadores operativos</h4><p>Métricas que confirman si la decisión funcionó.</p></div></div>
+  </div></div>
+</section>
+
+<section class="slide content" data-sec="2" data-title="Caja de herramientas" data-theme="light">
+  <div class="crumb rv" style="--i:0">Enfoque analítico · Herramientas</div>
+  <h2 class="rv" style="--i:1">La caja de <em>herramientas</em></h2>
+  <p class="lead rv" style="--i:2">Cada método responde a un tipo de pregunta. Clic para ir al caso donde se usa.</p>
+  <div class="body" style="top:190px"><div class="cards" style="grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:16px">
+    <div class="card sm sa rv" style="--c:var(--blue);--i:3;cursor:pointer" data-go="k2" data-tip="Series de tiempo|Observaciones ordenadas en el tiempo: tendencia, estacionalidad, pronóstico."><div class="n">01</div><h3>Series de tiempo</h3><p>¿Qué pasará mañana?</p></div>
+    <div class="card sm sa rv" style="--c:var(--teal);--i:4;cursor:pointer" data-go="k3" data-tip="Modelos lineales|Relacionan una variable con sus posibles causas; regresión y ANOVA."><div class="n">02</div><h3>Modelos lineales</h3><p>¿Qué factores influyen?</p></div>
+    <div class="card sm sa rv" style="--c:var(--violet);--i:5;cursor:pointer" data-go="b0" data-tip="Clasificación y logit|Estiman la probabilidad de un resultado: elegir, pagar, fallar."><div class="n">03</div><h3>Clasificación</h3><p>¿Qué tan probable es?</p></div>
+    <div class="card sm sa rv" style="--c:var(--amber);--i:6;cursor:pointer" data-go="k1" data-tip="Segmentación|Agrupa clientes o zonas parecidas (clustering, clases latentes)."><div class="n">04</div><h3>Segmentación</h3><p>¿Qué grupos existen?</p></div>
+    <div class="card sm sa rv" style="--c:var(--green);--i:7;cursor:pointer" data-go="k7" data-tip="Geoestadística|Analiza datos con ubicación: distancias, cobertura, zonas."><div class="n">05</div><h3>Geoespacial</h3><p>¿Dónde ocurre?</p></div>
+    <div class="card sm sa rv" style="--c:var(--coral);--i:8;cursor:pointer" data-go="k5" data-tip="Texto y lenguaje natural|Convierte noticias y opiniones en datos: tema y tono."><div class="n">06</div><h3>Texto y lenguaje</h3><p>¿Qué se dice?</p></div>
+    <div class="card sm sa rv" style="--c:var(--navy);--i:9;cursor:pointer" data-go="k6" data-tip="Optimización|Busca la mejor decisión bajo restricciones: inventarios, rutas, ubicación."><div class="n">07</div><h3>Optimización</h3><p>¿Cuál es la mejor opción?</p></div>
+    <div class="card sm sa rv" style="--c:var(--blue);--i:10;cursor:pointer" data-go="e4" data-tip="Simulación de escenarios|Esperanza matemática: valor esperado ponderado por probabilidades."><div class="n">08</div><h3>Escenarios</h3><p>¿Y si…?</p></div>
+  </div></div>
+</section>
+
+<section class="slide content" id="e4" data-sec="2" data-title="Niveles de incertidumbre" data-theme="light">
+  <div class="crumb rv" style="--i:0">Enfoque analítico · Incertidumbre</div>
+  <h2 class="rv" style="--i:1">Del dato al futuro: <em>cuánta incertidumbre</em> hay</h2>
+  <p class="lead rv" style="--i:2">Mientras menos claro el futuro, más honesta debe ser la respuesta: de un número a varios escenarios.</p>
+  <div class="body" style="top:200px"><div class="two" style="grid-template-columns:1.6fr 1fr;gap:28px">
+    <div class="stairs rv" style="--i:3">
+      <div class="stp sa" style="--c:var(--blue);height:42%" data-tip="Nivel 1|Futuro con suficiente claridad: un modelo determinista da una estimación puntual."><small>NIVEL 1</small><h4>Claridad suficiente</h4><p>Un número</p></div>
+      <div class="stp sa" style="--c:var(--teal);height:55%" data-tip="Nivel 2|Futuros probables: modelo estocástico con intervalo de confianza."><small>NIVEL 2</small><h4>Futuros probables</h4><p>Intervalo de confianza</p></div>
+      <div class="stp sa" style="--c:var(--violet);height:68%" data-tip="Nivel 3|Varios resultados ordenados según su probabilidad de ocurrencia."><small>NIVEL 3</small><h4>Con «rankings»</h4><p>Probabilidades ordenadas</p></div>
+      <div class="stp sa" style="--c:var(--amber);height:82%" data-tip="Nivel 4|Múltiples futuros plausibles: se construyen escenarios."><small>NIVEL 4</small><h4>Futuros plausibles</h4><p>Escenarios</p></div>
+      <div class="stp sa" style="--c:var(--coral);height:96%" data-tip="Nivel 5|Incertidumbre total: se explora y se aprende, no se predice."><small>NIVEL 5</small><h4>Incertidumbre total</h4><p>Exploración</p></div>
     </div>
+    <div class="calc rv" style="--i:5"><b style="font-size:11px;letter-spacing:.16em;color:var(--mute)">EJEMPLO · VALOR ESPERADO</b>
+      <table><tr><th>Cliente</th><th>Venta</th><th>P(x)</th><th>x·P(x)</th></tr>
+      <tr><td>Internacional</td><td>$1,000,000</td><td>0.1</td><td>$100,000</td></tr>
+      <tr><td>Local</td><td>$600,000</td><td>0.5</td><td>$300,000</td></tr>
+      <tr><td>En línea</td><td>$300,000</td><td>0.4</td><td>$120,000</td></tr>
+      <tr class="t"><td>E[X] = Σ x·P(x)</td><td></td><td>1.0</td><td>$520,000</td></tr></table>
+      <p style="color:var(--mute);margin-top:10px;font-size:12.5px;line-height:1.45">Cambiar las probabilidades crea escenarios optimista o pesimista.</p></div>
   </div></div>
 </section>
 
-<!-- 06 SECCIÓN 2 -->
-<section class="slide dark section" id="s2" data-sec="2" data-secname="Datos y métodos" data-title="Datos y métodos" data-theme="dark" data-divider="1">
-  <div class="grid-bg"></div><div class="orb a"></div><div class="orb b"></div><div class="big">02</div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Sección 02</div><h1 class="rv" style="--i:1">Datos, calidad<br>y <b>métodos</b></h1><p class="rv" style="--i:2">Qué fuentes existen, cómo se integran y qué técnicas matemáticas y estadísticas se aplican.</p><span class="time rv" style="--i:3">12 MIN</span></div>
-</section>
-
-<!-- 07 FUENTES -->
-<section class="slide content" data-sec="2" data-title="Fuentes de datos" data-theme="light">
-  <div class="crumb rv" style="--i:0">Datos y métodos · Fuentes</div>
-  <h2 class="rv" style="--i:1">Fuentes de <em>datos</em> disponibles</h2>
-  <p class="lead rv" style="--i:2">Cinco familias de datos que se combinan según el caso de uso.</p>
-  <div class="body"><div class="cards" style="grid-template-columns:repeat(5,1fr);height:330px">
-    <div class="card sa rv" style="--c:var(--blue);--i:3" data-tip="Internas|Ventas, clientes, inventario, operación. Propiedad del cliente."><div class="n">01</div><h3>Internas</h3><p>Datos propios del negocio.</p><div class="tags"><span class="tag">Ventas</span><span class="tag">CRM</span></div></div>
-    <div class="card sa rv" style="--c:var(--teal);--i:4" data-tip="Estadísticas oficiales|Censos, encuestas y directorios económicos públicos."><div class="n">02</div><h3>Oficiales</h3><p>Estadística pública y censal.</p><div class="tags"><span class="tag">Censo</span><span class="tag">Directorios</span></div></div>
-    <div class="card sa rv" style="--c:var(--violet);--i:5" data-tip="Digitales|Plataformas, reseñas, precios publicados y listados."><div class="n">03</div><h3>Digitales</h3><p>Plataformas y web.</p><div class="tags"><span class="tag">Listados</span><span class="tag">Reseñas</span></div></div>
-    <div class="card sa rv" style="--c:var(--amber);--i:6" data-tip="Geoespaciales|Mapas, vialidades, uso de suelo y puntos de interés."><div class="n">04</div><h3>Geoespaciales</h3><p>Territorio y entorno.</p><div class="tags"><span class="tag">Mapas</span><span class="tag">POI</span></div></div>
-    <div class="card sa rv" style="--c:var(--coral);--i:7" data-tip="Tiempo real|Tráfico, clima y eventos que cambian de forma continua."><div class="n">05</div><h3>Tiempo real</h3><p>Señales continuas.</p><div class="tags"><span class="tag">Tráfico</span><span class="tag">Clima</span></div></div>
-  </div></div>
-</section>
-
-<!-- 08 PIPELINE -->
-<section class="slide content" data-sec="2" data-title="Calidad e integración" data-theme="light">
-  <div class="crumb rv" style="--i:0">Datos y métodos · Integración</div>
-  <h2 class="rv" style="--i:1">Calidad e <em>integración</em></h2>
-  <p class="lead rv" style="--i:2">Un proceso repetible, de la fuente cruda al dato listo para modelar.</p>
-  <div class="body" style="top:200px"><div class="chevs rv" style="--i:3;height:150px">
-    <div class="chev sa" style="--c:var(--navy)" data-tip="Ingesta|Conexión a fuentes, APIs y archivos con registro de origen."><small>PASO 1</small><h4>Ingesta</h4></div>
-    <div class="chev sa" style="--c:var(--blue)" data-tip="Limpieza|Duplicados, valores atípicos, formatos y datos faltantes."><small>PASO 2</small><h4>Limpieza</h4></div>
-    <div class="chev sa" style="--c:var(--teal)" data-tip="Integración|Unión de fuentes por llaves comunes y por ubicación."><small>PASO 3</small><h4>Integración</h4></div>
-    <div class="chev sa" style="--c:var(--violet)" data-tip="Enriquecimiento|Variables derivadas, indicadores y capas geográficas."><small>PASO 4</small><h4>Enriquecimiento</h4></div>
-    <div class="chev sa" style="--c:var(--amber)" data-tip="Modelado|Dato validado y versionado, listo para el análisis."><small>PASO 5</small><h4>Modelado</h4></div>
-  </div>
-  <div class="chev-notes rv" style="--i:5;margin-top:60px"><div>Conexión a fuentes con trazabilidad.</div><div>Reglas de calidad automáticas.</div><div>Llaves comunes y geográficas.</div><div>Variables derivadas del negocio.</div><div>Datos versionados y auditables.</div></div></div>
-</section>
-
-<!-- 09 MÉTODOS -->
-<section class="slide content" data-sec="2" data-title="Métodos de análisis" data-theme="light">
-  <div class="crumb rv" style="--i:0">Datos y métodos · Técnicas</div>
-  <h2 class="rv" style="--i:1">Métodos de <em>análisis</em></h2>
-  <p class="lead rv" style="--i:2">Seis familias de técnicas, combinadas según la pregunta.</p>
-  <div class="body"><div class="honey rv" style="--i:3">
-    <div class="hex sa" style="--c:var(--blue);--x:20px;--y:0" data-tip="Estadística descriptiva|Distribuciones, medidas de tendencia y dispersión."><small>01</small>Descriptiva</div>
-    <div class="hex sa" style="--c:var(--teal);--x:186px;--y:0" data-tip="Regresión|Relaciones entre variables y elasticidades."><small>02</small>Regresión</div>
-    <div class="hex sa" style="--c:var(--violet);--x:352px;--y:0" data-tip="Series de tiempo|Tendencia, estacionalidad y pronóstico."><small>03</small>Series de tiempo</div>
-    <div class="hex sa" style="--c:var(--amber);--x:103px;--y:145px" data-tip="Segmentación|Clustering y perfiles de clientes o zonas."><small>04</small>Segmentación</div>
-    <div class="hex sa" style="--c:var(--coral);--x:269px;--y:145px" data-tip="Optimización|Programación matemática para precios y asignación de recursos."><small>05</small>Optimización</div>
-    <div class="hex sa" style="--c:var(--navy);--x:186px;--y:290px" data-tip="Análisis geoespacial|Accesibilidad, áreas de influencia y densidad."><small>06</small>Geoespacial</div>
-  </div></div>
-</section>
-
-<!-- 10 MARCO -->
-<section class="slide content" data-sec="2" data-title="Marco analítico" data-theme="light">
-  <div class="crumb rv" style="--i:0">Datos y métodos · Marco</div>
-  <h2 class="rv" style="--i:1">Del dato a la <em>decisión</em></h2>
-  <p class="lead rv" style="--i:2">Cuatro niveles de analítica: a mayor complejidad, mayor valor.</p>
-  <div class="body"><div class="mtx rv" style="--i:3">
-    <div class="axis y">Valor para el negocio →</div>
-    <div class="q sa" style="--c:var(--violet)" data-tip="Predictivo|¿Qué pasará? Pronósticos de demanda, precio y riesgo."><h3>Predictivo</h3><p>¿Qué es probable que pase?</p><span class="big">03</span></div>
-    <div class="q sa" style="--c:var(--coral)" data-tip="Prescriptivo|¿Qué debemos hacer? Recomendaciones y optimización."><h3>Prescriptivo</h3><p>¿Qué debemos hacer?</p><span class="big">04</span></div>
-    <div class="q sa" style="--c:var(--blue)" data-tip="Descriptivo|¿Qué pasó? Tableros e indicadores históricos."><h3>Descriptivo</h3><p>¿Qué ha pasado?</p><span class="big">01</span></div>
-    <div class="q sa" style="--c:var(--teal)" data-tip="Diagnóstico|¿Por qué pasó? Causas y correlaciones."><h3>Diagnóstico</h3><p>¿Por qué ha pasado?</p><span class="big">02</span></div>
-    <div class="axis x">Complejidad técnica →</div>
-  </div></div>
-</section>
-
-<!-- 11 SECCIÓN 3 -->
-<section class="slide dark section" id="s3" data-sec="3" data-secname="Casos de uso" data-title="Casos de uso" data-theme="dark" data-divider="1">
+<!-- ============ 3 CASOS ============ -->
+<section class="slide dark section" id="s3" data-sec="3" data-secname="Casos de uso" data-title="Casos de uso" data-theme="dark">
   <div class="grid-bg"></div><div class="orb a"></div><div class="orb c"></div><div class="big">03</div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Sección 03</div><h1 class="rv" style="--i:1">Cinco <b>casos</b><br>de uso</h1><p class="rv" style="--i:2">Mercado, competencia, precios, expansión y riesgo: cada uno con su reto, método y resultado.</p><span class="time rv" style="--i:3">25 MIN</span></div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 03</div><h1 class="rv" style="--i:1">Casos de uso:<br>de las ventas<br>al <b>planeta</b></h1><p class="rv" style="--i:2">Siete casos reales, un mismo hilo conductor.</p><span class="time rv" style="--i:3">30 MIN</span></div>
 </section>
 
-<!-- 12 MAPA DE CASOS -->
-<section class="slide content" data-sec="3" data-title="Mapa de casos de uso" data-theme="light">
-  <div class="crumb rv" style="--i:0">Casos de uso · Mapa</div>
-  <h2 class="rv" style="--i:1">Mapa de <em>casos de uso</em></h2>
-  <p class="lead rv" style="--i:2">Haz clic en un caso para ir directo a él.</p>
-  <div class="body"><div class="two" style="grid-template-columns:1fr 600px">
-    <div class="pts">
-      <div class="rv" style="--i:3">Un mismo núcleo de datos<small>Las cinco soluciones comparten fuentes y plataforma.</small></div>
-      <div class="rv" style="--i:4">Cinco decisiones distintas<small>Cada caso responde a una pregunta de negocio específica.</small></div>
+<section class="slide content" data-sec="3" data-title="Cómo leer cada caso" data-theme="light">
+  <div class="crumb rv" style="--i:0">Casos de uso · Guía de lectura</div>
+  <h2 class="rv" style="--i:1">Cómo leer <em>cada caso</em></h2>
+  <p class="lead rv" style="--i:2">Todos siguen la misma estructura: de la pregunta a lo que debes saber comunicar.</p>
+  <div class="body" style="top:210px"><div class="chevs rv" style="--i:3;height:150px">
+    <div class="chev sa" style="--c:var(--blue)" data-tip="Pregunta|La duda de negocio que se quiere responder."><small>01</small><h4>Pregunta</h4></div>
+    <div class="chev sa" style="--c:var(--teal)" data-tip="Hipótesis|La respuesta tentativa que los datos van a contrastar."><small>02</small><h4>Hipótesis</h4></div>
+    <div class="chev sa" style="--c:var(--violet)" data-tip="Método|Las técnicas estadísticas empleadas."><small>03</small><h4>Método</h4></div>
+    <div class="chev sa" style="--c:var(--amber)" data-tip="Resultado|Un ejemplo de lo que se obtiene."><small>04</small><h4>Resultado</h4></div>
+    <div class="chev sa" style="--c:var(--coral)" data-tip="Lectura|Qué debe comunicar y con qué cuidado un comunicador."><small>05</small><h4>Lectura</h4></div>
+  </div>
+  <div class="chev-notes rv" style="--i:5;margin-top:40px"><div>¿Qué queremos saber?</div><div>¿Qué creemos que pasa?</div><div>¿Con qué técnicas?</div><div>¿Qué se encontró?</div><div>¿Cómo lo cuento sin exagerar?</div></div></div>
+</section>
+
+<section class="slide content" data-sec="3" data-title="El recorrido" data-theme="light">
+  <div class="crumb rv" style="--i:0">Casos de uso · Recorrido</div>
+  <h2 class="rv" style="--i:1">El recorrido: de la venta al <em>entorno</em></h2>
+  <p class="lead rv" style="--i:2">Cada bloque nace de la pregunta anterior. Clic en una estación para saltar a ella.</p>
+  <div class="body" style="top:190px"><div class="path rv" style="--i:3">
+    <div class="st" data-go="b0" style="--c:var(--blue)"><div class="dot">1</div><h4>Ventas</h4><p>¿Qué quiere el cliente y cuánto venderemos?</p><span class="q">Casos 1 · 2</span></div>
+    <div class="st" data-go="b1" style="--c:var(--amber)"><div class="dot">2</div><h4>Expansión geográfica</h4><p>¿Dónde abrir y contra quién competimos?</p><span class="q">Caso 3</span></div>
+    <div class="st" data-go="b2" style="--c:var(--violet)"><div class="dot">3</div><h4>Entorno socioeconómico</h4><p>¿Qué efecto tenemos y cómo nos perciben?</p><span class="q">Casos 4 · 5</span></div>
+    <div class="st" data-go="b3" style="--c:var(--teal)"><div class="dot">4</div><h4>Entorno urbano</h4><p>¿Cómo influye la movilidad de la ciudad?</p><span class="q">Caso 6</span></div>
+    <div class="st" data-go="b4" style="--c:var(--green)"><div class="dot">5</div><h4>Entorno ambiental</h4><p>¿Qué huella dejamos en el planeta?</p><span class="q">Caso 7</span></div>
+  </div></div>
+</section>
+
+<template id="tplTheory">
+<section class="slide content" id="b0" data-sec="3" data-block="Ventas" data-bi="0" data-title="Teoría · De la utilidad a la elección" data-theme="light">
+  <div class="crumb rv" style="--i:0">Casos de uso · Ventas · Puente teórico</div>
+  <div class="thread" data-bi="0"></div>
+  <h2 class="rv" style="--i:1">¿Por qué elegimos lo que <em>elegimos</em>?</h2>
+  <p class="lead rv" style="--i:2">Un cliente compara opciones y elige la de mayor utilidad. Nosotros no vemos la utilidad: la convertimos en probabilidad.</p>
+  <div class="body" style="top:196px"><div class="demo rv" style="--i:3">
+    <div class="panel">
+      <div class="lbl">TRES CEREALES · MUEVE EL PRECIO Y LA CALIDAD DE B</div>
+      <table class="utbl"><thead><tr><th>Opción</th><th>Precio</th><th>Calidad</th><th>Marca</th><th>Utilidad</th></tr></thead>
+        <tbody><tr id="uA"><td>A</td><td>3</td><td>4</td><td>0</td><td class="u">–2.0</td></tr><tr id="uB"><td>B</td><td id="vPB">2</td><td id="vQB">5</td><td>1</td><td class="u">1.5</td></tr><tr id="uC"><td>C</td><td>4</td><td>5</td><td>1</td><td class="u">–1.5</td></tr></tbody></table>
+      <div class="row2"><label>Precio de B</label><input type="range" id="sP" min="1" max="8" step="0.5" value="2"></div>
+      <div class="row2"><label>Calidad de B</label><input type="range" id="sQ" min="1" max="8" step="0.5" value="5"></div>
+      <p style="font-size:12.5px;color:var(--mute);line-height:1.5;margin-top:6px">Utilidad = –1.5·precio + 0.625·calidad + 1.375·marca. Coeficientes derivados de los valores del ejemplo.</p>
     </div>
-    <div class="hub rv" style="--i:4">
-      <div class="ring" style="--R:190px"></div>
-      <div class="core">Plataforma analítica</div>
-      <div class="spoke" style="--a:-90deg;--c:var(--blue)"></div><div class="spoke" style="--a:-18deg;--c:var(--teal)"></div><div class="spoke" style="--a:54deg;--c:var(--violet)"></div><div class="spoke" style="--a:126deg;--c:var(--amber)"></div><div class="spoke" style="--a:198deg;--c:var(--coral)"></div>
-      <a class="node" data-go="c1" style="--a:-90deg;--c:var(--blue);cursor:pointer" data-tip="Investigación de mercados|Tamaño, segmentos y demanda.">Investigación de mercados</a>
-      <a class="node" data-go="c2" style="--a:-18deg;--c:var(--teal);cursor:pointer" data-tip="Análisis de competencia|Oferta, posicionamiento y brechas.">Análisis de competencia</a>
-      <a class="node" data-go="c3" style="--a:54deg;--c:var(--violet);cursor:pointer" data-tip="Precios óptimos|Elasticidad y optimización de ingresos.">Precios óptimos</a>
-      <a class="node" data-go="c4" style="--a:126deg;--c:var(--amber);cursor:pointer" data-tip="Expansión geográfica|Dónde abrir y con qué potencial.">Expansión geográfica</a>
-      <a class="node" data-go="c5" style="--a:198deg;--c:var(--coral);cursor:pointer" data-tip="Riesgos y oportunidades|Detección temprana de amenazas y espacios de crecimiento.">Riesgos y oportunidades</a>
+    <div class="panel">
+      <div class="lbl">PROBABILIDAD DE QUE CADA OPCIÓN SEA ELEGIDA</div>
+      <div class="pbar" style="--c:var(--blue)"><span>Cereal A</span><div class="t"><div class="f" id="pA"></div></div><b id="tA"></b></div>
+      <div class="pbar" style="--c:var(--teal)"><span>Cereal B</span><div class="t"><div class="f" id="pB"></div></div><b id="tB"></b></div>
+      <div class="pbar" style="--c:var(--amber)"><span>Cereal C</span><div class="t"><div class="f" id="pC"></div></div><b id="tC"></b></div>
+      <div style="margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--bg);font-size:14px;line-height:1.5"><b style="font-weight:500">P(j) = e<sup>U<sub>j</sub></sup> / Σ e<sup>U<sub>k</sub></sup></b> &nbsp;(logit multinomial). Las probabilidades <b style="font-weight:500">siempre suman 100%</b>: sube una y bajan las demás.</div>
     </div>
   </div></div>
 </section>
+</template>
 
 <div id="casesMount" hidden></div>
 
-<!-- SECCIÓN 4 -->
-<section class="slide dark section" id="s4" data-sec="4" data-secname="Arquitectura" data-title="Arquitectura" data-theme="dark" data-divider="1">
-  <div class="grid-bg"></div><div class="orb b"></div><div class="orb c"></div><div class="big">04</div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Sección 04</div><h1 class="rv" style="--i:1">Sistemas:<br><b>back-end</b> y front-end</h1><p class="rv" style="--i:2">Cómo se construye la solución que lleva el análisis hasta quien toma la decisión.</p><span class="time rv" style="--i:3">7 MIN</span></div>
+<!-- ============ 4 VISUALIZAR ============ -->
+<section class="slide dark section" id="s4" data-sec="4" data-secname="Visualizar y comunicar" data-title="Visualizar y comunicar" data-theme="dark">
+  <div class="grid-bg"></div><div class="orb a"></div><div class="orb b"></div><div class="big">04</div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 04</div><h1 class="rv" style="--i:1">Visualizar<br>y <b>comunicar</b></h1><p class="rv" style="--i:2">El mejor análisis no sirve si quien decide no lo entiende, o lo entiende mal.</p><span class="time rv" style="--i:3">6 MIN</span></div>
 </section>
 
-<section class="slide content" data-sec="4" data-title="Arquitectura de la solución" data-theme="light">
-  <div class="crumb rv" style="--i:0">Arquitectura · Capas</div>
-  <h2 class="rv" style="--i:1">Arquitectura de la <em>solución</em></h2>
-  <p class="lead rv" style="--i:2">Cinco capas, de los datos a la experiencia del usuario.</p>
-  <div class="body" style="top:170px"><div class="layers">
-    <div class="layer sa rv" style="--c:var(--coral);--i:3"><h4>Front-end<small>Experiencia de usuario</small></h4><div class="tags"><span class="tag" data-tip="Tableros|Visualización interactiva de resultados.">Tableros</span><span class="tag" data-tip="Mapas|Capas geográficas interactivas.">Mapas</span><span class="tag" data-tip="Reportes|Exportables ejecutivos.">Reportes</span></div></div>
-    <div class="layer sa rv" style="--c:var(--amber);--i:4"><h4>API y servicios<small>Acceso controlado</small></h4><div class="tags"><span class="tag" data-tip="REST|Endpoints para consultar resultados.">REST</span><span class="tag" data-tip="Autenticación|Roles y permisos por usuario.">Autenticación</span><span class="tag" data-tip="Caché|Respuestas rápidas.">Caché</span></div></div>
-    <div class="layer sa rv" style="--c:var(--violet);--i:5"><h4>Motor analítico<small>Modelos y cálculo</small></h4><div class="tags"><span class="tag" data-tip="Modelos|Estadística, ML y optimización.">Modelos</span><span class="tag" data-tip="Procesos por lotes|Cálculos programados.">Lotes</span><span class="tag" data-tip="Geoprocesamiento|Operaciones espaciales.">Geoprocesamiento</span></div></div>
-    <div class="layer sa rv" style="--c:var(--teal);--i:6"><h4>Almacenamiento<small>Datos listos</small></h4><div class="tags"><span class="tag" data-tip="Lago de datos|Archivos versionados en la nube.">Data lake</span><span class="tag" data-tip="Base analítica|Tablas optimizadas para consulta.">Base analítica</span><span class="tag" data-tip="Respaldos|Copias periódicas.">Respaldos</span></div></div>
-    <div class="layer sa rv" style="--c:var(--blue);--i:7"><h4>Ingesta<small>Fuentes</small></h4><div class="tags"><span class="tag" data-tip="APIs|Consumo de servicios externos.">APIs</span><span class="tag" data-tip="Archivos|Cargas desde hojas y CSV.">Archivos</span><span class="tag" data-tip="Programación|Actualización automática.">Programación</span></div></div>
-  </div></div>
-</section>
-
-<section class="slide content" data-sec="4" data-title="Ciclo de vida" data-theme="light">
-  <div class="crumb rv" style="--i:0">Arquitectura · Flujo</div>
-  <h2 class="rv" style="--i:1">Ciclo de <em>mejora continua</em></h2>
-  <p class="lead rv" style="--i:2">La solución se retroalimenta con cada decisión tomada.</p>
-  <div class="body"><div class="two" style="grid-template-columns:1fr 600px">
-    <div class="pts"><div class="rv" style="--i:3">Automatizado<small>Actualizaciones programadas sin intervención manual.</small></div><div class="rv" style="--i:4">Auditable<small>Cada resultado puede rastrearse a su fuente.</small></div><div class="rv" style="--i:5">Escalable<small>Se replica a nuevas regiones y casos.</small></div></div>
-    <div class="hub cycle rv" style="--i:4">
-      <div class="ring" style="--R:190px;animation-direction:normal"></div>
-      <div class="core">Mejora continua</div>
-      <div class="node" style="--a:-90deg;--c:var(--blue)" data-tip="Ingesta|Datos nuevos entran de forma programada.">1 · Ingesta</div>
-      <div class="node" style="--a:-18deg;--c:var(--teal)" data-tip="Modelado|Los modelos se recalculan y validan.">2 · Modelado</div>
-      <div class="node" style="--a:54deg;--c:var(--violet)" data-tip="Publicación|Resultados disponibles en tableros y mapas.">3 · Publicación</div>
-      <div class="node" style="--a:126deg;--c:var(--amber)" data-tip="Decisión|El negocio actúa con la evidencia.">4 · Decisión</div>
-      <div class="node" style="--a:198deg;--c:var(--coral)" data-tip="Retroalimentación|Se mide el impacto y se ajusta el modelo.">5 · Retroalimentación</div>
+<section class="slide content" data-sec="4" data-title="Mismos datos, dos historias" data-theme="light">
+  <div class="crumb rv" style="--i:0">Visualizar · El eje importa</div>
+  <h2 class="rv" style="--i:1">Mismos datos, <em>dos historias</em></h2>
+  <p class="lead rv" style="--i:2">Las ventas crecieron 8% en cuatro trimestres. Cambia dónde empieza el eje y observa el mensaje.</p>
+  <div class="body" style="top:200px"><div class="demo rv" style="--i:3;grid-template-columns:1.2fr 1fr">
+    <div class="panel">
+      <div class="lbl">VENTAS TRIMESTRALES (MILLONES)</div>
+      <div class="vbars" id="vbars"></div><div class="vlab"><div>T1</div><div>T2</div><div>T3</div><div>T4</div></div>
+      <div style="display:flex;gap:10px;margin-top:16px"><button class="btn alt" id="ax0">Eje desde 0</button><button class="btn alt on" id="ax90">Eje desde 90</button></div>
+    </div>
+    <div class="pts" style="justify-content:center">
+      <div id="axTxt" style="font-size:20px;font-weight:300;line-height:1.4;color:var(--ink)"></div>
+      <div>Un eje truncado no es mentira, pero <b style="font-weight:500">exagera</b>.<small>Si lo usas, dilo; para comparar magnitudes, empieza en cero.</small></div>
+      <div>La conclusión no cambia los datos, cambia la <b style="font-weight:500">percepción</b>.<small>Ese es el terreno del comunicador.</small></div>
     </div>
   </div></div>
 </section>
 
-<!-- SECCIÓN 5 -->
-<section class="slide dark section" id="s5" data-sec="5" data-secname="Resultados" data-title="Resultados" data-theme="dark" data-divider="1">
-  <div class="grid-bg"></div><div class="orb a"></div><div class="orb b"></div><div class="big">05</div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Sección 05</div><h1 class="rv" style="--i:1">Resultados<br>y <b>hallazgos</b></h1><p class="rv" style="--i:2">Qué se obtuvo en cada enfoque y qué sigue.</p><span class="time rv" style="--i:3">8 MIN</span></div>
-</section>
-
-<section class="slide content" data-sec="5" data-title="Resultados por enfoque" data-theme="light">
-  <div class="crumb rv" style="--i:0">Resultados · Impacto</div>
-  <h2 class="rv" style="--i:1">Resultados por <em>enfoque</em></h2>
-  <p class="lead rv" style="--i:2">Cifras ilustrativas: se sustituirán con los resultados reales.</p>
-  <div class="body" style="top:190px"><div class="bars">
-    <div class="bar rv" style="--i:3;--c:var(--blue);--w:82%" data-tip="Investigación de mercados|Indicador principal del caso."><label>Investigación de mercados</label><div class="track"><div class="fill"></div></div><b>82%</b></div>
-    <div class="bar rv" style="--i:4;--c:var(--teal);--w:68%" data-tip="Análisis de competencia|Indicador principal del caso."><label>Análisis de competencia</label><div class="track"><div class="fill"></div></div><b>68%</b></div>
-    <div class="bar rv" style="--i:5;--c:var(--violet);--w:91%" data-tip="Precios óptimos|Indicador principal del caso."><label>Precios óptimos</label><div class="track"><div class="fill"></div></div><b>91%</b></div>
-    <div class="bar rv" style="--i:6;--c:var(--amber);--w:74%" data-tip="Expansión geográfica|Indicador principal del caso."><label>Expansión geográfica</label><div class="track"><div class="fill"></div></div><b>74%</b></div>
-    <div class="bar rv" style="--i:7;--c:var(--coral);--w:63%" data-tip="Riesgos y oportunidades|Indicador principal del caso."><label>Riesgos y oportunidades</label><div class="track"><div class="fill"></div></div><b>63%</b></div>
-    <div class="note">Datos de ejemplo para el diseño de la presentación.</div>
-  </div></div>
-</section>
-
-<section class="slide content" data-sec="5" data-title="Hallazgos clave" data-theme="light">
-  <div class="crumb rv" style="--i:0">Resultados · Hallazgos</div>
-  <h2 class="rv" style="--i:1">Hallazgos <em>clave</em></h2>
-  <p class="lead rv" style="--i:2">La mejor decisión nace de la intersección entre oportunidad, riesgo y viabilidad.</p>
-  <div class="body"><div class="row" style="grid-template-columns:520px 1fr">
-    <div class="venn rv" style="--i:3">
-      <div class="vc v1 sa" style="--c:var(--blue)" data-g="h1" data-tip="Oportunidad|Dónde existe demanda no atendida."><span>Oportunidad</span></div>
-      <div class="vc v2 sa" style="--c:var(--coral)" data-g="h2" data-tip="Riesgo|Amenazas que condicionan la decisión."><span>Riesgo</span></div>
-      <div class="vc v3 sa" style="--c:var(--teal)" data-g="h3" data-tip="Viabilidad|Capacidad real de ejecutar."><span>Viabilidad</span></div>
-      <div class="mid">Decisión</div>
+<section class="slide content" data-sec="4" data-title="Elegir el gráfico adecuado" data-theme="light">
+  <div class="crumb rv" style="--i:0">Visualizar · Tabla vs. gráfico</div>
+  <h2 class="rv" style="--i:1">El gráfico <em>adecuado</em> a la pregunta</h2>
+  <p class="lead rv" style="--i:2">El mismo resultado, en una tabla y en un gráfico. ¿Cuál se entiende en cinco segundos?</p>
+  <div class="body" style="top:196px;display:grid;grid-template-columns:1.1fr 1fr;gap:26px">
+    <div class="tw rv" style="--i:3;grid-template-columns:1fr 1fr;gap:14px">
+      <figure class="shot"><div class="img"><img src="assets/viz-tabla.jpg" alt="Tabla de estadísticos"></div><figcaption>Tabla: exacta, pero hay que leerla fila por fila.</figcaption></figure>
+      <figure class="shot"><div class="img"><img src="assets/viz-barras.jpg" alt="Gráficas de barras"></div><figcaption>Barras: la comparación salta a la vista.</figcaption></figure>
     </div>
-    <div class="stack">
-      <div class="li sa rv" style="--c:var(--blue);--i:4" data-g="h1"><span class="k">1</span><div><h4>Hallazgo de oportunidad</h4><p>Resumen del principal hallazgo.</p></div></div>
-      <div class="li sa rv" style="--c:var(--coral);--i:5" data-g="h2"><span class="k">2</span><div><h4>Hallazgo de riesgo</h4><p>Resumen de la principal alerta.</p></div></div>
-      <div class="li sa rv" style="--c:var(--teal);--i:6" data-g="h3"><span class="k">3</span><div><h4>Hallazgo de viabilidad</h4><p>Resumen de la condición de ejecución.</p></div></div>
+    <div class="layers rv" style="--i:4;gap:8px">
+      <div class="layer sa" style="--c:var(--blue);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Comparar<small>categorías</small></h4><div class="tags"><span class="tag">Barras</span></div></div>
+      <div class="layer sa" style="--c:var(--teal);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Evolución<small>en el tiempo</small></h4><div class="tags"><span class="tag">Líneas</span></div></div>
+      <div class="layer sa" style="--c:var(--violet);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Distribución<small>y atípicos</small></h4><div class="tags"><span class="tag">Histograma</span><span class="tag">Caja</span></div></div>
+      <div class="layer sa" style="--c:var(--amber);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Relación<small>entre variables</small></h4><div class="tags"><span class="tag">Dispersión</span></div></div>
+      <div class="layer sa" style="--c:var(--green);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Ubicación<small>geográfica</small></h4><div class="tags"><span class="tag">Mapa</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide content" data-sec="4" data-title="Comunicar a la alta dirección" data-theme="light">
+  <div class="crumb rv" style="--i:0">Visualizar · Alta dirección</div>
+  <h2 class="rv" style="--i:1">Comunicar a quien <em>decide</em></h2>
+  <p class="lead rv" style="--i:2">Tu valor como comunicador: traducir el análisis sin perder rigor ni exagerar su alcance.</p>
+  <div class="body" style="top:196px"><div class="layers" style="justify-content:flex-start;gap:10px">
+    <div class="layer sa rv" style="--c:var(--blue);--i:3;grid-template-columns:260px 1fr"><h4>1 · Una idea por lámina<small>Menos es más</small></h4><div class="tags"><span class="tag" data-tip="Foco|Un gráfico, un mensaje. Lo demás va en el anexo.">Un gráfico, un mensaje</span></div></div>
+    <div class="layer sa rv" style="--c:var(--teal);--i:4;grid-template-columns:260px 1fr"><h4>2 · El título es la conclusión<small>No «Ventas 2026»</small></h4><div class="tags"><span class="tag" data-tip="Ejemplo|«Las ventas crecen 8% en 4 trimestres» dice más que «Ventas trimestrales».">Di lo que se ve</span></div></div>
+    <div class="layer sa rv" style="--c:var(--violet);--i:5;grid-template-columns:260px 1fr"><h4>3 · Muestra la incertidumbre<small>Intervalos, no certezas</small></h4><div class="tags"><span class="tag" data-tip="Intervalo|«Entre 80 y 95 mil» es más honesto que «87 mil».">Rangos y márgenes de error</span></div></div>
+    <div class="layer sa rv" style="--c:var(--amber);--i:6;grid-template-columns:260px 1fr"><h4>4 · Di qué NO dice el modelo<small>Los límites importan</small></h4><div class="tags"><span class="tag" data-tip="Correlación|Que dos variables se muevan juntas no prueba que una cause la otra.">Correlación no es causalidad</span><span class="tag" data-tip="Alcance|Un modelo vale para los datos con los que se construyó.">Alcance del modelo</span></div></div>
+    <div class="layer sa rv" style="--c:var(--coral);--i:7;grid-template-columns:260px 1fr"><h4>5 · Termina en una decisión<small>Y qué sigue</small></h4><div class="tags"><span class="tag" data-tip="Acción|Cada resultado debe responder: ¿qué hacemos distinto mañana?">Recomendación accionable</span></div></div>
+  </div></div>
+</section>
+
+<!-- ============ 5 DATOS ============ -->
+<section class="slide dark section" id="s5" data-sec="5" data-secname="El reto de los datos" data-title="El reto de los datos" data-theme="dark">
+  <div class="grid-bg"></div><div class="orb b"></div><div class="orb c"></div><div class="big">05</div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 05</div><h1 class="rv" style="--i:1">El reto de<br>los <b>datos</b></h1><p class="rv" style="--i:2">Tener claro el objetivo no basta: hay que encontrar los datos y dejarlos listos para analizar.</p><span class="time rv" style="--i:3">6 MIN</span></div>
+</section>
+
+<section class="slide content" data-sec="5" data-title="¿Dónde están los datos?" data-theme="light">
+  <div class="crumb rv" style="--i:0">El reto de los datos · Fuentes</div>
+  <h2 class="rv" style="--i:1">El objetivo es claro. ¿Y los <em>datos</em>?</h2>
+  <p class="lead rv" style="--i:2">En los casos anteriores combinamos fuentes muy distintas. Conseguirlas es de las partes más difíciles.</p>
+  <div class="body" style="top:196px"><div class="cards" style="grid-template-columns:repeat(5,1fr);height:330px">
+    <div class="card sa rv" style="--c:var(--blue);--i:3" data-tip="Oficiales|INEGI: censos, directorio de unidades económicas, marco geoestadístico. Públicos pero con formatos y niveles distintos."><div class="n">01</div><h3>Oficiales</h3><p>Censos, directorios económicos, cartografía.</p><div class="tags"><span class="tag">INEGI</span></div></div>
+    <div class="card sa rv" style="--c:var(--teal);--i:4" data-tip="Gremiales y de la empresa|Asociaciones del sector y bases internas: ventas, tiendas, clientes. Dependen de acuerdos."><div class="n">02</div><h3>Del sector</h3><p>Asociaciones y bases internas de la empresa.</p><div class="tags"><span class="tag">Ventas</span></div></div>
+    <div class="card sa rv" style="--c:var(--violet);--i:5" data-tip="Encuestas propias|Cuando no existe el dato, se diseña un cuestionario: preguntas, muestra y aplicación."><div class="n">03</div><h3>Encuestas</h3><p>Se diseñan cuando el dato no existe.</p><div class="tags"><span class="tag">Conjoint</span></div></div>
+    <div class="card sa rv" style="--c:var(--amber);--i:6" data-tip="Digitales|Noticias, redes y servicios web (más de 650 fuentes periodísticas). Texto sin estructura."><div class="n">04</div><h3>Digitales</h3><p>Noticias, redes y servicios en línea.</p><div class="tags"><span class="tag">Texto</span></div></div>
+    <div class="card sa rv" style="--c:var(--green);--i:7" data-tip="Geoespaciales|Imágenes satelitales, tráfico en vivo y mapas: grandes volúmenes y formatos técnicos."><div class="n">05</div><h3>Geoespaciales</h3><p>Satélites, tráfico y mapas.</p><div class="tags"><span class="tag">Mapas</span></div></div>
+  </div>
+  <div class="chev-notes rv" style="--i:8;margin-top:26px;font-size:15px"><div style="grid-column:auto">Encontrar → Obtener → Entender → Confiar. Cada paso consume tiempo y criterio.</div></div></div>
+</section>
+
+<section class="slide content" data-sec="5" data-title="De dato crudo a dato útil" data-theme="light">
+  <div class="crumb rv" style="--i:0">El reto de los datos · Preprocesamiento</div>
+  <h2 class="rv" style="--i:1">De dato crudo a <em>dato útil</em></h2>
+  <p class="lead rv" style="--i:2">El preprocesamiento es la fase menos vistosa y la que más determina la calidad del resultado.</p>
+  <div class="body" style="top:200px"><div class="chevs rv" style="--i:3;height:130px">
+    <div class="chev sa" style="--c:var(--navy)" data-tip="Extracción|Datos estructurados (CSV, XLS), semi-estructurados (JSON) y no estructurados (imágenes, PDF)."><small>1</small><h4>Extracción</h4></div>
+    <div class="chev sa" style="--c:var(--coral);filter:saturate(1.2)" data-tip="Preprocesamiento|Integrar, corregir errores, normalizar, tratar atípicos y faltantes."><small>2</small><h4>Preprocesamiento</h4></div>
+    <div class="chev sa" style="--c:var(--blue)" data-tip="Exploración|Estadísticas básicas, correlaciones y gráficos."><small>3</small><h4>Exploración</h4></div>
+    <div class="chev sa" style="--c:var(--teal)" data-tip="Modelación|Modelos supervisados o no supervisados."><small>4</small><h4>Modelación</h4></div>
+    <div class="chev sa" style="--c:var(--violet)" data-tip="Evaluación|Bondad de ajuste y validación cruzada."><small>5</small><h4>Evaluación</h4></div>
+    <div class="chev sa" style="--c:var(--green)" data-tip="Recalibración|Reajustar el modelo ante nuevas realidades."><small>6</small><h4>Recalibración</h4></div>
+  </div>
+  <div class="cards rv" style="--i:5;grid-template-columns:repeat(5,1fr);height:190px;margin-top:26px">
+    <div class="card sm sa" style="--c:var(--coral)" data-tip="Datos atípicos (outliers)|Valores extremos: ¿error de captura o hecho real? Distorsionan promedios."><div class="n" style="font-size:26px">Atípicos</div><p>¿Error o caso real?</p></div>
+    <div class="card sm sa" style="--c:var(--amber)" data-tip="Datos faltantes|Celdas vacías: se eliminan, se rellenan (imputación) o se señalan."><div class="n" style="font-size:26px">Faltantes</div><p>Vacíos que hay que decidir.</p></div>
+    <div class="card sm sa" style="--c:var(--blue)" data-tip="Formatos|Fechas 03/11/2026 vs 2026-11-03; comas y puntos decimales; mayúsculas."><div class="n" style="font-size:26px">Formatos</div><p>Mismo dato, distinta forma.</p></div>
+    <div class="card sm sa" style="--c:var(--teal)" data-tip="Unidades|Miles vs. millones; metros vs. kilómetros; pesos vs. dólares."><div class="n" style="font-size:26px">Unidades</div><p>Miles, millones, pesos.</p></div>
+    <div class="card sm sa" style="--c:var(--violet)" data-tip="Integración|Unir fuentes con llaves comunes (nombre, código, coordenada)."><div class="n" style="font-size:26px">Integración</div><p>Que las fuentes «hablen».</p></div>
+  </div></div>
+</section>
+
+<section class="slide content" data-sec="5" data-title="Demo: limpiar datos" data-theme="light">
+  <div class="crumb rv" style="--i:0">El reto de los datos · Demostración</div>
+  <h2 class="rv" style="--i:1">Un promedio puede <em>mentir</em></h2>
+  <p class="lead rv" style="--i:2">Cinco registros de ventas por tienda, con los problemas típicos. Presiona «Limpiar» y compara el promedio.</p>
+  <div class="body" style="top:196px"><div class="demo rv" style="--i:3;grid-template-columns:1.5fr 1fr">
+    <div class="panel"><table class="dtbl dirty" id="dtbl">
+      <thead><tr><th>Tienda</th><th>Ventas</th><th>Fecha</th><th>Unidad</th><th>Problema</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>1,250</td><td><span class="raw bad">03/11/2026</span><span class="clean">2026-11-03</span></td><td>miles $</td><td><span class="badge" id="b1">formato de fecha</span></td></tr>
+        <tr><td>B</td><td><span class="raw bad">1.2</span><span class="clean">1,200</span></td><td>2026-11-03</td><td><span class="raw bad">millones $</span><span class="clean">miles $</span></td><td><span class="badge">unidades distintas</span></td></tr>
+        <tr class="drop"><td>C</td><td><span class="raw bad">98,000</span><span class="clean">revisar</span></td><td>2026-11-03</td><td>miles $</td><td><span class="badge">atípico (¿ceros de más?)</span></td></tr>
+        <tr><td>D</td><td><span class="raw bad">—</span><span class="clean">1,225</span></td><td>2026-11-03</td><td>miles $</td><td><span class="badge">dato faltante</span></td></tr>
+        <tr class="drop"><td>A</td><td>1,250</td><td>2026-11-03</td><td>miles $</td><td><span class="badge">registro duplicado</span></td></tr>
+      </tbody></table>
+      <div style="display:flex;gap:10px;margin-top:18px"><button class="btn" id="clean">Limpiar datos</button><button class="btn alt" id="dirty">Restablecer</button></div>
+    </div>
+    <div class="pts" style="justify-content:center">
+      <div class="mean"><span>Promedio de ventas</span><b id="meanV">25,125</b></div>
+      <div id="meanTxt" style="font-size:16px;line-height:1.5;color:var(--mute)">Con los datos crudos, un solo valor atípico y los duplicados inflan el promedio muy por encima de lo que vende cualquier tienda.</div>
+      <div>Antes de modelar, <b style="font-weight:500">limpiar</b>.<small>Documenta cada decisión: qué se corrigió, qué se excluyó y por qué.</small></div>
     </div>
   </div></div>
 </section>
 
-<section class="slide content" data-sec="5" data-title="Hoja de ruta" data-theme="light">
-  <div class="crumb rv" style="--i:0">Resultados · Siguientes pasos</div>
-  <h2 class="rv" style="--i:1">Hoja de <em>ruta</em></h2>
-  <p class="lead rv" style="--i:2">Cuatro hitos para llevar los hallazgos a la operación.</p>
-  <div class="body" style="top:190px"><div class="tl rv" style="--i:3">
-    <div class="ms sa" style="--c:var(--blue)" data-tip="Hito 1|Validación de hallazgos con el cliente."><div class="dot"></div><div class="txt"><small>MES 1</small><h4>Validación</h4><p>Revisión de resultados.</p></div></div>
-    <div class="ms sa" style="--c:var(--teal)" data-tip="Hito 2|Priorización de iniciativas."><div class="dot"></div><div class="txt"><small>MES 2</small><h4>Priorización</h4><p>Iniciativas de mayor impacto.</p></div></div>
-    <div class="ms sa" style="--c:var(--violet)" data-tip="Hito 3|Implementación piloto."><div class="dot"></div><div class="txt"><small>MES 3-4</small><h4>Piloto</h4><p>Implementación controlada.</p></div></div>
-    <div class="ms sa" style="--c:var(--amber)" data-tip="Hito 4|Escalamiento a toda la operación."><div class="dot"></div><div class="txt"><small>MES 5+</small><h4>Escalamiento</h4><p>Despliegue a toda la operación.</p></div></div>
-  </div></div>
+<!-- ============ 6 CIERRE ============ -->
+<section class="slide content" id="z1" data-sec="6" data-secname="Cierre" data-title="Qué nos llevamos" data-theme="light">
+  <div class="crumb rv" style="--i:0">Cierre · Síntesis</div>
+  <h2 class="rv" style="--i:1">Qué nos <em>llevamos</em></h2>
+  <p class="lead rv" style="--i:2">Cuatro ideas para recordar.</p>
+  <div class="body" style="top:190px"><div class="s4" style="height:330px">
+    <div class="card sa rv" style="--c:var(--blue);--i:3" data-tip="Idea 1|Toda decisión de negocio puede traducirse en una pregunta que los datos ayudan a responder."><div class="n">01</div><h3>Pregunta primero</h3><p>El método se elige según la pregunta, no al revés.</p></div>
+    <div class="card sa rv" style="--c:var(--teal);--i:4" data-tip="Idea 2|Formular una hipótesis obliga a decir qué evidencia la confirmaría o la refutaría."><div class="n">02</div><h3>Hipótesis explícita</h3><p>Decir qué creemos y cómo lo comprobaríamos.</p></div>
+    <div class="card sa rv" style="--c:var(--violet);--i:5" data-tip="Idea 3|Los resultados son estimaciones con margen de error; comunicarlo genera confianza."><div class="n">03</div><h3>Incertidumbre honesta</h3><p>Probabilidades e intervalos, no certezas absolutas.</p></div>
+    <div class="card sa rv" style="--c:var(--amber);--i:6" data-tip="Idea 4|Tu rol: traducir el análisis a mensajes claros, coherentes y creíbles para cada público."><div class="n">04</div><h3>Comunicar con rigor</h3><p>Claro, simple y consciente de los límites.</p></div>
+  </div>
+  <div class="strip rv" style="--i:8"><b>PARA TU CARRERA</b><span>Identidad, coherencia, diálogo y confianza: los datos son la evidencia que sostiene las cuatro.</span></div></div>
 </section>
 
-<section class="slide content" data-sec="5" data-title="Proyectos relacionados" data-theme="light">
-  <div class="crumb rv" style="--i:0">Resultados · Proyectos</div>
+<section class="slide content" data-sec="6" data-title="Proyectos relacionados" data-theme="light">
+  <div class="crumb rv" style="--i:0">Cierre · Proyectos</div>
   <h2 class="rv" style="--i:1">Proyectos <em>relacionados</em></h2>
-  <p class="lead rv" style="--i:2">Cada caso tiene un proyecto en vivo. Haz clic para abrirlo.</p>
-  <div class="body"><div class="cards" style="grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:18px">
-    <a class="card link-card sa rv" style="--c:var(--blue);--i:3" href="#" target="_blank" rel="noopener" data-tip="Proyecto 1|Reemplazar con la URL real."><div><div class="n">01</div><h3>Proyecto uno</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
-    <a class="card link-card sa rv" style="--c:var(--teal);--i:4" href="#" target="_blank" rel="noopener" data-tip="Proyecto 2|Reemplazar con la URL real."><div><div class="n">02</div><h3>Proyecto dos</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
-    <a class="card link-card sa rv" style="--c:var(--violet);--i:5" href="#" target="_blank" rel="noopener" data-tip="Proyecto 3|Reemplazar con la URL real."><div><div class="n">03</div><h3>Proyecto tres</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
-    <a class="card link-card sa rv" style="--c:var(--amber);--i:6" href="#" target="_blank" rel="noopener" data-tip="Proyecto 4|Reemplazar con la URL real."><div><div class="n">04</div><h3>Proyecto cuatro</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
-    <a class="card link-card sa rv" style="--c:var(--coral);--i:7" href="#" target="_blank" rel="noopener" data-tip="Proyecto 5|Reemplazar con la URL real."><div><div class="n">05</div><h3>Proyecto cinco</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
-    <a class="card link-card sa rv" style="--c:var(--navy);--i:8" href="#" target="_blank" rel="noopener" data-tip="Proyecto 6|Reemplazar con la URL real."><div><div class="n">06</div><h3>Proyecto seis</h3><p>Descripción breve del proyecto.</p></div><span class="go">ABRIR PROYECTO →</span></a>
+  <p class="lead rv" style="--i:2">Para profundizar en cada caso. Clic para abrir.</p>
+  <div class="body" style="top:190px"><div class="cards" style="grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:16px">
+    <a class="card link-card sm sa rv" style="--c:var(--blue);--i:3;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Ventas|Reemplazar con la URL real."><div><div class="n">01</div><h3>Ventas y consumidor</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--amber);--i:4;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Expansión|Reemplazar con la URL real."><div><div class="n">02</div><h3>Expansión y competencia</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--violet);--i:5;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Socioeconómico|Reemplazar con la URL real."><div><div class="n">03</div><h3>Impacto socioeconómico</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--coral);--i:6;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Medios|Reemplazar con la URL real."><div><div class="n">04</div><h3>Medios y redes</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--teal);--i:7;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Urbano|Reemplazar con la URL real."><div><div class="n">05</div><h3>Movilidad urbana</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--green);--i:8;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Ambiental|Reemplazar con la URL real."><div><div class="n">06</div><h3>Entorno ambiental</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--navy);--i:9;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Datos|Reemplazar con la URL real."><div><div class="n">07</div><h3>Datos abiertos</h3></div><span class="go">ABRIR →</span></a>
+    <a class="card link-card sm sa rv" style="--c:var(--blue);--i:10;min-height:0" href="#" target="_blank" rel="noopener" data-tip="Más|Reemplazar con la URL real."><div><div class="n">08</div><h3>Más proyectos</h3></div><span class="go">ABRIR →</span></a>
   </div></div>
 </section>
 
-<section class="slide dark cover" data-sec="5" data-title="Cierre" data-theme="dark">
+<section class="slide dark cover" data-sec="6" data-title="Preguntas" data-theme="dark">
   <div class="grid-bg"></div><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
-  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Cierre</div><h1 class="rv" style="--i:1">Gracias.<br><b>¿Conversamos?</b></h1><p class="rv" style="--i:2">Preguntas, comentarios y siguientes pasos.</p><div class="meta rv" style="--i:3"><span>CONTACTO<b>correo@empresa.com</b></span><span>WEB<b>www.empresa.com</b></span></div></div>
+  <div class="cover-in"><div class="eyebrow rv" style="--i:0">Cierre</div><h1 class="rv" style="--i:1">¿Qué decisión de tu futura organización <b>no</b> debería tomarse sin datos?</h1><p class="rv" style="--i:2">Gracias. Preguntas y conversación.</p><div class="meta rv" style="--i:3"><span>CONTACTO<b>correo@empresa.com</b></span><span>WEB<b>www.empresa.com</b></span></div></div>
 </section>
 
 </main>

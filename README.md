@@ -1,7 +1,8 @@
-# Analítica aplicada · Casos de uso
+# Datos para decidir · Probabilidad y estadística aplicada
 
-Presentación ejecutiva en HTML (slides) sobre casos de uso de analítica: investigación de mercados, competencia, precios óptimos, expansión geográfica y riesgos/oportunidades.
+Presentación ejecutiva (HTML, 43 slides, 60 min) para alumnos de Comunicación Corporativa.
 
+- Hilo: preguntas de negocio → enfoque analítico → 7 casos (ventas, expansión, entorno socioeconómico, urbano, ambiental) → visualización → reto de los datos → cierre.
+- Cada caso: pregunta, hipótesis, métodos, ejemplo de resultado, lectura para el comunicador y una lámina de evidencia.
 - Navegación: ← → / espacio · `M` índice · `F` pantalla completa · menú superior con submenús.
-- Estructura: portada → secciones → subsecciones; número de página siempre visible.
-- Sin dependencias ni build: `index.html` + `styles.css` + `app.js`.
+- Sin dependencias ni build: `index.html` + `styles.css` + `app.js` + `assets/`.
