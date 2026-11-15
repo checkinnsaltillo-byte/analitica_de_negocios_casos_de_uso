@@ -114,20 +114,20 @@ function thread(bi){
 }
 function ficha(x){
  var B=BLOCKS[x.bi],t=x.t.replace(x.em,'<em>'+x.em+'</em>');
- return '<section class="slide content" '+(BID[x.id]?'id="'+BID[x.id]+'" ':'')+'data-sec="3" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · '+x.t+'" data-theme="light" style="--c:'+B.c+'">'+
+ return '<section class="slide content" '+(BID[x.id]?'id="'+BID[x.id]+'" ':'')+'data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · '+x.t+'" data-theme="light" style="--c:'+B.c+'">'+
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+'</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1">'+t+'</h2><p class="lead rv" style="--i:2">'+x.sub+'</p>'+
  '<div class="fiche"><div class="l">'+
   '<div class="pq q rv" style="--i:3"><small>PREGUNTA</small><p>'+x.q+'</p></div>'+
   '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+x.h+'</p></div>'+
-  '<div class="spot rv" style="--i:5">'+x.b.map(function(k){return '<svg viewBox="0 0 24 24">'+P[k]+'</svg>';}).join('')+'</div></div>'+
+  '<figure class="pic kpic rv" style="--i:5" data-ph="'+x.id+'"></figure></div>'+
  '<div class="r"><div class="rv" style="--i:5"><div class="lbl">MÉTODOS</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
  '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis">'+x.k.map(function(k){return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
  '<div class="strip rv" style="--i:7"><b>LECTURA PARA EL COMUNICADOR</b><span>'+x.l+'</span></div></section>';
 }
 function evid(x){
  var B=BLOCKS[x.bi],e=x.ev,n=e.imgs.length;
- return '<section class="slide content" data-sec="3" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1;font-size:32px">'+e.t+'</h2>'+
  '<div class="evid" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img"><img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'"></div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
@@ -136,7 +136,7 @@ function evid(x){
 }
 function bridge(b){
  var f=BLOCKS[b.from],t=BLOCKS[b.to];
- return '<section class="slide content bridge" data-sec="3" data-block="Enlace" data-bi="'+b.to+'" data-title="Enlace · '+f.s+' → '+t.s+'" data-theme="light" style="--c:'+t.c+'">'+thread(b.to)+
+ return '<section class="slide content bridge" data-sec="4" data-block="Enlace" data-bi="'+b.to+'" data-title="Enlace · '+f.s+' → '+t.s+'" data-theme="light" style="--c:'+t.c+'">'+thread(b.to)+
  '<div class="bart" data-bart="'+b.art+'"></div><div class="from rv" style="--i:1">'+b.s+'</div><div class="ask rv" style="--i:2">'+b.a+'</div><div class="nxt rv" style="--i:3">SIGUIENTE BLOQUE · '+t.n.toUpperCase()+' →</div></section>';
 }
 var stream='';
@@ -172,6 +172,12 @@ function dot(cx,cy,r,n,col){return '<circle class="pop" cx="'+cx+'" cy="'+cy+'" 
 function rc(x,y,w,h,n,col){return '<rect class="dr" pathLength="1" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="5" style="--d:'+n+'" stroke="'+col+'" stroke-width="1.6"/>';}
 var G='url(#gx)';
 var ART={
+ sim:function(){var g='url(#gsim)',o='';
+  o+=dp('M40 450H470',0,g,2)+dp('M40 450V70',0,g,2)+dp('M40 330C140 320 190 300 250 280',1,g,3.2);
+  [[330,170,2],[330,230,3],[330,285,4],[330,350,5],[330,410,6]].forEach(function(c){o+=dp('M250 280C290 262 300 '+(c[1]+20)+' 440 '+c[1]+'',c[2],g,c[2]===4?3:1.6);});
+  o+=dot(250,280,9,2,g)+dot(440,170,7,6,g)+dot(440,230,7,6,g)+dot(440,285,10,7,g)+dot(440,350,7,6,g)+dot(440,410,7,6,g);
+  o+=dp('M40 330C80 326 110 322 140 318',1,g,3.2);
+  return sv(o,'gsim',1);},
  cover:function(){var g='url(#gcover)',o='';
   o+=dp('M20 330C110 330 130 170 230 190S360 330 480 120',0,g,2.4)+dp('M20 400C120 400 160 260 250 280S380 380 480 230',1,g,2)+dp('M20 260C100 260 150 120 260 120S400 220 480 60',2,g,1.6);
   [[230,190],[480,120],[250,280],[480,230],[260,120]].forEach(function(c,i){o+=dot(c[0],c[1],7,i+3,g);});
@@ -230,6 +236,24 @@ var BART={
 };
 [].forEach.call(document.querySelectorAll('.art[data-art]'),function(e){e.innerHTML=ART[e.dataset.art]();});
 [].forEach.call(document.querySelectorAll('.bart[data-bart]'),function(e){e.innerHTML=BART[e.dataset.bart]();});
+
+
+/* ================= Fotos libres y créditos ================= */
+/*PH_START*/var PH={"esc1": {"t": "PRESS CONFERENCE 2016-07-19", "a": "EU2016 SK", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:PRESS_CONFERENCE_2016-07-19_Informal_Meeting_of_Ministers_Responsible_for_Competitiveness_(28410298625).jpg", "w": "Rueda de prensa", "p": "center"}, "esc2": {"t": "Albany wind farm", "a": "Leon Brooks", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Albany_wind_farm_against_the_sunset_western_Australia.jpg", "w": "Parque eólico al atardecer", "p": "center"}, "esc3": {"t": "FEMA City Council meeting", "a": "Marvin Nauman / FEMA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:FEMA_-_32884_-_FEMA_Community_Relations_worker_speaks_at_City_Council_meeting_in_Oklahoma.jpg", "w": "Reunión de un concejo municipal", "p": "center"}, "esc4": {"t": "Southern Monterrey skyline", "a": "Rick González", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Southern_Monterrey_skyline.jpg", "w": "Horizonte de Monterrey", "p": "center"}, "q1": {"t": "REMA 1000 Supermarket interior grocery store Tønsberg, Norway 2017-11-03 cashier", "a": "Wolfmann", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:REMA_1000_Supermarket_interior_grocery_store_T%C3%B8nsberg,_Norway_2017-11-03_cashier_checkout_a.jpg", "w": "Caja de supermercado", "p": "center"}, "q2": {"t": "Moscow, Paveletskaya Plaza Feb.2025 - turkey 01.jpg", "a": "Retired electrician", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Moscow,_Paveletskaya_Plaza_Feb.2025_-_turkey_01.jpg", "w": "Precios en un anaquel con etiquetas electrónicas", "p": "center"}, "q3": {"t": "Storefronts on Bridgeway, Sausalito-L1003865.jpg", "a": "Frank Schulenburg", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Storefronts_on_Bridgeway,_Sausalito-L1003865.jpg", "w": "Locales comerciales en una calle", "p": "center"}, "q4": {"t": "DSC06451 Explosion Hazard Folding Sign, Wiener Netze, 2023-10.jpg", "a": "Aciarium", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:DSC06451_Explosion_Hazard_Folding_Sign,_Wiener_Netze,_2023-10.jpg", "w": "Señal de advertencia de peligro", "p": "center"}, "q5": {"t": "2016-09-11 19 30 20 Sunset at the NEXRAD WSR-88D Doppler Radar at the National W", "a": "Famartin", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:2016-09-11_19_30_20_Sunset_at_the_NEXRAD_WSR-88D_Doppler_Radar_at_the_National_Weather_Service%27s_Baltimore-Washington_Weather_Forecast_Office_in_Sterling,_Loudoun_County,_Virginia.jpg", "w": "Radar meteorológico al atardecer", "p": "center"}, "q6": {"t": "Kabul City Factory Smoke.jpg", "a": "Pm4gis", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Kabul_City_Factory_Smoke.jpg", "w": "Vista aérea de chimeneas y humo industrial", "p": "center"}, "k1": {"t": "The interior of an Advance Auto Parts store in Murphy, North Carolina 06.jpg", "a": "Harrison Keely", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:The_interior_of_an_Advance_Auto_Parts_store_in_Murphy,_North_Carolina_06.jpg", "w": "Interior de una refaccionaria", "p": "center"}, "k2": {"t": "New store opening draws crowds at Littlewood's, Oswestry (1479019).jpg", "a": "Geoff Charles", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:New_store_opening_draws_crowds_at_Littlewood%27s,_Oswestry_(1479019).jpg", "w": "Inauguración de una tienda", "p": "center"}, "k3": {"t": "Sclater Street Yard market, Brick Lane Market London E1 o.jpg", "a": "Acabashi", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Sclater_Street_Yard_market,_Brick_Lane_Market_London_E1_o.jpg", "w": "Mercado callejero", "p": "center"}, "k5": {"t": "Man reading a newspaper at a café terrace in Athens, Greece - 1979.jpg", "a": "Jean-Louis Debaize / European Communitie", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:Man_reading_a_newspaper_at_a_caf%C3%A9_terrace_in_Athens,_Greece_-_1979.jpg", "w": "Lector de periódico en un café", "p": "center"}, "k6": {"t": "Traffic jam Bangkok.JPG", "a": "Sky 269", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Traffic_jam_Bangkok.JPG", "w": "Congestión vehicular", "p": "center"}, "k7": {"t": "Waste landfill in Derhachi.jpg", "a": "I.Shevtsov", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Waste_landfill_in_Derhachi.jpg", "w": "Relleno sanitario", "p": "center"}, "d4": {"t": "Solar Data Analyst at Work in Kenya.jpg", "a": "Dwalsh3", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Solar_Data_Analyst_at_Work_in_Kenya.jpg", "w": "Analista de datos en su estación de trabajo", "p": "center"}, "d5": {"t": "Earth's City Lights by DMSP, 1994-1995 (large).jpg", "a": "Data: Marc Imhoff/NASA GSFC, Christopher", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Earth%27s_City_Lights_by_DMSP,_1994-1995_(large).jpg", "w": "Imagen satelital: luces nocturnas de la Tierra", "p": "center"}, "s1": {"t": "Cockpit Motion Facility.jpg", "a": "NASA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Cockpit_Motion_Facility.jpg", "w": "Simulador de vuelo", "p": "center"}, "s2": {"t": "This image shows VINCI (VLT INterferometer Commissioning Instrument), the \"test ", "a": "ESO", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:This_image_shows_VINCI_(VLT_INterferometer_Commissioning_Instrument),_the_%22test_camera%22_of_the_Very_Large_Telescope_Interferometer_(VLTI),_and_LEONARDO,_its_calibration_source_(vlt1_02-dez2000).jpg", "w": "Instrumentos de laboratorio de precisión", "p": "center"}, "s3": {"t": "New York Stock Exchange trading floor on Wall Street, New York, New York LCCN201", "a": "Carol M. Highsmith", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:New_York_Stock_Exchange_trading_floor_on_Wall_Street,_New_York,_New_York_LCCN2011634218.tif", "w": "Bolsa de valores de Nueva York", "p": "center"}, "k4": {"t": "Tienda de abarrotes, Mercado Michoacán.jpg", "a": "Xanyssel", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Tienda_de_abarrotes,_Mercado_Michoac%C3%A1n.jpg", "w": "Tienda de abarrotes de barrio", "p": "center"}, "d1": {"t": "Edificio del Instituto Nacional de Estadística, Geografía e Informática.JPG", "a": "Luisalvaz", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Edificio_del_Instituto_Nacional_de_Estad%C3%ADstica,_Geograf%C3%ADa_e_Inform%C3%A1tica.JPG", "w": "Edificio del INEGI, fuente oficial de estadística", "p": "center"}, "d2": {"t": "Logistics Specialist 2nd Class Jarred Stone checks cargo inventory (6172589).jpg", "a": "U.S. Navy photo by Petty Officer 2nd Cla", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Logistics_Specialist_2nd_Class_Jarred_Stone_checks_cargo_inventory_(6172589).jpg", "w": "Control de inventario: datos internos de una operación", "p": "center"}, "d3": {"t": "Deb Haaland at New Mexico Counts 2020 event in 2019. 02.jpg", "a": "Deb Haaland", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Deb_Haaland_at_New_Mexico_Counts_2020_event_in_2019._02.jpg", "w": "Evento público de participación en el censo", "p": "center"}};/*PH_END*/
+var PHMAP={'¿Cómo vender más?':'q1','¿A qué precio?':'q2','¿Dónde abrir?':'q3','¿Qué puede salir mal?':'q4','¿Qué pasará?':'q5','¿Qué impacto dejamos?':'q6','Oficiales':'d1','Del sector':'d2','Encuestas':'d3','Digitales':'d4','Geoespaciales':'d5'};
+function phCredit(k){var x=PH[k];return x?'Foto: '+x.a+' · '+x.l:'';}
+[].forEach.call(document.querySelectorAll('.card h3'),function(h){
+ var k=PHMAP[h.textContent.trim()],card=h.closest('.card');
+ if(!k||!PH[k]||card.querySelector('.ph'))return;
+ card.classList.add('withph','phs');
+ card.insertAdjacentHTML('afterbegin','<div class="ph" style="background-image:url(assets/ph-'+k+'.jpg);background-position:'+(PH[k].p||'center')+'"><small>'+phCredit(k)+'</small></div>');
+});
+[].forEach.call(document.querySelectorAll('.pic[data-ph]'),function(f){
+ var k=f.dataset.ph;if(!PH[k]){f.remove();return;}
+ f.innerHTML='<img src="assets/ph-'+k+'.jpg" alt="" style="object-position:'+(PH[k].p||'center')+'"><small>'+phCredit(k)+'</small>';
+});
+var cr=document.getElementById('credits');
+if(cr){cr.innerHTML=Object.keys(PH).map(function(k){var x=PH[k];return '<a href="'+x.u+'" target="_blank" rel="noopener" data-tip="'+x.t.replace(/"/g,'')+'|'+x.l+'"><b>'+x.a+'</b> · '+x.l+'<i>'+x.w+'</i></a>';}).join('');}
 
 /* ================= Estado y menú ================= */
 var slides=[].slice.call(document.querySelectorAll('.slide')),N=slides.length,cur=-1;
@@ -379,6 +403,98 @@ document.addEventListener('mousemove',function(e){
  var mv=document.getElementById('meanV'),mt=document.getElementById('meanTxt');
  document.getElementById('clean').onclick=function(){t.className='dtbl tidy';mv.textContent='1,225';mt.textContent='Con unidades homogéneas, sin duplicados y sin el valor atípico, el promedio refleja lo que realmente vende una tienda típica.';};
  document.getElementById('dirty').onclick=function(){t.className='dtbl dirty';mv.textContent='25,125';mt.textContent='Con los datos crudos, un solo valor atípico y los duplicados inflan el promedio muy por encima de lo que vende cualquier tienda.';};
+})();
+
+
+// 4) Ajuste polinomial: sub-ajuste / robusto / sobre-ajuste
+(function(){
+ var svg=document.getElementById('polySvg');if(!svg)return;
+ var seed=7;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ function gau(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.283185*v);}
+ function f(x){return 1.2*Math.sin(1.1*x)+0.35*x;}
+ var tr=[],te=[],i;
+ for(i=0;i<14;i++){var x=0.2+i*5.6/13+(rnd()-.5)*.25;tr.push([x,f(x)+0.5*gau()]);}
+ for(i=0;i<40;i++){var x2=0.1+rnd()*5.8;te.push([x2,f(x2)+0.5*gau()]);}
+ function fit(d){var n=d+1,A=[],b=[],r,c,k;
+  for(r=0;r<n;r++){A.push(new Array(n).fill(0));b.push(0);}
+  tr.forEach(function(p){var u=(p[0]-3)/3,pw=[];for(k=0;k<n;k++)pw.push(Math.pow(u,k));
+   for(r=0;r<n;r++){b[r]+=pw[r]*p[1];for(c=0;c<n;c++)A[r][c]+=pw[r]*pw[c];}});
+  for(r=0;r<n;r++)A[r][r]+=1e-9;
+  for(var col=0;col<n;col++){var piv=col;for(r=col+1;r<n;r++)if(Math.abs(A[r][col])>Math.abs(A[piv][col]))piv=r;
+   var t=A[col];A[col]=A[piv];A[piv]=t;var tb=b[col];b[col]=b[piv];b[piv]=tb;
+   for(r=col+1;r<n;r++){var m=A[r][col]/A[col][col];for(c=col;c<n;c++)A[r][c]-=m*A[col][c];b[r]-=m*b[col];}}
+  var w=new Array(n).fill(0);
+  for(r=n-1;r>=0;r--){var sm=b[r];for(c=r+1;c<n;c++)sm-=A[r][c]*w[c];w[r]=sm/A[r][r];}
+  return function(x){var u=(x-3)/3,y=0;for(var k2=0;k2<n;k2++)y+=w[k2]*Math.pow(u,k2);return y;};}
+ function rmse(m,D){var s2=0;D.forEach(function(p){var e=m(p[0])-p[1];s2+=e*e;});return Math.sqrt(s2/D.length);}
+ var X=function(x){return 30+x/6*510;},Y=function(y){return 300-(Math.max(-1.6,Math.min(4.2,y))+1.6)/5.8*280;};
+ var ds=document.getElementById('degS');
+ function upd(){
+  var d=+ds.value,m=fit(d),eT=rmse(m,tr),eV=rmse(m,te);
+  document.getElementById('degV').textContent=d;
+  var h='<line x1="30" y1="300" x2="545" y2="300" stroke="#cfd8e8"/><line x1="30" y1="20" x2="30" y2="300" stroke="#cfd8e8"/>';
+  var path='';for(var x=0;x<=6.001;x+=.05){path+=(x===0?'M':'L')+X(x).toFixed(1)+' '+Y(m(x)).toFixed(1);}
+  h+='<path d="'+path+'" fill="none" stroke="#2F6BFF" stroke-width="3" stroke-linecap="round"/>';
+  te.forEach(function(p){h+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="4" fill="#fff" stroke="#F5A524" stroke-width="1.8"/>';});
+  tr.forEach(function(p){h+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="5" fill="#2F6BFF"/>';});
+  svg.innerHTML=h;
+  var tag=document.getElementById('polyTag'),txt=document.getElementById('polyTxt');
+  document.getElementById('eTr').style.width=Math.min(100,eT/2.5*100)+'%';document.getElementById('eTe').style.width=Math.min(100,eV/2.5*100)+'%';
+  document.getElementById('eTrV').textContent=eT.toFixed(2);document.getElementById('eTeV').textContent=eV>9?'>9':eV.toFixed(2);
+  if(d<=2){tag.textContent='SUB-AJUSTADO';tag.style.background='#F5A524';txt.textContent='El modelo es demasiado simple: no captura la forma de los datos. Falla tanto en entrenamiento como en prueba.';}
+  else if(d<=4){tag.textContent='ROBUSTO';tag.style.background='#2FA56B';txt.textContent='Buen equilibrio: el error de entrenamiento y el de prueba son parecidos y bajos. Generaliza bien.';}
+  else{tag.textContent='SOBRE-AJUSTADO';tag.style.background='#F26B5B';txt.textContent='Memoriza el ruido: el error de entrenamiento baja, pero el de prueba sube. Predecirá mal casos nuevos.';}
+ }
+ ds.value=3;ds.oninput=upd;upd();
+})();
+// 5) Simulador de escenarios
+(function(){
+ var xP=document.getElementById('xP');if(!xP)return;
+ var xA=document.getElementById('xA'),xC=document.getElementById('xC'),base=120-4.5*10+2.1*20-3.2*4,sig=6;
+ function upd(){
+  var P=+xP.value,A=+xA.value,C=+xC.value;
+  document.getElementById('xPv').textContent=P;document.getElementById('xAv').textContent=A;document.getElementById('xCv').textContent=C;
+  var cp=-4.5*P,ca=2.1*A,cc=-3.2*C,y=120+cp+ca+cc;
+  document.getElementById('yHat').textContent=y.toFixed(1);
+  var dl=(y/base-1)*100,de=document.getElementById('yDelta');
+  de.textContent=(dl>=0?'+':'')+dl.toFixed(1)+'% vs. hoy';de.style.color=dl>=0.05?'#1c7a4a':dl<-0.05?'#B3261E':'#667085';
+  var lo=y-1.96*sig,hi=y+1.96*sig,sc=160;
+  var cb=document.getElementById('ciBar');cb.style.left=Math.max(0,lo/sc*100)+'%';cb.style.width=Math.max(2,(hi-lo)/sc*100)+'%';
+  document.getElementById('ciTxt').textContent='Intervalo de predicción 95 %: de '+lo.toFixed(1)+' a '+hi.toFixed(1);
+  var rows=[['Base (β₀)',120,'#9AA7BD'],['Precio',cp,cp>=0?'#2FA56B':'#F26B5B'],['Publicidad',ca,ca>=0?'#2FA56B':'#F26B5B'],['Competidores',cc,cc>=0?'#2FA56B':'#F26B5B'],['Ventas pronosticadas',y,'#2F6BFF']];
+  document.getElementById('wf').innerHTML=rows.map(function(r){return '<div class="wfr"><span>'+r[0]+'</span><div class="t"><div class="f" style="width:'+Math.min(100,Math.abs(r[1])/160*100)+'%;background:'+r[2]+'"></div></div><b>'+(r[1]>0&&r[0]!=='Base (β₀)'&&r[0]!=='Ventas pronosticadas'?'+':'')+r[1].toFixed(1)+'</b></div>';}).join('');
+ }
+ [xP,xA,xC].forEach(function(e){e.oninput=function(){[].forEach.call(document.querySelectorAll('.scn .btn'),function(b){b.classList.remove('on');});upd();};});
+ [].forEach.call(document.querySelectorAll('.scn .btn'),function(b){b.onclick=function(){var v=b.dataset.s.split(',');xP.value=v[0];xA.value=v[1];xC.value=v[2];[].forEach.call(document.querySelectorAll('.scn .btn'),function(q){q.classList.remove('on');});b.classList.add('on');upd();};});
+ upd();
+})();
+// 6) Deriva del modelo y re-entrenamiento
+(function(){
+ var svg=document.getElementById('driftSvg');if(!svg)return;
+ var seed=11;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ var d=[],t;for(t=1;t<=52;t++){var base=t<=30?40+1.0*t:70-1.0*(t-30);d.push([t,base+(rnd()-.5)*6]);}
+ function ols(a,b){var pts=d.filter(function(p){return p[0]>=a&&p[0]<=b;}),n=pts.length,sx=0,sy=0,sxx=0,sxy=0;
+  pts.forEach(function(p){sx+=p[0];sy+=p[1];sxx+=p[0]*p[0];sxy+=p[0]*p[1];});var m=(n*sxy-sx*sy)/(n*sxx-sx*sx);return [m,(sy-m*sx)/n];}
+ function mae(l){var s=0,c=0;d.forEach(function(p){if(p[0]>30){s+=Math.abs(l[0]*p[0]+l[1]-p[1]);c++;}});return s/c;}
+ var old=ols(1,30),nw=ols(38,52),mo=mae(old),mn=mae(nw);
+ var X=function(x){return 36+(x-1)/51*540;},Y=function(y){return 270-y/110*250;};
+ var trained=false;
+ function draw(){
+  var h='<line x1="36" y1="270" x2="580" y2="270" stroke="#cfd8e8"/><line x1="36" y1="14" x2="36" y2="270" stroke="#cfd8e8"/>';
+  h+='<line x1="'+X(30.5)+'" y1="14" x2="'+X(30.5)+'" y2="270" stroke="#F26B5B" stroke-dasharray="5 5"/><text x="'+(X(30.5)+6)+'" y="28" font-size="11" fill="#F26B5B">Cambio de mercado</text>';
+  h+='<line x1="'+X(1)+'" y1="'+Y(old[0]+old[1])+'" x2="'+X(52)+'" y2="'+Y(old[0]*52+old[1])+'" stroke="#7C5CFF" stroke-width="2.4" stroke-dasharray="7 5"/>';
+  if(trained)h+='<line class="dr" pathLength="1" x1="'+X(31)+'" y1="'+Y(nw[0]*31+nw[1])+'" x2="'+X(52)+'" y2="'+Y(nw[0]*52+nw[1])+'" stroke="#2FA56B" stroke-width="3.4" style="stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s ease forwards"/>';
+  d.forEach(function(p){h+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="3.6" fill="'+(p[0]<=30?'#6FA2FF':'#F26B5B')+'"/>';});
+  h+='<text x="40" y="288" font-size="10.5" fill="#667085">semana 1</text><text x="545" y="288" font-size="10.5" fill="#667085">52</text>';
+  svg.innerHTML=h;
+  var mx=Math.max(mo,1);
+  document.getElementById('mOld').style.width=Math.min(100,mo/mx*100)+'%';document.getElementById('mOldV').textContent=mo.toFixed(1);
+  document.getElementById('mNew').style.width=trained?Math.min(100,mn/mx*100)+'%':'0';document.getElementById('mNewV').textContent=trained?mn.toFixed(1):'—';
+  document.getElementById('drTxt').textContent=trained?'Con las últimas 15 semanas, el modelo recupera la tendencia nueva: el error baja. Mañana el mercado volverá a moverse y habrá que repetirlo.':'Hasta la semana 30 el modelo acierta. Luego llega un competidor nuevo y las ventas empiezan a caer: el modelo sigue proyectando el pasado.';
+ }
+ document.getElementById('retrain').onclick=function(){trained=true;draw();};
+ document.getElementById('resetDrift').onclick=function(){trained=false;draw();};
+ draw();
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
