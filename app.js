@@ -461,6 +461,22 @@ document.addEventListener('mousemove',function(e){
   var lo=y-1.96*sig,hi=y+1.96*sig,sc=160;
   var cb=document.getElementById('ciBar');cb.style.left=Math.max(0,lo/sc*100)+'%';cb.style.width=Math.max(2,(hi-lo)/sc*100)+'%';
   document.getElementById('ciTxt').textContent='Intervalo de predicción 95 %: de '+lo.toFixed(1)+' a '+hi.toFixed(1);
+  (function(){
+   var a=120+2.1*A-3.2*C,a0=120+2.1*20-3.2*4,svg=document.getElementById('dcSvg');if(!svg)return;
+   var X=function(q){return 44+q/200*500;},Y=function(p){return 214-p/22*196;};
+   function line(a_,col,w,dash){var p0=Math.max(0,(a_-200)/4.5),p1=Math.min(22,a_/4.5);return '<line x1="'+X(a_-4.5*p0)+'" y1="'+Y(p0)+'" x2="'+X(a_-4.5*p1)+'" y2="'+Y(p1)+'" stroke="'+col+'" stroke-width="'+w+'"'+(dash?' stroke-dasharray="6 5"':'')+' stroke-linecap="round"/>';}
+   var s='<line x1="44" y1="214" x2="544" y2="214" stroke="#cfd8e8"/><line x1="44" y1="18" x2="44" y2="214" stroke="#cfd8e8"/>';
+   s+='<text x="48" y="14" font-size="11" fill="#667085">Precio ($)</text><text x="544" y="232" font-size="11" fill="#667085" text-anchor="end">Unidades (miles)</text>';
+   s+=line(a0,'#9AA7BD',2,true)+line(a,'#2F6BFF',3.4,false);
+   var pu=a/9;if(pu>0&&pu<22)s+='<circle cx="'+X(a/2)+'" cy="'+Y(pu)+'" r="4" fill="#fff" stroke="#F5A524" stroke-width="2"/><text x="'+(X(a/2)+8)+'" y="'+(Y(pu)-6)+'" font-size="10.5" fill="#B7791F">ε = −1</text>';
+   if(y>0){s+='<line x1="44" y1="'+Y(P)+'" x2="'+X(y)+'" y2="'+Y(P)+'" stroke="#2F6BFF" stroke-dasharray="3 4" opacity=".5"/><line x1="'+X(y)+'" y1="'+Y(P)+'" x2="'+X(y)+'" y2="214" stroke="#2F6BFF" stroke-dasharray="3 4" opacity=".5"/><circle cx="'+X(y)+'" cy="'+Y(P)+'" r="6.5" fill="#2F6BFF" stroke="#fff" stroke-width="2.5"/>';}
+   s+='<text x="'+(X(Math.min(a0-4.5*1,195))-4)+'" y="'+(Y(1)-6)+'" font-size="10.5" fill="#9AA7BD" text-anchor="end">hoy</text>';
+   svg.innerHTML=s;
+   var e=y>0?-4.5*P/y:-99,ev=document.getElementById('eVal'),tg=document.getElementById('eTag'),ab=Math.abs(e),R=P*y;
+   ev.textContent=y>0?e.toFixed(2).replace('-','−'):'—';
+   var k=ab>1.05?['ELÁSTICA','#F26B5B','Subir 1 % el precio reduce las unidades ≈ '+ab.toFixed(1)+' %: el ingreso cae. Los clientes reaccionan mucho al precio.']:ab<0.95?['INELÁSTICA','#2FA56B','Subir 1 % el precio reduce las unidades solo ≈ '+ab.toFixed(1)+' %: el ingreso sube. Los clientes reaccionan poco al precio.']:['UNITARIA','#F5A524','Subir 1 % el precio reduce las unidades ≈ 1 %: el ingreso casi no cambia. Es el precio que maximiza el ingreso.'];
+   tg.textContent=k[0];tg.style.background=k[1];document.getElementById('eTxt').innerHTML=k[2]+'<br><b>Ingreso = P × Q = '+R.toFixed(0)+'</b>';
+  })();
   var rows=[['Base (β₀)',120,'#9AA7BD'],['Precio',cp,cp>=0?'#2FA56B':'#F26B5B'],['Publicidad',ca,ca>=0?'#2FA56B':'#F26B5B'],['Competidores',cc,cc>=0?'#2FA56B':'#F26B5B'],['Ventas pronosticadas',y,'#2F6BFF']];
   document.getElementById('wf').innerHTML=rows.map(function(r){return '<div class="wfr"><span>'+r[0]+'</span><div class="t"><div class="f" style="width:'+Math.min(100,Math.abs(r[1])/160*100)+'%;background:'+r[2]+'"></div></div><b>'+(r[1]>0&&r[0]!=='Base (β₀)'&&r[0]!=='Ventas pronosticadas'?'+':'')+r[1].toFixed(1)+'</b></div>';}).join('');
  }

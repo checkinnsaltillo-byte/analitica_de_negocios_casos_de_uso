@@ -248,6 +248,8 @@
       <div class="row2"><label>Competidores</label><input type="range" id="xC" min="0" max="10" step="1" value="4"><b id="xCv" class="xv">4</b></div>
       <div class="lbl" style="margin-top:16px">ESCENARIOS PREDEFINIDOS</div>
       <div class="scn"><button class="btn alt on" data-s="10,20,4">Hoy</button><button class="btn alt" data-s="9,30,3">Optimista</button><button class="btn alt" data-s="12,10,7">Pesimista</button><button class="btn alt" data-s="8,25,8">Guerra de precios</button></div>
+      <div class="lbl" style="margin-top:14px">CURVA DE LA DEMANDA (precio vs. unidades)</div>
+      <svg id="dcSvg" viewBox="0 0 560 250" style="width:100%;height:236px"></svg>
     </div>
     <div class="panel">
       <div class="lbl">PREDICCIÓN DEL MODELO</div>
@@ -255,6 +257,11 @@
       <div class="ci"><div class="cib"><div id="ciBar"></div></div><span id="ciTxt"></span></div>
       <div class="lbl" style="margin-top:14px">CONTRIBUCIÓN DE CADA VARIABLE</div>
       <div id="wf"></div>
+      <div class="elas"><div class="lbl">ELASTICIDAD PRECIO DE LA DEMANDA</div>
+        <div class="erow"><span class="eb" id="eVal">−0.30</span><span class="etag" id="eTag">INELÁSTICA</span></div>
+        <div class="etxt" id="eTxt"></div>
+        <div class="eform">ε = (ΔQ/Q) ÷ (ΔP/P) = β<sub>precio</sub> · P / Q</div>
+      </div>
     </div>
   </div></div>
 </section>

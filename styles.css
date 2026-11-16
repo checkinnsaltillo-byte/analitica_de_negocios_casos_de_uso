@@ -455,3 +455,10 @@ input[type=range]{flex:1;accent-color:var(--blue)}
 .credits{columns:2;column-gap:36px;font-size:12px;line-height:1.5}
 .credits a{display:block;break-inside:avoid;padding:6px 10px;border-radius:8px;color:var(--ink);transition:.2s}
 .credits a:hover{background:rgba(47,107,255,.08)}.credits b{font-weight:500}.credits i{display:block;font-style:normal;color:var(--mute)}
+
+.elas{margin-top:14px;padding-top:12px;border-top:1px solid #e6ebf4}
+.erow{display:flex;align-items:center;gap:14px;margin:2px 0 6px}
+.eb{font-size:40px;font-weight:200;letter-spacing:-1px;color:var(--navy)}
+.etag{color:#fff;font-size:11px;letter-spacing:.12em;font-weight:600;padding:4px 10px;border-radius:99px}
+.etxt{font-size:14px;line-height:1.45;color:#475467}
+.eform{margin-top:8px;font-size:13px;color:var(--blue);font-family:ui-monospace,Menlo,monospace}
