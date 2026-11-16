@@ -198,6 +198,19 @@ var EVSVG={
   return '<svg viewBox="0 0 640 290" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">'+h+'</svg>';
  }
 };
+
+var GM={G:[['Zona comercial central','#7C5CFF',[22,16,30,150,55],80,[5.5,12,1.8,1.2,-2.6]],['Colonia residencial','#2F6BFF',[18,5,10,40,35],90,[9,6,1.2,2.5,-2.2]],['Periferia en crecimiento','#F5A524',[8,2,12,15,20],60,[10,5,4.5,3,-3]],['Corredor vial','#14A39A',[12,4,38,60,40],70,[4,6,5,2,-2]],['Zona turística','#F26B5B',[10,18,20,110,60],50,[3,16,2,2.2,-3.5]]],
+ V:[['PEA','Población económicamente activa (miles)',0,40,1],['Peatonal','Afluencia peatonal (miles/día)',0,25,1],['Vehicular','Afluencia vehicular (miles/día)',0,50,1],['Establ.','Establecimientos comerciales',0,250,5],['Compet.','Concentración de la competencia (0–100)',0,100,1]]};
+function mirror2(){
+ var B=BLOCKS[0];
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="0" data-title="Caso 2 · Un modelo por grupo" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 2 · Un modelo por grupo</div>'+thread(0)+
+ '<h2 class="rv" style="--i:1">Un <em>modelo</em> para cada grupo</h2>'+
+ '<div class="fm sm xs rv" style="--i:2" id="gmF"></div>'+
+ '<div class="body" style="top:214px"><div class="demo rv" style="--i:3;grid-template-columns:1.1fr 1fr;gap:24px"><div class="panel"><div class="selrow"><div class="lbl">GRUPO DE TIENDAS <i id="gmDot" class="gdot"></i></div><select id="gmSel" class="cbx">'+GM.G.map(function(g,i){return '<option value="'+i+'">'+g[0]+'</option>';}).join('')+'</select></div>'+
+ '<div class="lbl" style="margin-top:12px">VARIABLES INDEPENDIENTES (HIPOTÉTICAS)</div>'+GM.V.map(function(v,i){return '<div class="row2"><label style="min-width:210px;font-size:13px">'+v[1]+'</label><input type="range" class="gmR" data-i="'+i+'" min="'+v[2]+'" max="'+v[3]+'" step="'+v[4]+'"><b class="xv" id="gmv'+i+'"></b></div>';}).join('')+
+ '<div class="scn" style="margin-top:8px"><button class="btn alt" id="gmAvg">Tienda promedio del grupo</button><button class="btn alt" id="gmUp">Zona más concurrida (+30 %)</button></div><div class="gmfit" id="gmFit"></div></div>'+
+ '<div class="panel"><div class="lbl">VENTAS PRONOSTICADAS PARA ESTE GRUPO</div><div class="big2"><span id="gmY">—</span><small> miles de pesos / mes</small><em id="gmD"></em></div><div class="ci"><div class="cib"><div id="gmBar"></div></div><span id="gmTxt"></span></div><div class="lbl" style="margin-top:14px">CONTRIBUCIÓN DE CADA VARIABLE</div><div id="gmWf"></div></div></div></div></section>';
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -231,7 +244,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror();
+ stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -656,6 +669,51 @@ document.addEventListener('mousemove',function(e){
   document.getElementById('mrTxt').textContent='Rango de las '+k+' tiendas espejo: de '+Math.round(lo)+' a '+Math.round(hi);
  }
  sel.onchange=upd;K.oninput=upd;upd();
+})();
+
+// 9) Un modelo por grupo (regresión múltiple ajustada por grupo)
+(function(){
+ var sel=document.getElementById('gmSel');if(!sel)return;
+ var seed=21;function r(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ function nrm(){return (r()+r()+r()+r()-2)*1.73;}
+ function solve(A,b){var n=b.length,i,j,k,M=A.map(function(row,q){return row.concat([b[q]]);});
+  for(i=0;i<n;i++){var p=i;for(j=i+1;j<n;j++)if(Math.abs(M[j][i])>Math.abs(M[p][i]))p=j;var t=M[i];M[i]=M[p];M[p]=t;
+   for(j=i+1;j<n;j++){var f=M[j][i]/M[i][i];for(k=i;k<=n;k++)M[j][k]-=f*M[i][k];}}
+  var x=new Array(n);for(i=n-1;i>=0;i--){var s=M[i][n];for(j=i+1;j<n;j++)s-=M[i][j]*x[j];x[i]=s/M[i][i];}return x;}
+ var sp=[.22,.3,.2,.25,.2],F=GM.G.map(function(g){
+  var X=[],Y=[],n=60,i,j,k;
+  for(i=0;i<n;i++){var row=[1];for(j=0;j<5;j++){var m=g[2][j];row.push(Math.max(0,m+nrm()*(j===4?9:m*sp[j])));}
+   var y=g[3];for(j=0;j<5;j++)y+=g[4][j]*row[j+1];y+=nrm()*24;X.push(row);Y.push(y);}
+  var A=[],b=[];for(j=0;j<6;j++){A.push([]);b.push(0);for(k=0;k<6;k++){var s=0;for(i=0;i<n;i++)s+=X[i][j]*X[i][k];A[j].push(s);}for(i=0;i<n;i++)b[j]+=X[i][j]*Y[i];}
+  var be=solve(A,b),sse=0,my=Y.reduce(function(p,q){return p+q;},0)/n,sst=0;
+  for(i=0;i<n;i++){var f=0;for(j=0;j<6;j++)f+=be[j]*X[i][j];sse+=Math.pow(Y[i]-f,2);sst+=Math.pow(Y[i]-my,2);}
+  return {b:be,r2:1-sse/sst,sig:Math.sqrt(sse/(n-6)),n:n};});
+ var rg=[].slice.call(document.querySelectorAll('.gmR')),X=[0,0,0,0,0];
+ function fx(v){return (Math.abs(v)<10?v.toFixed(2):v.toFixed(1));}
+ function load(avg){var gi=+sel.value,g=GM.G[gi];rg.forEach(function(e,i){e.value=avg?g[2][i]:Math.min(+e.max,Math.round(g[2][i]*1.3));});upd();}
+ function upd(){
+  var gi=+sel.value,g=GM.G[gi],m=F[gi],y=m.b[0],i,h;
+  document.getElementById('gmDot').style.background=g[1];
+  var rows=[['Base (β₀)',m.b[0],'#9AA7BD']];
+  rg.forEach(function(e,k){var v=+e.value;X[k]=v;document.getElementById('gmv'+k).textContent=v;var cv=m.b[k+1]*v;y+=cv;rows.push([GM.V[k][0],cv,cv>=0?'#2FA56B':'#F26B5B']);});
+  rows.push(['Ventas pronosticadas',y,g[1]]);
+  var f='<span class="v y">Ventas</span><span class="op">=</span><span class="v b">'+fx(m.b[0])+'</span>';
+  GM.V.forEach(function(v,k){var b=m.b[k+1];f+='<span class="op">'+(b<0?'−':'+')+'</span><span class="v b">'+fx(Math.abs(b))+'</span><span class="op">·</span><span class="v x">'+v[0]+'</span>';});
+  document.getElementById('gmF').innerHTML=f+'<small>Modelo ajustado con '+m.n+' tiendas del grupo «'+g[0]+'» · R² = '+m.r2.toFixed(2)+' · error típico ±'+m.sig.toFixed(0)+' mil</small>';
+  document.getElementById('gmY').textContent=Math.round(y);
+  var base=m.b[0],avg=m.b[0];g[2].forEach(function(v,k){avg+=m.b[k+1]*v;});
+  var dl=(y/avg-1)*100,de=document.getElementById('gmD');de.textContent=(dl>=0?'+':'')+dl.toFixed(1)+'% vs. tienda promedio';de.style.color=dl>=0.05?'#1c7a4a':dl<-0.05?'#B3261E':'#667085';
+  var lo=y-1.96*m.sig,hi=y+1.96*m.sig,sc=900,cb=document.getElementById('gmBar');cb.style.left=Math.max(0,lo/sc*100)+'%';cb.style.width=Math.max(2,(hi-lo)/sc*100)+'%';
+  document.getElementById('gmTxt').textContent='Intervalo de predicción 95 %: de '+Math.round(lo)+' a '+Math.round(hi);
+  var mx=Math.max.apply(null,rows.map(function(q){return Math.abs(q[1]);}));
+  document.getElementById('gmWf').innerHTML=rows.map(function(q,k){return '<div class="wfr"><span>'+q[0]+'</span><div class="t"><div class="f" style="width:'+Math.min(100,Math.abs(q[1])/mx*100)+'%;background:'+q[2]+'"></div></div><b>'+(q[1]>0&&k>0&&k<rows.length-1?'+':'')+Math.round(q[1])+'</b></div>';}).join('');
+  document.getElementById('gmFit').innerHTML='Cada grupo tiene sus propios coeficientes: <b>la misma afluencia vale distinto</b> en una zona turística que en una colonia residencial.';
+ }
+ sel.onchange=function(){load(true);};
+ rg.forEach(function(e){e.oninput=upd;});
+ document.getElementById('gmAvg').onclick=function(){load(true);};
+ document.getElementById('gmUp').onclick=function(){load(false);};
+ load(true);
 })();
 // 6) Deriva del modelo y re-entrenamiento
 (function(){

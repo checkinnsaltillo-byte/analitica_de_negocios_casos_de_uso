@@ -527,3 +527,7 @@ body[data-theme=dark] .brand .lg-d{display:none}body[data-theme=dark] .brand .lg
 .evid.wide .shots.n2{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 .evid.wide .read{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px}
 .evid.wide .read .lbl{grid-column:1/-1}.evid.wide .read .warn{grid-column:1/-1}
+
+.fm.sm.xs{font-size:17px;gap:4px 5px}.fm.sm.xs small{font-size:13px}
+.gdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:6px;vertical-align:-1px;background:#7C5CFF}
+.gmfit{margin-top:12px;font-size:13px;line-height:1.45;color:var(--mute)}.gmfit b{color:var(--ink);font-weight:500}
