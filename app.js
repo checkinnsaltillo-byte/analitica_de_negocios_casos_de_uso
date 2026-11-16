@@ -52,7 +52,7 @@ var CASES=[
   m:[['Coeficiente de Gower','Mide qué tan parecidas son dos tiendas aunque sus variables sean numéricas y categóricas.'],['Escalamiento multidimensional','Convierte las similitudes en un mapa donde la cercanía significa parecido.'],['Agrupamiento k-means','Separa las tiendas en grupos (aquí, 5 segmentos).'],['Modelo de pronóstico por grupo','Cada segmento tiene su propio modelo de ventas.']],
   k:[[2943,'','tiendas de referencia'],[5,'','segmentos de tiendas'],[12,'meses','de historial por tienda']],
   l:'Una cifra de ventas es una estimación: se comunica con su margen de error, no como certeza.',
-  ev:{t:'Evidencia: el mapa de similitud y la predicción',imgs:[['pred-mds','Cada punto es una tienda; cercanía = parecido'],['pred-cancun','Ventas reales vs. predichas (plaza Cancún)']],
+  ev:{t:'Evidencia: el mapa de similitud y la predicción',imgs:[['svg:mds','Cada punto es una tienda; cercanía = parecido (ilustración)'],['svg:fit','Ventas reales vs. estimadas y aciertos por clase (ilustración)']],
    r:['Las variables mezcladas se convierten en «distancias» entre tiendas.','Los puntos cercanos se agrupan en segmentos, cada uno con su modelo.','Cuanto más cerca de la diagonal, mejor la predicción: error de clasificación de 0 % en Cancún y 4.8 % en Acapulco.'],
    w:'Es muy sensible a datos inconsistentes de la tienda nueva: si sus variables no son coherentes, la predicción se desvía.'}},
  {id:'k3',b:['pin','target','map'],bi:1,n:3,t:'Competencia y zonas de influencia',em:'competencia',sub:'¿Qué tan competido está el mercado en cada zona?',
@@ -166,6 +166,38 @@ function mirror(){
  '<div class="lbl" style="margin-top:8px">VENTAS MENSUALES ESPERADAS</div><div class="big2"><span id="mrY">—</span><small> miles de pesos</small></div><div class="ci"><div class="cib"><div id="mrBar"></div></div><span id="mrTxt"></span></div>'+
  '<ol class="mrsteps"><li><b>Describe</b> el sitio: tipo, entorno, ubicación.</li><li><b>Busca</b> las sucursales más parecidas (distancia de Gower).</li><li><b>Mira</b> cuánto vendieron esas tiendas «espejo».</li><li><b>Estima</b> con su promedio y su rango, no con una sola cifra.</li></ol></div></div></div></section>';
 }
+
+var EVSVG={
+ mds:function(){
+  var s=3,r=function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296;},g=function(){return (r()+r()+r()-1.5)/1.5;};
+  var X=function(v){return 44+(v+0.2)/0.7*380;},Y=function(v){return 232-(v+0.25)/0.5*212;},h='<rect width="460" height="270" fill="#fff"/>',i,t;
+  for(t=-0.2;t<=0.5001;t+=0.1)h+='<line x1="'+X(t)+'" y1="20" x2="'+X(t)+'" y2="232" stroke="#eef1f7"/><text x="'+X(t)+'" y="248" font-size="10" fill="#667085" text-anchor="middle">'+t.toFixed(1)+'</text>';
+  for(t=-0.25;t<=0.2501;t+=0.05)h+='<line x1="44" y1="'+Y(t)+'" x2="424" y2="'+Y(t)+'" stroke="#eef1f7"/><text x="38" y="'+(Y(t)+3)+'" font-size="10" fill="#667085" text-anchor="end">'+t.toFixed(2)+'</text>';
+  h+='<rect x="44" y="20" width="380" height="212" fill="none" stroke="#cfd8e8"/>';
+  function blob(cx,cy,sx,sy,n,col){for(var k=0;k<n;k++)h+='<circle cx="'+X(cx+g()*sx)+'" cy="'+Y(cy+g()*sy)+'" r="2.2" fill="'+col+'" opacity=".7"/>';}
+  blob(-0.09,0.105,0.06,0.09,260,'#0B1F44');blob(-0.09,-0.085,0.07,0.07,260,'#0B1F44');blob(-0.08,0.0,0.05,0.06,70,'#0B1F44');blob(-0.04,0.14,0.05,0.025,40,'#0B1F44');
+  blob(0.22,0.07,0.07,0.06,260,'#F26B5B');blob(0.15,-0.13,0.05,0.06,220,'#F26B5B');blob(0.17,-0.02,0.025,0.1,70,'#F26B5B');blob(0.1,-0.17,0.03,0.04,15,'#F26B5B');
+  h+='<rect x="236" y="26" width="182" height="40" rx="4" fill="#fff" stroke="#cfd8e8"/><circle cx="248" cy="39" r="3.2" fill="#F26B5B"/><text x="258" y="42" font-size="10.5" fill="#243350">tiendas de la plaza Norte</text><circle cx="248" cy="56" r="3.2" fill="#0B1F44"/><text x="258" y="59" font-size="10.5" fill="#243350">tiendas de la plaza Sur</text>';
+  h+='<text x="234" y="264" font-size="10.5" fill="#667085" text-anchor="middle">Dimensión 1</text><text x="10" y="126" font-size="10.5" fill="#667085" transform="rotate(-90 10 126)" text-anchor="middle">Dimensión 2</text>';
+  return '<svg viewBox="0 0 460 270" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">'+h+'</svg>';
+ },
+ fit:function(){
+  var s=9,r=function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296;},h='<rect width="640" height="290" fill="#fff"/>',i,t;
+  var X=function(v){return 62+(v-300)/1200*250;},Y=function(v){return 232-(v-350)/1150*190;};
+  h+='<text x="190" y="18" font-size="12.5" font-weight="600" text-anchor="middle" fill="#0B1F44">Ajuste en la plaza A</text><rect x="62" y="32" width="250" height="200" fill="none" stroke="#cfd8e8"/>';
+  [400,600,800,1000,1200,1400].forEach(function(v){h+='<line x1="62" y1="'+Y(v)+'" x2="312" y2="'+Y(v)+'" stroke="#eef1f7"/><text x="56" y="'+(Y(v)+3)+'" font-size="9.5" fill="#667085" text-anchor="end">'+v+'</text>';});
+  [400,600,800,1000,1200,1400].forEach(function(v){h+='<text x="'+X(v)+'" y="246" font-size="9.5" fill="#667085" text-anchor="middle">'+v+'</text>';});
+  h+='<line x1="'+X(330)+'" y1="'+Y(330)+'" x2="'+X(1450)+'" y2="'+Y(1450)+'" stroke="#F26B5B" stroke-width="1.6"/>';
+  for(i=0;i<53;i++){var v=380+Math.pow(r(),1.3)*1060,e=v+(r()-.5)*40;h+='<circle cx="'+X(v)+'" cy="'+Y(e)+'" r="2.6" fill="#0B1F44"/>';if(i%6===0)h+='<text x="'+(X(v)+3)+'" y="'+(Y(e)-4)+'" font-size="5.5" fill="#667085">T'+(100+i)+'</text>';}
+  h+='<text x="187" y="268" font-size="11" fill="#667085" text-anchor="middle">Ventas estimadas</text><text x="14" y="132" font-size="11" fill="#667085" transform="rotate(-90 14 132)" text-anchor="middle">Ventas reales</text>';
+  var m=[[13,0,0],[0,11,0],[0,0,29]],cx=410,cy=70,w=62,hh=44;
+  h+='<text x="500" y="18" font-size="12.5" font-weight="600" text-anchor="middle" fill="#0B1F44">Error = 0</text>';
+  for(i=0;i<3;i++){h+='<text x="'+(cx+w*i+w/2+20)+'" y="'+(cy-8)+'" font-size="11" fill="#F26B5B" text-anchor="middle">'+(i+1)+'</text><text x="'+(cx+6)+'" y="'+(cy+hh*i+hh/2+4)+'" font-size="11" fill="#F26B5B" text-anchor="middle">'+(i+1)+'</text>';}
+  for(i=0;i<3;i++)for(var j=0;j<3;j++){var d=i===j;h+='<rect x="'+(cx+20+w*j)+'" y="'+(cy+hh*i)+'" width="'+w+'" height="'+hh+'" fill="'+(d?'#DCE6FF':'#fff')+'" stroke="#cfd8e8"/><text x="'+(cx+20+w*j+w/2)+'" y="'+(cy+hh*i+hh/2+5)+'" font-size="'+(d?16:13)+'" fill="'+(d?'#2F6BFF':'#98A2B3')+'" font-weight="'+(d?600:400)+'" text-anchor="middle">'+m[i][j]+'</text>';}
+  h+='<text x="500" y="244" font-size="11" fill="#667085" text-anchor="middle">Clase estimada</text><text x="372" y="140" font-size="11" fill="#667085" transform="rotate(-90 372 140)" text-anchor="middle">Clase real</text>';
+  return '<svg viewBox="0 0 640 290" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">'+h+'</svg>';
+ }
+};
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -187,7 +219,7 @@ function evid(x){
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1;font-size:32px">'+e.t+'</h2>'+
- '<div class="evid" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img"><img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'"></div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
+ '<div class="evid'+(e.imgs[0][0].indexOf('svg:')===0?' wide':'')+'" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img">'+(i[0].indexOf('svg:')===0?EVSVG[i[0].slice(4)]():'<img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'">')+'</div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
  '<div class="read"><div class="lbl rv" style="--i:4;margin:0">CÓMO SE LEE</div>'+e.r.map(function(r,i){return '<div class="rd sa rv" style="--i:'+(5+i)+'"><b>'+(i+1)+'</b><span>'+r+'</span></div>';}).join('')+
  '<div class="warn rv" style="--i:9"><b>CUIDADO</b>'+e.w+'</div></div></div></section>';
 }
