@@ -61,7 +61,7 @@ var CASES=[
   m:[['Polígonos de influencia','Zonas alrededor de cada tienda: radio de 500 m, tiempo de traslado (isócronas) o AGEB del INEGI.'],['Índice Herfindahl-Hirschman','Mide concentración: más alto = menos competencia.'],['Contrastes de hipótesis y ANOVA','Comprueban si las diferencias entre zonas son reales o casualidad.'],['Regresión y machine learning','Cuantifican qué factores pesan más y con qué capacidad predictiva.']],
   k:[[46,'','redes de competidores'],[22790,'','tiendas analizadas'],[80528,'','ubicaciones únicas']],
   l:'Un índice resume la competencia en un número; hay que explicar qué mide y qué no.',
-  ev:{t:'Evidencia: concentración y zonas de influencia',imgs:[['comp-hhi','Índice HHI: sin y con presencia de la tienda'],['comp-isocronas','Isócronas: zonas por minutos de traslado']],
+  ev:{t:'Evidencia: concentración y zonas de influencia',imgs:[['map:comp','Coropleta (concentración por zona) y teselación de Voronoi (un polígono por sucursal) · datos simulados'],['map:zonas','Isócronas (minutos de traslado) y radios de influencia · datos simulados']],
    r:['A mayor HHI, más concentrado el mercado (menos competencia).','La zona de influencia puede ser un círculo, un tiempo de traslado o un AGEB.','La oportunidad aparece donde la población tiene una sola alternativa.'],
    w:'Las distancias en línea recta ignoran calles, barreras y movilidad real.'}},
  {id:'k4',b:['people','doc','scale'],bi:2,n:4,t:'Impacto socioeconómico de una empresa',em:'socioeconómico',sub:'Derrama, empleo, impuestos y pequeños comercios',
@@ -167,6 +167,49 @@ function mirror(){
  '<ol class="mrsteps"><li><b>Describe</b> el sitio: tipo, entorno, ubicación.</li><li><b>Busca</b> las sucursales más parecidas (distancia de Gower).</li><li><b>Mira</b> cuánto vendieron esas tiendas «espejo».</li><li><b>Estima</b> con su promedio y su rango, no con una sola cifra.</li></ol></div></div></div></section>';
 }
 
+
+function MAPS2(kinds){
+ var PW=316,PH=215;
+ function rng(s){return function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296;};}
+ function clip(poly,nx,ny,c){var out=[],i,n=poly.length;for(i=0;i<n;i++){var p=poly[i],q=poly[(i+1)%n],dp=nx*p[0]+ny*p[1]-c,dq=nx*q[0]+ny*q[1]-c;if(dp<=0)out.push(p);if((dp<0&&dq>0)||(dp>0&&dq<0)){var t=dp/(dp-dq);out.push([p[0]+t*(q[0]-p[0]),p[1]+t*(q[1]-p[1])]);}}return out;}
+ function vor(S){return S.map(function(s,i){var poly=[[0,0],[PW,0],[PW,PH],[0,PH]];S.forEach(function(o,j){if(i===j||!poly.length)return;var nx=o[0]-s[0],ny=o[1]-s[1],mx=(o[0]+s[0])/2,my=(o[1]+s[1])/2;poly=clip(poly,nx,ny,nx*mx+ny*my);});return poly;});}
+ function pts(poly){return poly.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ');}
+ function spread(r,n,min,m){var S=[],t=0;while(S.length<n&&t<4000){t++;var p=[m+r()*(PW-2*m),m+r()*(PH-2*m)];if(S.every(function(q){return Math.hypot(q[0]-p[0],q[1]-p[1])>=min;}))S.push(p);}return S;}
+ function ramp(v,cs){var f=Math.min(.999,Math.max(0,v))*(cs.length-1),i=Math.floor(f),t=f-i,h=function(c,k){return parseInt(c.substr(1+2*k,2),16);};return 'rgb('+[0,1,2].map(function(k){return Math.round(h(cs[i],k)*(1-t)+h(cs[i+1],k)*t);}).join(',')+')';}
+ function chip(t){return '<g><rect x="8" y="8" width="'+(t.length*5.6+16)+'" height="19" rx="9.5" fill="#fff" opacity=".94"/><text x="16" y="21" font-size="10.5" font-weight="600" fill="#0B1F44">'+t+'</text></g>';}
+ function road(r){var h='<rect width="'+PW+'" height="'+PH+'" fill="#EEF2F8"/>',i;for(i=0;i<7;i++){var y=r()*PH,y2=r()*PH;h+='<path d="M0 '+y+' L'+PW+' '+y2+'" stroke="#fff" stroke-width="'+(2+r()*3)+'" opacity=".85"/>';}for(i=0;i<6;i++){var x=r()*PW,x2=r()*PW;h+='<path d="M'+x+' 0 L'+x2+' '+PH+'" stroke="#fff" stroke-width="'+(2+r()*3)+'" opacity=".85"/>';}return h;}
+ function branch(p,c){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5.2" fill="'+(c||'#2F6BFF')+'" stroke="#fff" stroke-width="1.8"/>';}
+ function comp(p){return '<rect x="'+(p[0]-3)+'" y="'+(p[1]-3)+'" width="6" height="6" fill="#0B1F44" stroke="#fff" stroke-width="1" transform="rotate(45 '+p[0]+' '+p[1]+')"/>';}
+ var P={
+  coropleta:function(){var r=rng(11),S=spread(r,46,26,4),cs=['#FFF4DC','#F8C46A','#F26B5B','#B4301F'],G=[[70,60,70],[240,150,80],[160,110,60]],h='',V=vor(S);
+   S.forEach(function(s,i){var v=0;G.forEach(function(g){v+=Math.exp(-(Math.pow(s[0]-g[0],2)+Math.pow(s[1]-g[1],2))/(2*g[2]*g[2]));});v=Math.min(1,v*.5+r()*.22);h+='<polygon points="'+pts(V[i])+'" fill="'+ramp(v,cs)+'" stroke="#fff" stroke-width="1.2"/>';});
+   var B=spread(r,12,34,10);B.forEach(function(p){h+=branch(p);});for(var i=0;i<30;i++)h+=comp([8+r()*(PW-16),8+r()*(PH-16)]);
+   h+=chip('Coropleta: concentración (HHI)')+'<g transform="translate(10 190)"><rect width="140" height="18" rx="9" fill="#fff" opacity=".94"/><defs><linearGradient id="gr1"><stop offset="0" stop-color="#FFF4DC"/><stop offset=".5" stop-color="#F26B5B"/><stop offset="1" stop-color="#B4301F"/></linearGradient></defs><rect x="8" y="6" width="42" height="6" rx="3" fill="url(#gr1)"/><text x="55" y="13" font-size="8.5" fill="#475467">baja → alta</text><circle cx="108" cy="9" r="3.6" fill="#2F6BFF"/><text x="114" y="12.5" font-size="8.5" fill="#475467">propia</text></g><g transform="translate(152 190)"><rect width="64" height="18" rx="9" fill="#fff" opacity=".94"/><rect x="8" y="6.5" width="5" height="5" fill="#0B1F44" transform="rotate(45 10.5 9)"/><text x="18" y="12.5" font-size="8.5" fill="#475467">competidor</text></g>';
+   return h;},
+  voronoi:function(){var r=rng(23),S=spread(r,10,52,22),V=vor(S),C=[],cnt=S.map(function(){return 0;}),h='',i;
+   for(i=0;i<30;i++){var p=[8+r()*(PW-16),8+r()*(PH-16)];C.push(p);var b=0,bd=1e9;S.forEach(function(s,j){var d=Math.hypot(s[0]-p[0],s[1]-p[1]);if(d<bd){bd=d;b=j;}});cnt[b]++;}
+   var mx=Math.max.apply(null,cnt)||1;
+   S.forEach(function(s,j){h+='<polygon points="'+pts(V[j])+'" fill="'+ramp(cnt[j]/mx,['#EAF1FF','#9DB9FF','#2F6BFF'])+'" fill-opacity=".85" stroke="#0B1F44" stroke-width="1.3"/>';});
+   C.forEach(function(p){h+=comp(p);});
+   S.forEach(function(s,j){h+=branch(s,'#0B1F44');h+='<text x="'+(s[0]+8)+'" y="'+(s[1]+4)+'" font-size="10.5" font-weight="700" fill="#0B1F44" stroke="#fff" stroke-width="3" paint-order="stroke">'+cnt[j]+'</text>';});
+   h+=chip('Voronoi: un polígono por sucursal')+'<g transform="translate(10 190)"><rect width="206" height="18" rx="9" fill="#fff" opacity=".94"/><circle cx="14" cy="9" r="4" fill="#0B1F44"/><text x="22" y="12.5" font-size="8.5" fill="#475467">sucursal</text><rect x="66" y="6.5" width="5" height="5" fill="#0B1F44" transform="rotate(45 68.5 9)"/><text x="76" y="12.5" font-size="8.5" fill="#475467">competidor</text><text x="126" y="12.5" font-size="8.5" fill="#475467">n = competidores dentro</text></g>';
+   return h;},
+  isocronas:function(){var r=rng(5),h=road(r),cx=150,cy=118,i,k,cols=['#FFE9C2','#FFD08A','#F9A66B','#F26B5B','#B4301F'],txt=['25','20','15','10','5'];
+   for(k=5;k>=1;k--){var d='';for(i=0;i<=72;i++){var t=i/72*Math.PI*2,rr=(1+.38*Math.cos(2*t-.5)+.2*Math.cos(3*t+1)+.12*Math.cos(5*t))*(1+.06*Math.sin(7*t+k))*k*21;d+=(i?'L':'M')+(cx+rr*Math.cos(t)).toFixed(1)+' '+(cy+rr*Math.sin(t)).toFixed(1);}
+    h+='<path d="'+d+'Z" fill="'+cols[5-k]+'" fill-opacity=".78" stroke="#fff" stroke-width="1.4"/>';}
+   for(k=1;k<=5;k++){var t0=-.35,rr0=(1+.38*Math.cos(2*t0-.5)+.2*Math.cos(3*t0+1)+.12*Math.cos(5*t0))*k*21;h+='<text x="'+(cx+rr0*Math.cos(t0)-8)+'" y="'+(cy+rr0*Math.sin(t0)+3)+'" font-size="8.5" font-weight="600" fill="#0B1F44">'+k*5+'′</text>';}
+   h+=branch([cx,cy])+chip('Isócronas: minutos de traslado');return h;},
+  radios:function(){var r=rng(17),h=road(r),S=[[78,84],[148,120],[226,88],[120,176],[232,168]],i;
+   S.forEach(function(s,i){h+='<circle cx="'+s[0]+'" cy="'+s[1]+'" r="62" fill="#F5A524" fill-opacity=".16" stroke="#F5A524" stroke-width="1.2" stroke-dasharray="4 3"/>';});
+   S.forEach(function(s){h+='<circle cx="'+s[0]+'" cy="'+s[1]+'" r="31" fill="#2F6BFF" fill-opacity=".2" stroke="#2F6BFF" stroke-width="1.4"/>';});
+   S.forEach(function(s){h+=branch(s);});
+   h+='<text x="'+(S[0][0]+33)+'" y="'+(S[0][1]-33)+'" font-size="9" fill="#2F6BFF" font-weight="600">1 km</text><text x="'+(S[0][0]-60)+'" y="'+(S[0][1]+62)+'" font-size="9" fill="#B7791F" font-weight="600">2 km</text>';
+   h+=chip('Radios: 1 km y 2 km')+'<g transform="translate(10 190)"><rect width="150" height="18" rx="9" fill="#fff" opacity=".94"/><text x="10" y="12.5" font-size="8.5" fill="#475467">Donde se traslapan: se canibalizan</text></g>';return h;}
+ };
+ var out='<svg viewBox="0 0 '+(PW*2+8)+' '+PH+'" style="width:100%;height:100%" preserveAspectRatio="xMidYMid slice"><defs><clipPath id="cpA"><rect width="'+PW+'" height="'+PH+'" rx="10"/></clipPath></defs>';
+ kinds.forEach(function(k,i){out+='<g transform="translate('+(i*(PW+8))+' 0)" clip-path="url(#cpA)">'+P[k]()+'</g>';});
+ return out+'</svg>';
+}
 var EVSVG={
  mds:function(){
   var s=3,r=function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296;},g=function(){return (r()+r()+r()-1.5)/1.5;};
@@ -197,6 +240,9 @@ var EVSVG={
   h+='<text x="500" y="244" font-size="11" fill="#667085" text-anchor="middle">Clase estimada</text><text x="372" y="140" font-size="11" fill="#667085" transform="rotate(-90 372 140)" text-anchor="middle">Clase real</text>';
   return '<svg viewBox="0 0 640 290" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">'+h+'</svg>';
  }
+ ,comp:function(){return MAPS2(['coropleta','voronoi']);},
+ zonas:function(){return MAPS2(['isocronas','radios']);}
+
 };
 
 var GM={G:[['Zona comercial central','#7C5CFF',[22,16,30,150,55],80,[5.5,12,1.8,1.2,-2.6]],['Colonia residencial','#2F6BFF',[18,5,10,40,35],90,[9,6,1.2,2.5,-2.2]],['Periferia en crecimiento','#F5A524',[8,2,12,15,20],60,[10,5,4.5,3,-3]],['Corredor vial','#14A39A',[12,4,38,60,40],70,[4,6,5,2,-2]],['Zona turística','#F26B5B',[10,18,20,110,60],50,[3,16,2,2.2,-3.5]]],
@@ -232,7 +278,7 @@ function evid(x){
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1;font-size:32px">'+e.t+'</h2>'+
- '<div class="evid'+(e.imgs[0][0].indexOf('svg:')===0?' wide':'')+'" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img">'+(i[0].indexOf('svg:')===0?EVSVG[i[0].slice(4)]():'<img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'">')+'</div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
+ '<div class="evid'+(e.imgs[0][0].indexOf('svg:')===0?' wide':'')+'" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img">'+(/^(svg|map):/.test(i[0])?EVSVG[i[0].split(':')[1]]():'<img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'">')+'</div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
  '<div class="read"><div class="lbl rv" style="--i:4;margin:0">CÓMO SE LEE</div>'+e.r.map(function(r,i){return '<div class="rd sa rv" style="--i:'+(5+i)+'"><b>'+(i+1)+'</b><span>'+r+'</span></div>';}).join('')+
  '<div class="warn rv" style="--i:9"><b>CUIDADO</b>'+e.w+'</div></div></div></section>';
 }
