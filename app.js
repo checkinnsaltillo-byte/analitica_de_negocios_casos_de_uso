@@ -257,6 +257,22 @@ function mirror2(){
  '<div class="scn" style="margin-top:8px"><button class="btn alt" id="gmAvg">Tienda promedio del grupo</button><button class="btn alt" id="gmUp">Zona más concurrida (+30 %)</button></div><div class="gmfit" id="gmFit"></div></div>'+
  '<div class="panel"><div class="lbl">VENTAS PRONOSTICADAS PARA ESTE GRUPO</div><div class="big2"><span id="gmY">—</span><small> miles de pesos / mes</small><em id="gmD"></em></div><div class="ci"><div class="cib"><div id="gmBar"></div></div><span id="gmTxt"></span></div><div class="lbl" style="margin-top:14px">CONTRIBUCIÓN DE CADA VARIABLE</div><div id="gmWf"></div></div></div></div></section>';
 }
+
+function impacto(){
+ var B=BLOCKS[2];
+ function bar(l,v,w,col){return '<div class="ibar"><span>'+l+'</span><div class="t"><div class="f" style="width:'+w+'%;background:'+col+'"></div></div><b>'+v+'</b></div>';}
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 4 · Impactos positivos" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 4 · Impactos positivos</div>'+thread(2)+
+ '<h2 class="rv" style="--i:1">Lo que la empresa <em>aporta</em> al territorio</h2><p class="lead rv" style="--i:2">Resultados del estudio (datos 2014): empleo, recaudación, inclusión financiera y presencia en el país.</p>'+
+ '<div class="body" style="top:196px;bottom:44px"><div class="imp">'+
+ '<div class="ipn rv" style="--c:#14A39A;--i:3"><div class="ih"><i>👥</i><b>Empleo</b></div><div class="bigr"><span data-count="77199">0</span><small>empleos directos en tienda</small></div>'+
+ '<div class="chips2"><span><b data-count="113615">0</b> personas beneficiadas en total <em>(0.47 adicionales por empleado)</em></span><span><b>1.6</b> salarios mínimos del comercio <em>(≈ 2 mínimos nacional)</em></span><span><b>≈ 5 %</b> de los empleos del subsector «Abarrotes y alimentos»</span></div></div>'+
+ '<div class="ipn rv" style="--c:#2F6BFF;--i:4"><div class="ih"><i>🏛️</i><b>Recaudación de impuestos</b></div><div class="bigr"><span>33</span><small>× el programa federal para 6,000 «changarros» ($85 M)</small></div>'+
+ bar('Programa federal','1×',3,'#9DB9FF')+bar('Impuestos pagados','33×',100,'#2F6BFF')+bar('Ingresos del subsector «Abarrotes y alimentos»','7×',21,'#14A39A')+
+ '<div class="chips2"><span><b>½</b> del presupuesto de un estado (Baja California Sur)</span><span>Pagaría el salario mínimo a <b>97 %</b> de los trabajadores del subsector «Bebidas, hielo y tabaco» por un año</span></div></div>'+
+ '<div class="ipn rv" style="--c:#7C5CFF;--i:5"><div class="ih"><i>💳</i><b>Inclusión financiera</b></div><p class="ip">Depósitos, retiros y pagos al alcance de quien vive lejos de una sucursal bancaria.</p><div class="chips2"><span>Cobertura de <b>corresponsalías</b></span><span>Cobertura de <b>terminales (TPV)</b></span><span>Municipios con presencia</span></div><p class="ip2">Se mide con indicadores propios y fuentes como la ENIF y la CNBV.</p></div>'+
+ '<div class="ipn rv" style="--c:#F5A524;--i:6"><div class="ih"><i>🗺️</i><b>Presencia en el país</b></div><div class="bigr"><span data-count="767">0</span><small>municipios, una tercera parte del total</small></div><div class="chips2"><span><b>+10 %</b> anual en tiendas</span><span><b>1.2</b> municipios nuevos cada mes</span><span><b>1.5 %</b> de los negocios del subsector</span></div></div>'+
+ '</div></div><div class="strip rv" style="--i:7"><b>Y LOS PEQUEÑOS COMERCIOS</b><span>No hay efecto directo; donde la economía va bien, los negocios chicos mueren más lento.</span></div></section>';
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -290,7 +306,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();
+ stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
