@@ -348,7 +348,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();
+ stream+=ficha(x)+(x.id==='k4'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
