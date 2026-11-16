@@ -199,7 +199,7 @@ mount.insertAdjacentHTML('beforebegin',stream);mount.remove();
 
 var ICMAP={'¿Cómo vender más?':'trend','¿A qué precio?':'tag','¿Dónde abrir?':'pin','¿Qué puede salir mal?':'shield','¿Qué pasará?':'bars','¿Qué impacto dejamos?':'leaf',
  'En una crisis':'shield','Al reportar impacto':'doc','Ante autoridades':'scale','Al planear':'bars',
- 'Series de tiempo':'trend','Modelos lineales y Machine Learning':'line','Clasificación':'split','Segmentación':'cluster','Geoespacial':'map','Texto y lenguaje':'text','Optimización':'target','Escenarios':'q',
+ 'Series de tiempo':'trend','Modelos predictivos (modelos lineales, machine learning)':'line','Clasificación':'split','Segmentación':'cluster','Geoespacial':'map','Texto y lenguaje':'text','Optimización':'target','Escenarios':'q',
  'Introducción':'eye','Enfoque analítico':'target','Casos de uso':'map','Visualizar y comunicar':'bars','El reto de los datos':'cluster','Cierre':'flag',
  'Pregunta primero':'q','Hipótesis explícita':'doc','Incertidumbre honesta':'scale','Comunicar con rigor':'mega',
  'Oficiales':'doc','Del sector':'people','Encuestas':'text','Digitales':'eye','Geoespaciales':'map'};
