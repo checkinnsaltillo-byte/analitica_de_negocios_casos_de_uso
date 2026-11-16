@@ -462,3 +462,8 @@ input[type=range]{flex:1;accent-color:var(--blue)}
 .etag{color:#fff;font-size:11px;letter-spacing:.12em;font-weight:600;padding:4px 10px;border-radius:99px}
 .etxt{font-size:14px;line-height:1.45;color:#475467}
 .eform{margin-top:8px;font-size:13px;color:var(--blue);font-family:ui-monospace,Menlo,monospace}
+
+.cn{display:inline-flex;align-items:center;gap:9px}
+.cn img{width:42px;height:42px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(16,24,40,.18)}
+.pbar>span.cn{width:auto;min-width:118px}
+.pbar:has(.cn){grid-template-columns:140px 1fr 54px !important}

@@ -348,17 +348,17 @@
     <div class="panel">
       <div class="lbl">TRES CEREALES · MUEVE EL PRECIO Y LA CALIDAD DE B</div>
       <table class="utbl"><thead><tr><th>Opción</th><th>Precio</th><th>Calidad</th><th>Marca</th><th>Utilidad</th></tr></thead>
-        <tbody><tr id="uA"><td>A</td><td>3</td><td>4</td><td>0</td><td class="u">–2.0</td></tr><tr id="uB"><td>B</td><td id="vPB">2</td><td id="vQB">5</td><td>1</td><td class="u">1.5</td></tr><tr id="uC"><td>C</td><td>4</td><td>5</td><td>1</td><td class="u">–1.5</td></tr></tbody></table>
+        <tbody><tr id="uA"><td><span class="cn"><img src="assets/ph-cA.jpg" alt="">A</span></td><td>3</td><td>4</td><td>0</td><td class="u">–2.0</td></tr><tr id="uB"><td><span class="cn"><img src="assets/ph-cB.jpg" alt="">B</span></td><td id="vPB">2</td><td id="vQB">5</td><td>1</td><td class="u">1.5</td></tr><tr id="uC"><td><span class="cn"><img src="assets/ph-cC.jpg" alt="">C</span></td><td>4</td><td>5</td><td>1</td><td class="u">–1.5</td></tr></tbody></table>
       <div class="row2"><label>Precio de B</label><input type="range" id="sP" min="1" max="8" step="0.5" value="2"></div>
       <div class="row2"><label>Calidad de B</label><input type="range" id="sQ" min="1" max="8" step="0.5" value="5"></div>
-      <p style="font-size:12.5px;color:var(--mute);line-height:1.5;margin-top:6px">Utilidad = –1.5·precio + 0.625·calidad + 1.375·marca. Coeficientes derivados de los valores del ejemplo.</p>
+      <div class="lbl" style="margin-top:12px">CURVA DE UTILIDAD · U = –1.5·precio + 0.625·calidad + 1.375·marca</div><svg id="ucSvg" viewBox="0 0 560 190" style="width:100%;height:178px"></svg>
     </div>
     <div class="panel">
       <div class="lbl">PROBABILIDAD DE QUE CADA OPCIÓN SEA ELEGIDA</div>
-      <div class="pbar" style="--c:var(--blue)"><span>Cereal A</span><div class="t"><div class="f" id="pA"></div></div><b id="tA"></b></div>
-      <div class="pbar" style="--c:var(--teal)"><span>Cereal B</span><div class="t"><div class="f" id="pB"></div></div><b id="tB"></b></div>
-      <div class="pbar" style="--c:var(--amber)"><span>Cereal C</span><div class="t"><div class="f" id="pC"></div></div><b id="tC"></b></div>
-      <div style="margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--bg);font-size:14px;line-height:1.5"><b style="font-weight:500">P(j) = e<sup>U<sub>j</sub></sup> / Σ e<sup>U<sub>k</sub></sup></b> &nbsp;(logit multinomial). Las probabilidades <b style="font-weight:500">siempre suman 100%</b>: sube una y bajan las demás.</div>
+      <div class="pbar" style="--c:var(--blue)"><span class="cn"><img src="assets/ph-cA.jpg" alt="">Cereal A</span><div class="t"><div class="f" id="pA"></div></div><b id="tA"></b></div>
+      <div class="pbar" style="--c:var(--teal)"><span class="cn"><img src="assets/ph-cB.jpg" alt="">Cereal B</span><div class="t"><div class="f" id="pB"></div></div><b id="tB"></b></div>
+      <div class="pbar" style="--c:var(--amber)"><span class="cn"><img src="assets/ph-cC.jpg" alt="">Cereal C</span><div class="t"><div class="f" id="pC"></div></div><b id="tC"></b></div>
+      <div class="lbl" style="margin-top:12px">PROBABILIDAD DE ELEGIR B SEGÚN SU PRECIO</div><svg id="pcSvg" viewBox="0 0 560 150" style="width:100%;height:140px"></svg><div style="margin-top:8px;padding:10px 14px;border-radius:12px;background:var(--bg);font-size:13px;line-height:1.45"><b style="font-weight:500">P(j) = e<sup>U<sub>j</sub></sup> / Σ e<sup>U<sub>k</sub></sup></b> &nbsp;(logit multinomial). Las probabilidades <b style="font-weight:500">siempre suman 100%</b>: sube una y bajan las demás.</div>
     </div>
   </div></div>
 </section>
