@@ -534,3 +534,4 @@ body[data-theme=dark] .brand .lg-d{display:none}body[data-theme=dark] .brand .lg
 
 .gmpick{display:flex;align-items:center;gap:10px;margin:8px 0 10px;font-size:11px;letter-spacing:.12em;font-weight:600;color:var(--mute)}
 .gmpick .gdot{margin:0}.gmpick .cbx{font-size:15px;padding:9px 34px 9px 14px;border:1.5px solid var(--blue);letter-spacing:0;font-weight:500}
+.kpis:has(.kpi:nth-child(2):last-child){grid-template-columns:repeat(2,1fr)}

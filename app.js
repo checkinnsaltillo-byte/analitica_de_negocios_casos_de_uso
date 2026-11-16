@@ -50,7 +50,7 @@ var CASES=[
   q:'¿Cuánto venderá una tienda que todavía no existe?',
   h:'Las tiendas parecidas en tipo, entorno y ubicación venden parecido, así que se puede estimar por similitud.',
   m:[['Coeficiente de Gower','Mide qué tan parecidas son dos tiendas aunque sus variables sean numéricas y categóricas.'],['Escalamiento multidimensional','Convierte las similitudes en un mapa donde la cercanía significa parecido.'],['Agrupamiento k-means','Separa las tiendas en grupos (aquí, 5 segmentos).'],['Modelo de pronóstico por grupo','Cada segmento tiene su propio modelo de ventas.']],
-  k:[[2943,'','tiendas de referencia'],[5,'','segmentos de tiendas'],[12,'meses','de historial por tienda']],
+  k:[[14,'meses','Periodo de Recuperación de la Inversión (PRI)'],[5,'','segmentos de tiendas identificados']],
   l:'Una cifra de ventas es una estimación: se comunica con su margen de error, no como certeza.',
   ev:{t:'Evidencia: el mapa de similitud y la predicción',imgs:[['svg:mds','Cada punto es una tienda; cercanía = parecido (ilustración)'],['svg:fit','Ventas reales vs. estimadas y aciertos por clase (ilustración)']],
    r:['Las variables mezcladas se convierten en «distancias» entre tiendas.','Los puntos cercanos se agrupan en segmentos, cada uno con su modelo.','Cuanto más cerca de la diagonal, mejor la predicción: error de clasificación de 0 % en Cancún y 4.8 % en Acapulco.'],
