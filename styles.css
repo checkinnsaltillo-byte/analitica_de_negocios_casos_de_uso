@@ -473,3 +473,5 @@ input[type=range]{flex:1;accent-color:var(--blue)}
 body[data-theme=dark] .brand .lg-d{display:none}body[data-theme=dark] .brand .lg-w{display:block}
 .brand .bt{display:flex;align-items:center;gap:10px;margin-left:6px;padding-left:16px;border-left:1px solid rgba(120,130,150,.35)}
 @media (max-width:1100px){.brand .bt{display:none}}
+
+.mapfig::after{display:none}.mapfig{min-height:150px}
