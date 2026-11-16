@@ -148,12 +148,23 @@ function conjoint(){
  '<h2 class="rv" style="--i:1">Por qué usar <em>conjoint</em></h2><p class="lead rv" style="--i:2">En lugar de preguntar «¿qué es importante para ti?», se observa qué eliges cuando todo cambia a la vez.</p>'+
  '<div class="body" style="top:200px;display:grid;grid-template-columns:1.5fr 1fr;gap:24px"><div class="cards" style="grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr);gap:14px">'+
  adv.map(function(x,i){return '<div class="card sm sa rv" style="--c:'+x[2]+';--i:'+(3+i)+'"><div class="n">0'+(i+1)+'</div><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>';}).join('')+'</div>'+
- '<div class="panel rv" style="--i:5"><div class="lbl">DISEÑO ORTOGONAL · 9 PRODUCTOS, 4 ATRIBUTOS</div><div id="orthoMx"></div><p class="orthoTx" id="orthoTx"></p></div></div></section>';
+ '<div class="panel rv" style="--i:5"><div class="lbl">DISEÑO ORTOGONAL · 9 PRODUCTOS, 4 ATRIBUTOS</div><div id="orthoMx"></div><p class="orthoTx" id="orthoTx"></p><div class="lbl" style="margin-top:16px">ASÍ SE LE PRESENTA AL ENCUESTADO</div><div class="excard"><div class="ph"><img src="assets/ph-cA.jpg" alt=""></div><div class="bd"><h4>Producto 1</h4><div class="g"><div><span>Precio</span><b>$38</b></div><div><span>Marca</span><b>Local</b></div><div><span>Ingrediente</span><b>Clásico</b></div><div><span>Empaque</span><b>Bolsa</b></div></div></div><div class="pick">¿Lo comprarías?<i>Elegir</i></div></div></div></div></section>';
  var s2=conjHead('Conjoint: simulador','Simulador conjoint')+
  '<h2 class="rv" style="--i:1">Elige y descubre tu <em>perfil</em></h2><p class="lead rv" style="--i:2">Seis rondas de tres productos que cambian en todos sus atributos a la vez. Tus elecciones se traducen en un perfil.</p>'+
  '<div class="body" style="top:200px"><div class="demo rv" style="--i:3;grid-template-columns:1.3fr 1fr;gap:24px"><div class="panel"><div class="selrow"><div class="lbl">RONDA <b id="cjR">1</b> DE 6 · ¿CUÁL COMPRARÍAS?</div><button class="btn alt" id="cjReset">Reiniciar</button></div><div class="cjcards" id="cjCards"></div><div class="cjprog" id="cjProg"></div></div>'+
  '<div class="panel"><div class="lbl">IMPORTANCIA DE CADA ATRIBUTO</div><div id="cjBars"></div><div class="cjperf" id="cjPerf"></div><div class="lbl" style="margin-top:12px">ORTOGONALIDAD · PRODUCTOS MOSTRADOS</div><div id="cjMx"></div></div></div></div></section>';
  return s1+s2;
+}
+
+function mirror(){
+ var B=BLOCKS[0];
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="0" data-title="Caso 2 · Tiendas espejo" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 2 · Tiendas espejo</div>'+thread(0)+
+ '<h2 class="rv" style="--i:1">Predecir con <em>tiendas espejo</em></h2><p class="lead rv" style="--i:2">Una cadena con miles de sucursales ya tiene la respuesta: las que se parecen a la nueva. Su pasado es el futuro más probable de la nueva tienda.</p>'+
+ '<div class="body" style="top:200px"><div class="demo rv" style="--i:3;grid-template-columns:1.45fr 1fr;gap:24px"><div class="panel" style="padding:14px 16px"><div class="lbl">MAPA DE SIMILITUD · CADA PUNTO ES UNA SUCURSAL (320)</div><svg id="mrSvg" viewBox="0 0 600 330" style="width:100%;height:330px"></svg></div>'+
+ '<div class="panel"><div class="selrow"><div class="lbl">TIENDA NUEVA EN</div><select id="mrSel" class="cbx"><option value="0">Zona comercial central</option><option value="1">Colonia residencial</option><option value="2">Periferia en crecimiento</option></select></div>'+
+ '<div class="row2" style="margin-top:10px"><label style="min-width:110px">Espejos (k)</label><input type="range" id="mrK" min="3" max="25" step="1" value="8"><b id="mrKv" class="xv">8</b></div>'+
+ '<div class="lbl" style="margin-top:8px">VENTAS MENSUALES ESPERADAS</div><div class="big2"><span id="mrY">—</span><small> miles de pesos</small></div><div class="ci"><div class="cib"><div id="mrBar"></div></div><span id="mrTxt"></span></div>'+
+ '<ol class="mrsteps"><li><b>Describe</b> el sitio: tipo, entorno, ubicación.</li><li><b>Busca</b> las sucursales más parecidas (distancia de Gower).</li><li><b>Mira</b> cuánto vendieron esas tiendas «espejo».</li><li><b>Estima</b> con su promedio y su rango, no con una sola cifra.</li></ol></div></div></div></section>';
 }
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
@@ -188,7 +199,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();
+ stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -587,6 +598,32 @@ document.addEventListener('mousemove',function(e){
  }
  function reset(){round=0;chosen=[];render();}
  document.getElementById('cjReset').onclick=reset;reset();
+})();
+
+// 8) Tiendas espejo
+(function(){
+ var svg=document.getElementById('mrSvg');if(!svg)return;
+ var seed=5;function r(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ function g(){return (r()+r()+r()+r()-2)/2;}
+ var CL=[[170,110,330,'#2F6BFF'],[430,90,470,'#14A39A'],[120,250,210,'#F5A524'],[300,210,610,'#7C5CFF'],[490,250,380,'#F26B5B']],S=[],i;
+ for(i=0;i<320;i++){var c=CL[Math.floor(r()*5)];S.push({x:c[0]+g()*80,y:c[1]+g()*60,v:c[2]*(1+g()*.22),c:c[3]});}
+ var CAND=[[300,195],[170,125],[470,262]],sel=document.getElementById('mrSel'),K=document.getElementById('mrK');
+ function upd(){
+  var k=+K.value,t=CAND[+sel.value];document.getElementById('mrKv').textContent=k;
+  var d=S.map(function(s,j){return [Math.hypot(s.x-t[0],s.y-t[1]),j];}).sort(function(p,q){return p[0]-q[0];}).slice(0,k),near=d.map(function(p){return S[p[1]];});
+  var vs=near.map(function(s){return s.v;}).sort(function(p,q){return p-q;}),m=vs.reduce(function(p,q){return p+q;},0)/k,lo=vs[Math.floor(k*.1)],hi=vs[Math.ceil(k*.9)-1];
+  var h='<rect width="600" height="330" fill="#F6F8FC" rx="12"/>';
+  near.forEach(function(s){h+='<line x1="'+t[0]+'" y1="'+t[1]+'" x2="'+s.x+'" y2="'+s.y+'" stroke="#0B1F44" stroke-width="1" opacity=".35"/>';});
+  var rad=d[k-1][0];h+='<circle cx="'+t[0]+'" cy="'+t[1]+'" r="'+rad+'" fill="#F26B5B" opacity=".07" stroke="#F26B5B" stroke-dasharray="4 4"/>';
+  S.forEach(function(s){var n=near.indexOf(s)>=0;h+='<circle cx="'+s.x+'" cy="'+s.y+'" r="'+(n?6:3.4)+'" fill="'+s.c+'" opacity="'+(n?1:.35)+'"'+(n?' stroke="#0B1F44" stroke-width="1.6"':'')+'/>';});
+  h+='<path d="M'+t[0]+' '+(t[1]+2)+' c-12 -14 -14 -20 -14 -26 a14 14 0 1 1 28 0 c0 6 -2 12 -14 26z" fill="#F26B5B" stroke="#fff" stroke-width="2"/><circle cx="'+t[0]+'" cy="'+(t[1]-24)+'" r="5" fill="#fff"/>';
+  h+='<text x="12" y="320" font-size="11" fill="#667085">Más cerca = más parecida en tipo, entorno y ubicación · contorno oscuro = tienda espejo</text>';
+  svg.innerHTML=h;
+  document.getElementById('mrY').textContent=Math.round(m);
+  var sc=800;var b=document.getElementById('mrBar');b.style.left=(lo/sc*100)+'%';b.style.width=Math.max(2,(hi-lo)/sc*100)+'%';
+  document.getElementById('mrTxt').textContent='Rango de las '+k+' tiendas espejo: de '+Math.round(lo)+' a '+Math.round(hi);
+ }
+ sel.onchange=upd;K.oninput=upd;upd();
 })();
 // 6) Deriva del modelo y re-entrenamiento
 (function(){
