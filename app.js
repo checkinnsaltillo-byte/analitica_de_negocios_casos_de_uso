@@ -715,6 +715,17 @@ document.addEventListener('mousemove',function(e){
  document.getElementById('gmUp').onclick=function(){load(false);};
  load(true);
 })();
+
+// 10) Maqueta del Tec de Monterrey (carga bajo demanda)
+(function(){
+ var fr=document.getElementById('maqFrame');if(!fr)return;
+ var URL_='https://www.check-inn.mx/admin/maqueta/entorno.html?v=2459&id=91793588883061';
+ var cov=document.getElementById('maqCover'),bar=document.getElementById('maqBar'),sec=document.getElementById('maq');
+ function show(){fr.src=URL_;fr.hidden=false;cov.hidden=true;bar.hidden=false;}
+ function hide(){fr.hidden=true;fr.removeAttribute('src');cov.hidden=false;bar.hidden=true;}
+ document.getElementById('maqShow').onclick=show;document.getElementById('maqHide').onclick=hide;document.getElementById('maqOpen').href=URL_;
+ new MutationObserver(function(){if(!sec.classList.contains('active')&&!fr.hidden)hide();}).observe(sec,{attributes:true,attributeFilter:['class']});
+})();
 // 6) Deriva del modelo y re-entrenamiento
 (function(){
  var svg=document.getElementById('driftSvg');if(!svg)return;
