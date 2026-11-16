@@ -721,8 +721,8 @@ document.addEventListener('mousemove',function(e){
  var fr=document.getElementById('maqFrame');if(!fr)return;
  var URL_='https://www.check-inn.mx/admin/maqueta/entorno.html?v=2459&id=91793588883061';
  var cov=document.getElementById('maqCover'),bar=document.getElementById('maqBar'),sec=document.getElementById('maq');
- function show(){fr.src=URL_;fr.hidden=false;cov.hidden=true;bar.hidden=false;}
- function hide(){fr.hidden=true;fr.removeAttribute('src');cov.hidden=false;bar.hidden=true;}
+ function show(){fr.src=URL_;fr.hidden=false;cov.hidden=true;bar.hidden=false;sec.classList.add('maqfull');}
+ function hide(){fr.hidden=true;fr.removeAttribute('src');cov.hidden=false;bar.hidden=true;sec.classList.remove('maqfull');}
  document.getElementById('maqShow').onclick=show;document.getElementById('maqHide').onclick=hide;document.getElementById('maqOpen').href=URL_;
  new MutationObserver(function(){if(!sec.classList.contains('active')&&!fr.hidden)hide();}).observe(sec,{attributes:true,attributeFilter:['class']});
 })();
