@@ -66,7 +66,7 @@ var CASES=[
    w:'Las distancias en línea recta ignoran calles, barreras y movilidad real.'}},
  {id:'k4a',b:['people','scale','doc'],bi:2,n:'4A',t:'Impacto en los changarros',em:'changarros',sub:'Enfoque microrregional: ¿desplaza la tienda al comercio de barrio?',
   q:'¿La presencia de las tiendas de la cadena desplaza a los pequeños comercios («changarros») de su zona de influencia?',
-  h:'La expansión de la cadena no desplaza directamente a los pequeños comercios: el efecto depende del entorno económico local.',
+  h:['La expansión de la cadena no desplaza directamente a los changarros: el efecto depende del entorno económico local.','El nacimiento de changarros responde al ciclo económico regional: ante el desempleo, abrir un negocio propio es una alternativa de ingreso.'],
   m:[['Polígonos de influencia (Voronoi)','Dividen el territorio según la tienda más cercana y reúnen los changarros de cada zona.'],['Índices de concentración','IC, ICE e ICEF: combinan establecimientos, empleo, gasto e ingreso.'],['Natalidad y mortalidad de negocios','Mide cuántos negocios de 1 a 10 empleados nacen y cuántos cierran.'],['Series de tiempo económicas','Relacionan esa dinámica con la economía local: actividad, inflación, compras.']],
   k:[[3,'','índices de concentración (IC, ICE, ICEF)'],[2,'','censos comparados (2009 y 2014)'],[10,'','empleados o menos: negocios estudiados']],
   l:'Un hallazgo matizado («no afecta directamente, aunque hay relación inversa de largo plazo») comunica mejor que un sí o un no.',
@@ -325,7 +325,7 @@ function ficha(x){
  '<h2 class="rv" style="--i:1">'+t+'</h2><p class="lead rv" style="--i:2">'+x.sub+'</p>'+
  '<div class="fiche"><div class="l">'+
   '<div class="pq q rv" style="--i:3"><small>PREGUNTA</small><p>'+x.q+'</p></div>'+
-  '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+x.h+'</p></div>'+
+  '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+(Array.isArray(x.h)?x.h.join('</p><p class="h2">'):x.h)+'</p></div>'+
   (x.id==='k2'?siteMap():(x.id==='k4'?ripple():'<figure class="pic kpic rv" style="--i:5" data-ph="'+x.id+'"></figure>'))+'</div>'+
  '<div class="r"><div class="rv" style="--i:5"><div class="lbl">MÉTODOS</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
  '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis">'+x.k.map(function(k){return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
