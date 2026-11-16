@@ -105,7 +105,7 @@
     <div class="root">Incrementar las ventas</div>
     <div class="branches">
       <div class="br sa" style="--c:var(--amber)" data-tip="Expansión geográfica|Decidir dónde abrir con base en competencia, población y entorno."><h4>Expansión geográfica</h4><small>ENFOQUES</small>
-        <span class="chip" data-go="k3" data-tip="Geoestadística|Mide competencia y cobertura por zonas de influencia.">Geoestadística</span><span class="chip" data-go="k6" data-tip="Modelos de flujo|Estima cuánto tránsito pasa frente a un punto.">Flujo vehicular</span><span class="chip" data-tip="Clasificación|Separa zonas de alto y bajo potencial.">Clasificación de zonas</span></div>
+        <span class="chip" data-go="k7" data-tip="Geoestadística|Analiza datos con ubicación: distancias, cobertura y patrones en el territorio.">Geoestadística</span><span class="chip" data-go="k6" data-tip="Econometría espacial|Modelos que incorporan la vecindad: lo que pasa en un lugar influye en los cercanos.">Econometría espacial</span><span class="chip" data-go="k3" data-tip="Análisis de competitividad|Mide competencia, cobertura y concentración de mercado por zona.">Análisis de competitividad</span></div>
       <div class="br sa" style="--c:var(--violet)" data-tip="Precios óptimos|Encontrar el precio que maximiza ingreso sin perder clientes."><h4>Precios óptimos</h4><small>ENFOQUES</small>
         <span class="chip" data-go="b0" data-tip="Elección discreta|Probabilidad de elegir según precio y atributos.">Elección discreta (logit)</span><span class="chip" data-go="k1" data-tip="Conjoint|Estima cuánto valora el cliente cada atributo.">Análisis conjunto</span><span class="chip" data-tip="Modelos lineales|Estiman la elasticidad: cuánto cae la demanda si sube el precio.">Modelos lineales</span></div>
       <div class="br sa" style="--c:var(--coral)" data-tip="Guerra de precios|Anticipar la reacción de competidores ante cambios de precio."><h4>Guerra de precios</h4><small>ENFOQUES</small>
@@ -118,11 +118,11 @@
 
 <section class="slide content" data-sec="2" data-title="Caja de herramientas" data-theme="light">
   <div class="crumb rv" style="--i:0">Enfoque analítico · Herramientas</div>
-  <h2 class="rv" style="--i:1">La caja de <em>herramientas</em></h2>
+  <h2 class="rv" style="--i:1">Un método para <em>cada pregunta</em></h2>
   <p class="lead rv" style="--i:2">Cada método responde a un tipo de pregunta. Clic para ir al caso donde se usa.</p>
   <div class="body" style="top:190px"><div class="cards" style="grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:16px">
     <div class="card sm sa rv" style="--c:var(--blue);--i:3;cursor:pointer" data-go="k2" data-tip="Series de tiempo|Observaciones ordenadas en el tiempo: tendencia, estacionalidad, pronóstico."><div class="n">01</div><h3>Series de tiempo</h3><p>¿Qué pasará mañana?</p></div>
-    <div class="card sm sa rv" style="--c:var(--teal);--i:4;cursor:pointer" data-go="k3" data-tip="Modelos lineales|Relacionan una variable con sus posibles causas; regresión y ANOVA."><div class="n">02</div><h3>Modelos lineales</h3><p>¿Qué factores influyen?</p></div>
+    <div class="card sm sa rv" style="--c:var(--teal);--i:4;cursor:pointer" data-go="k3" data-tip="Modelos lineales y Machine Learning|Relacionan una variable con sus causas (regresión, ANOVA) y, con aprendizaje automático, predicen patrones más complejos."><div class="n">02</div><h3>Modelos lineales y Machine Learning</h3><p>¿Qué factores influyen?</p></div>
     <div class="card sm sa rv" style="--c:var(--violet);--i:5;cursor:pointer" data-go="b0" data-tip="Clasificación y logit|Estiman la probabilidad de un resultado: elegir, pagar, fallar."><div class="n">03</div><h3>Clasificación</h3><p>¿Qué tan probable es?</p></div>
     <div class="card sm sa rv" style="--c:var(--amber);--i:6;cursor:pointer" data-go="k1" data-tip="Segmentación|Agrupa clientes o zonas parecidas (clustering, clases latentes)."><div class="n">04</div><h3>Segmentación</h3><p>¿Qué grupos existen?</p></div>
     <div class="card sm sa rv" style="--c:var(--green);--i:7;cursor:pointer" data-go="k7" data-tip="Geoestadística|Analiza datos con ubicación: distancias, cobertura, zonas."><div class="n">05</div><h3>Geoespacial</h3><p>¿Dónde ocurre?</p></div>
@@ -239,7 +239,7 @@
 <section class="slide content" id="m5" data-sec="3" data-title="Simulador de escenarios" data-theme="light">
   <div class="crumb rv" style="--i:0">Simular el futuro · Escenarios</div>
   <h2 class="rv" style="--i:1">Simulador de <em>escenarios</em>: ¿y si…?</h2>
-  <p class="lead rv" style="--i:2">Ventas = 120 − 4.5·Precio + 2.1·Publicidad − 3.2·Competidores. Mueve los valores hipotéticos: la predicción es instantánea.</p>
+  <div class="fm sm rv" style="--i:2"><span class="v y">Ventas</span><span class="op">=</span><span class="v b">120</span><span class="op">−</span><span class="v b">4.5</span><span class="op">·</span><span class="v x">Precio</span><span class="op">+</span><span class="v b">2.1</span><span class="op">·</span><span class="v x">Publicidad</span><span class="op">−</span><span class="v b">3.2</span><span class="op">·</span><span class="v x">Competidores</span><small>Mueve los valores hipotéticos: la predicción es instantánea.</small></div>
   <div class="body" style="top:196px"><div class="demo rv" style="--i:3;grid-template-columns:1fr 1.1fr;gap:24px">
     <div class="panel">
       <div class="lbl">VARIABLES INDEPENDIENTES (HIPOTÉTICAS)</div>
@@ -346,21 +346,46 @@
   <p class="lead rv" style="--i:2">Un cliente compara opciones y elige la de mayor utilidad. Nosotros no vemos la utilidad: la convertimos en probabilidad.</p>
   <div class="body" style="top:196px"><div class="demo rv" style="--i:3">
     <div class="panel">
-      <div class="lbl">TRES CEREALES · MUEVE EL PRECIO Y LA CALIDAD DE B</div>
-      <table class="utbl"><thead><tr><th>Opción</th><th>Precio</th><th>Calidad</th><th>Marca</th><th>Utilidad</th></tr></thead>
-        <tbody><tr id="uA"><td><span class="cn"><img src="assets/ph-cA.jpg" alt="">A</span></td><td>3</td><td>4</td><td>0</td><td class="u">–2.0</td></tr><tr id="uB"><td><span class="cn"><img src="assets/ph-cB.jpg" alt="">B</span></td><td id="vPB">2</td><td id="vQB">5</td><td>1</td><td class="u">1.5</td></tr><tr id="uC"><td><span class="cn"><img src="assets/ph-cC.jpg" alt="">C</span></td><td>4</td><td>5</td><td>1</td><td class="u">–1.5</td></tr></tbody></table>
-      <div class="row2"><label>Precio de B</label><input type="range" id="sP" min="1" max="8" step="0.5" value="2"></div>
-      <div class="row2"><label>Calidad de B</label><input type="range" id="sQ" min="1" max="8" step="0.5" value="5"></div>
-      <div class="lbl" style="margin-top:12px">CURVA DE UTILIDAD · U = –1.5·precio + 0.625·calidad + 1.375·marca</div><svg id="ucSvg" viewBox="0 0 560 190" style="width:100%;height:178px"></svg>
+      <div class="selrow"><div class="lbl">TRES CEREALES · ELIGE CUÁL MOVER</div><select id="sSel" class="cbx"><option value="A">Cereal A</option><option value="B" selected>Cereal B</option><option value="C">Cereal C</option></select></div>
+      <table class="utbl"><thead><tr><th>Opción</th><th>Precio</th><th>Calidad</th><th>Marca</th><th>Utilidad</th></tr></thead><tbody><tr id="uA"><td><span class="cn"><img src="assets/ph-cA.jpg" alt="">A</span></td><td id="vPA">3</td><td id="vQA">4</td><td>0</td><td class="u">–2.0</td></tr><tr id="uB"><td><span class="cn"><img src="assets/ph-cB.jpg" alt="">B</span></td><td id="vPB">2</td><td id="vQB">5</td><td>1</td><td class="u">1.5</td></tr><tr id="uC"><td><span class="cn"><img src="assets/ph-cC.jpg" alt="">C</span></td><td id="vPC">4</td><td id="vQC">5</td><td>1</td><td class="u">–1.5</td></tr></tbody></table>
+      <div class="row2"><label>Precio</label><input type="range" id="sP" min="1" max="8" step="0.5" value="2"></div>
+      <div class="row2"><label>Calidad</label><input type="range" id="sQ" min="1" max="8" step="0.5" value="5"></div>
+      <div class="lbl" style="margin-top:8px">CURVA DE UTILIDAD · U = –1.5·precio + 0.625·calidad + 1.375·marca</div><svg id="ucSvg" viewBox="0 0 560 170" style="width:100%;height:158px"></svg>
     </div>
     <div class="panel">
       <div class="lbl">PROBABILIDAD DE QUE CADA OPCIÓN SEA ELEGIDA</div>
       <div class="pbar" style="--c:var(--blue)"><span class="cn"><img src="assets/ph-cA.jpg" alt="">Cereal A</span><div class="t"><div class="f" id="pA"></div></div><b id="tA"></b></div>
       <div class="pbar" style="--c:var(--teal)"><span class="cn"><img src="assets/ph-cB.jpg" alt="">Cereal B</span><div class="t"><div class="f" id="pB"></div></div><b id="tB"></b></div>
       <div class="pbar" style="--c:var(--amber)"><span class="cn"><img src="assets/ph-cC.jpg" alt="">Cereal C</span><div class="t"><div class="f" id="pC"></div></div><b id="tC"></b></div>
-      <div class="lbl" style="margin-top:12px">PROBABILIDAD DE ELEGIR B SEGÚN SU PRECIO</div><svg id="pcSvg" viewBox="0 0 560 150" style="width:100%;height:140px"></svg><div style="margin-top:8px;padding:10px 14px;border-radius:12px;background:var(--bg);font-size:13px;line-height:1.45"><b style="font-weight:500">P(j) = e<sup>U<sub>j</sub></sup> / Σ e<sup>U<sub>k</sub></sup></b> &nbsp;(logit multinomial). Las probabilidades <b style="font-weight:500">siempre suman 100%</b>: sube una y bajan las demás.</div>
+      <div class="lbl" style="margin-top:10px">PROBABILIDAD DE ELEGIR <b id="selName">B</b> SEGÚN SU PRECIO</div><svg id="pcSvg" viewBox="0 0 560 150" style="width:100%;height:130px"></svg>
+      <div class="trad"><div class="t1"><small>TRADUCCIÓN COTIDIANA</small>«Entre las opciones que vi, <b id="winName">B</b> es la que más me conviene.»</div><div class="t2"><small>LO QUE OBSERVAMOS</small>La elección final, no la utilidad completa que llevó a ella.</div></div>
+      <div class="fnote"><b>P(j) = e<sup>U<sub>j</sub></sup> / Σ e<sup>U<sub>k</sub></sup></b> · las probabilidades siempre suman 100 %</div>
     </div>
   </div></div>
+</section>
+
+<section class="slide content" id="b0b" data-sec="4" data-block="Ventas" data-bi="0" data-title="Teoría · Supuestos y decisiones" data-theme="light">
+  <div class="crumb rv" style="--i:0">Casos de uso · Ventas · Puente teórico</div>
+  <div class="thread" data-bi="0"></div>
+  <h2 class="rv" style="--i:1">Del modelo a la <em>decisión</em></h2>
+  <p class="lead rv" style="--i:2">La utilidad no es un puntaje definitivo: se convierte en una probabilidad de elección. No conocemos toda la parte no observada, pero sí podemos decir qué tan probable es cada opción.</p>
+  <div class="body" style="top:214px;bottom:112px;display:grid;grid-template-columns:1.25fr 1fr;gap:26px">
+    <div class="panel rv" style="--i:3"><div class="lbl">SUPUESTOS QUE SOSTIENEN EL MODELO</div>
+      <div class="asm"><i></i><b>Elección racional comparativa</b><span>Se elige la alternativa de mayor utilidad, dadas las opciones.</span></div>
+      <div class="asm"><i></i><b>Información coherente</b><span>Los atributos incluidos son los que realmente influían antes de elegir.</span></div>
+      <div class="asm"><i></i><b>Especificación correcta</b><span>La utilidad refleja una relación razonable: lineal u otra que se justifique.</span></div>
+      <div class="asm hl"><i></i><b>Logit multinomial</b><span>Lo no observado es independiente e idénticamente distribuido: lleva al supuesto IIA.</span></div>
+      <div class="asm"><i></i><b>Observaciones independientes</b><span>Si hay elecciones repetidas, se debe modelar esa dependencia.</span></div>
+      <div class="iia"><b>IIA:</b> la relación entre dos alternativas no debería cambiar por la presencia de una tercera muy parecida.</div>
+    </div>
+    <div class="panel rv" style="--i:4"><div class="lbl">QUÉ SE PUEDE HACER CON EL MODELO</div>
+      <div class="dec sa" style="--c:var(--coral)"><b>Precio</b><span>Simular cómo cambiaría la preferencia ante una promoción.</span></div>
+      <div class="dec sa" style="--c:var(--blue)"><b>Producto</b><span>Identificar atributos que realmente elevan la utilidad.</span></div>
+      <div class="dec sa" style="--c:var(--teal)"><b>Marca</b><span>Cuantificar el valor de la familiaridad o la confianza.</span></div>
+      <div class="dec sa" style="--c:var(--violet)"><b>Segmentos</b><span>Detectar grupos que responden de manera distinta.</span></div>
+    </div>
+  </div>
+  <div class="strip rv" style="--i:7"><b>LECTURA PARA EL COMUNICADOR</b><span>No sustituye el criterio de negocio: lo vuelve explícito, contrastable y reproducible.</span></div>
 </section>
 </template>
 

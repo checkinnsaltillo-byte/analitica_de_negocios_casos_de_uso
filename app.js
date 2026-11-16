@@ -132,6 +132,29 @@ function siteMap(){
  h+='<g transform="translate(14 176)"><rect width="262" height="18" rx="9" fill="#fff" opacity=".92"/><circle cx="12" cy="9" r="4" fill="#2F6BFF"/><circle cx="24" cy="9" r="4" fill="#14A39A"/><circle cx="36" cy="9" r="4" fill="#F5A524"/><text x="46" y="12.5" font-size="9.5" fill="#475467">segmentos de tiendas</text><circle cx="146" cy="9" r="5.5" fill="none" stroke="#667085" stroke-dasharray="2 2"/><text x="156" y="12.5" font-size="9.5" fill="#475467">candidatos</text></g>';
  return '<figure class="pic kpic mapfig rv" style="--i:5"><svg viewBox="0 0 750 200" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">'+h+'</svg></figure>';
 }
+
+var CJ={A:[['Precio',['$38','$52','$68']],['Marca',['Local','Conocida','Premium']],['Ingrediente',['Clásico','Integral','Con fruta']],['Empaque',['Bolsa','Caja','Individual']]],
+ L9:[[0,0,0,0],[0,1,1,1],[0,2,2,2],[1,0,1,2],[1,1,2,0],[1,2,0,1],[2,0,2,1],[2,1,0,2],[2,2,1,0]],
+ T:[[1,3,4],[1,4,5],[3,5,8],[0,2,7],[0,6,7],[2,6,8]],COL:['#F26B5B','#2F6BFF','#14A39A','#F5A524']};
+function conjHead(t,crumb){var B=BLOCKS[0];return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="0" data-title="Caso 1 · '+t+'" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 1 · '+crumb+'</div>'+thread(0);}
+function conjoint(){
+ var adv=[['Se parece a comprar de verdad','Elegir entre productos completos es más natural que calificar atributos sueltos.','var(--blue)'],
+  ['Mide los intercambios','Revela cuánto precio se acepta a cambio de una mejor marca o un mejor ingrediente.','var(--teal)'],
+  ['Pesa cada atributo','La importancia relativa sale de lo que la persona elige, no de lo que dice que valora.','var(--violet)'],
+  ['Valora cada nivel','Sabe si prefiere $38 o $52, empaque en caja o en bolsa: utilidad por nivel.','var(--amber)'],
+  ['Simula antes de lanzar','Con las utilidades se estima la cuota de un producto nuevo o de un cambio de precio.','var(--coral)'],
+  ['Descubre perfiles','Agrupa a quienes eligen parecido: cazadores de oferta, leales a la marca, etc.','var(--green)']];
+ var s1=conjHead('Conjoint: ventajas','Conjoint')+
+ '<h2 class="rv" style="--i:1">Por qué usar <em>conjoint</em></h2><p class="lead rv" style="--i:2">En lugar de preguntar «¿qué es importante para ti?», se observa qué eliges cuando todo cambia a la vez.</p>'+
+ '<div class="body" style="top:200px;display:grid;grid-template-columns:1.5fr 1fr;gap:24px"><div class="cards" style="grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr);gap:14px">'+
+ adv.map(function(x,i){return '<div class="card sm sa rv" style="--c:'+x[2]+';--i:'+(3+i)+'"><div class="n">0'+(i+1)+'</div><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>';}).join('')+'</div>'+
+ '<div class="panel rv" style="--i:5"><div class="lbl">DISEÑO ORTOGONAL · 9 PRODUCTOS, 4 ATRIBUTOS</div><div id="orthoMx"></div><p class="orthoTx" id="orthoTx"></p></div></div></section>';
+ var s2=conjHead('Conjoint: simulador','Simulador conjoint')+
+ '<h2 class="rv" style="--i:1">Elige y descubre tu <em>perfil</em></h2><p class="lead rv" style="--i:2">Seis rondas de tres productos que cambian en todos sus atributos a la vez. Tus elecciones se traducen en un perfil.</p>'+
+ '<div class="body" style="top:200px"><div class="demo rv" style="--i:3;grid-template-columns:1.3fr 1fr;gap:24px"><div class="panel"><div class="selrow"><div class="lbl">RONDA <b id="cjR">1</b> DE 6 · ¿CUÁL COMPRARÍAS?</div><button class="btn alt" id="cjReset">Reiniciar</button></div><div class="cjcards" id="cjCards"></div><div class="cjprog" id="cjProg"></div></div>'+
+ '<div class="panel"><div class="lbl">IMPORTANCIA DE CADA ATRIBUTO</div><div id="cjBars"></div><div class="cjperf" id="cjPerf"></div><div class="lbl" style="margin-top:12px">ORTOGONALIDAD · PRODUCTOS MOSTRADOS</div><div id="cjMx"></div></div></div></div></section>';
+ return s1+s2;
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -165,7 +188,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+evid(x);
+ stream+=ficha(x)+evid(x);if(x.id==='k1')stream+=conjoint();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -176,7 +199,7 @@ mount.insertAdjacentHTML('beforebegin',stream);mount.remove();
 
 var ICMAP={'¿Cómo vender más?':'trend','¿A qué precio?':'tag','¿Dónde abrir?':'pin','¿Qué puede salir mal?':'shield','¿Qué pasará?':'bars','¿Qué impacto dejamos?':'leaf',
  'En una crisis':'shield','Al reportar impacto':'doc','Ante autoridades':'scale','Al planear':'bars',
- 'Series de tiempo':'trend','Modelos lineales':'line','Clasificación':'split','Segmentación':'cluster','Geoespacial':'map','Texto y lenguaje':'text','Optimización':'target','Escenarios':'q',
+ 'Series de tiempo':'trend','Modelos lineales y Machine Learning':'line','Clasificación':'split','Segmentación':'cluster','Geoespacial':'map','Texto y lenguaje':'text','Optimización':'target','Escenarios':'q',
  'Introducción':'eye','Enfoque analítico':'target','Casos de uso':'map','Visualizar y comunicar':'bars','El reto de los datos':'cluster','Cierre':'flag',
  'Pregunta primero':'q','Hipótesis explícita':'doc','Incertidumbre honesta':'scale','Comunicar con rigor':'mega',
  'Oficiales':'doc','Del sector':'people','Encuestas':'text','Digitales':'eye','Geoespaciales':'map'};
@@ -387,38 +410,38 @@ document.addEventListener('mousemove',function(e){
 /* ================= Widgets interactivos ================= */
 // 1) Utilidad → probabilidad (logit multinomial)
 (function(){
- var sP=document.getElementById('sP'),sQ=document.getElementById('sQ');if(!sP)return;
- var b={p:-1.5,q:0.625,m:1.375};
- function U(p,q,m){return b.p*p+b.q*q+b.m*m;}
+ var sP=document.getElementById('sP'),sQ=document.getElementById('sQ'),sel=document.getElementById('sSel');if(!sP)return;
+ var b={p:-1.5,q:0.625,m:1.375},K=['A','B','C'],COL={A:'#2F6BFF',B:'#14A39A',C:'#F5A524'};
+ var o={A:{p:3,q:4,m:0},B:{p:2,q:5,m:1},C:{p:4,q:5,m:1}};
+ function U(x,p,q){return b.p*p+b.q*q+b.m*x.m;}
+ function fmt(v){return v.toFixed(1).replace('-','–');}
  function upd(){
-  var pB=+sP.value,qB=+sQ.value;
-  var u=[U(3,4,0),U(pB,qB,1),U(4,5,1)];
+  var k=sel.value;o[k].p=+sP.value;o[k].q=+sQ.value;
+  var u=K.map(function(n){return U(o[n],o[n].p,o[n].q);});
   var ex=u.map(Math.exp),sum=ex[0]+ex[1]+ex[2],p=ex.map(function(v){return v/sum;});
-  ['A','B','C'].forEach(function(k,i){
-   document.getElementById('p'+k).style.width=(p[i]*100)+'%';
-   document.getElementById('t'+k).textContent=(p[i]*100).toFixed(1)+'%';
-   document.querySelector('#u'+k+' .u').textContent=u[i].toFixed(1).replace('-','–');
+  K.forEach(function(n,i){
+   document.getElementById('p'+n).style.width=(p[i]*100)+'%';
+   document.getElementById('t'+n).textContent=(p[i]*100).toFixed(1)+'%';
+   document.querySelector('#u'+n+' .u').textContent=fmt(u[i]);
+   document.getElementById('vP'+n).textContent=o[n].p;document.getElementById('vQ'+n).textContent=o[n].q;
   });
-  (function(){
-   var us=document.getElementById('ucSvg'),ps=document.getElementById('pcSvg');if(!us)return;
-   var X=function(p){return 40+(p-1)/7*500;},Y=function(u){return 12+(5-u)/15*150;},s,i;
-   s='<line x1="40" y1="'+Y(0)+'" x2="540" y2="'+Y(0)+'" stroke="#e1e7f2"/><line x1="40" y1="12" x2="40" y2="162" stroke="#cfd8e8"/><line x1="40" y1="162" x2="540" y2="162" stroke="#cfd8e8"/>';
-   s+='<line x1="40" y1="'+Y(u[0])+'" x2="540" y2="'+Y(u[0])+'" stroke="#2F6BFF" stroke-width="2"/><text x="544" y="'+(Y(u[0])+4)+'" font-size="11" fill="#2F6BFF">A</text>';
-   s+='<line x1="40" y1="'+Y(u[2])+'" x2="540" y2="'+Y(u[2])+'" stroke="#F5A524" stroke-width="2"/><text x="544" y="'+(Y(u[2])-3)+'" font-size="11" fill="#B7791F">C</text>';
-   s+='<line x1="'+X(1)+'" y1="'+Y(U(1,qB,1))+'" x2="'+X(8)+'" y2="'+Y(U(8,qB,1))+'" stroke="#14A39A" stroke-width="3.4" stroke-linecap="round"/><text x="544" y="'+(Y(U(8,qB,1))+4)+'" font-size="11" fill="#14A39A">B</text>';
-   s+='<circle cx="'+X(pB)+'" cy="'+Y(u[1])+'" r="6.5" fill="#14A39A" stroke="#fff" stroke-width="2.5"/>';
-   s+='<text x="40" y="180" font-size="10.5" fill="#667085">Precio de B →  1</text><text x="540" y="180" font-size="10.5" fill="#667085" text-anchor="end">8</text><text x="44" y="10" font-size="10.5" fill="#667085">Utilidad</text>';
-   us.innerHTML=s;
-   var pts=[],pp,e;for(pp=1;pp<=8.001;pp+=0.25){e=[Math.exp(u[0]),Math.exp(U(pp,qB,1)),Math.exp(u[2])];pts.push(X(pp)+','+(130-e[1]/(e[0]+e[1]+e[2])*115));}
-   s='<line x1="40" y1="130" x2="540" y2="130" stroke="#cfd8e8"/><line x1="40" y1="15" x2="40" y2="130" stroke="#cfd8e8"/><text x="44" y="12" font-size="10.5" fill="#667085">P(B) 100 %</text><text x="540" y="146" font-size="10.5" fill="#667085" text-anchor="end">Precio de B</text>';
-   s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#14A39A" stroke-width="3.2" stroke-linejoin="round"/>';
-   s+='<circle cx="'+X(pB)+'" cy="'+(130-p[1]*115)+'" r="6.5" fill="#14A39A" stroke="#fff" stroke-width="2.5"/>';
-   ps.innerHTML=s;
-  })();
-  document.getElementById('vPB').textContent=pB;document.getElementById('vQB').textContent=qB;
-  var mx=u.indexOf(Math.max.apply(null,u));
-  ['A','B','C'].forEach(function(k,i){document.getElementById('u'+k).className=i===mx?'win':'';});
+  var mx=u.indexOf(Math.max.apply(null,u)),ki=K.indexOf(k);
+  K.forEach(function(n,i){var r=document.getElementById('u'+n);r.className=(i===mx?'win':'')+(n===k?' sel':'');});
+  document.getElementById('winName').textContent=K[mx];document.getElementById('selName').textContent=k;
+  var us=document.getElementById('ucSvg'),ps=document.getElementById('pcSvg'),pB=o[k].p,qB=o[k].q,col=COL[k],s,pp,e;
+  var X=function(v){return 40+(v-1)/7*500;},Y=function(v){return 12+(5-v)/15*136;};
+  s='<line x1="40" y1="'+Y(0)+'" x2="540" y2="'+Y(0)+'" stroke="#e1e7f2"/><line x1="40" y1="12" x2="40" y2="148" stroke="#cfd8e8"/><line x1="40" y1="148" x2="540" y2="148" stroke="#cfd8e8"/>';
+  K.forEach(function(n,i){if(n===k)return;s+='<line x1="40" y1="'+Y(u[i])+'" x2="540" y2="'+Y(u[i])+'" stroke="'+COL[n]+'" stroke-width="2"/><text x="544" y="'+(Y(u[i])+4)+'" font-size="11" fill="'+COL[n]+'">'+n+'</text>';});
+  s+='<line x1="'+X(1)+'" y1="'+Y(U(o[k],1,qB))+'" x2="'+X(8)+'" y2="'+Y(U(o[k],8,qB))+'" stroke="'+col+'" stroke-width="3.4" stroke-linecap="round"/><text x="544" y="'+(Y(U(o[k],8,qB))+4)+'" font-size="11" font-weight="600" fill="'+col+'">'+k+'</text>';
+  s+='<circle cx="'+X(pB)+'" cy="'+Y(u[ki])+'" r="6.5" fill="'+col+'" stroke="#fff" stroke-width="2.5"/>';
+  s+='<text x="40" y="164" font-size="10.5" fill="#667085">Precio de '+k+' →  1</text><text x="540" y="164" font-size="10.5" fill="#667085" text-anchor="end">8</text><text x="44" y="10" font-size="10.5" fill="#667085">Utilidad</text>';
+  us.innerHTML=s;
+  var pts=[];for(pp=1;pp<=8.001;pp+=0.25){e=u.map(function(v,i){return i===ki?Math.exp(U(o[k],pp,qB)):Math.exp(v);});pts.push(X(pp)+','+(130-e[ki]/(e[0]+e[1]+e[2])*115));}
+  s='<line x1="40" y1="130" x2="540" y2="130" stroke="#cfd8e8"/><line x1="40" y1="15" x2="40" y2="130" stroke="#cfd8e8"/><text x="44" y="12" font-size="10.5" fill="#667085">P('+k+') 100 %</text><text x="540" y="146" font-size="10.5" fill="#667085" text-anchor="end">Precio de '+k+'</text>';
+  s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="3.2" stroke-linejoin="round"/><circle cx="'+X(pB)+'" cy="'+(130-p[ki]*115)+'" r="6.5" fill="'+col+'" stroke="#fff" stroke-width="2.5"/>';
+  ps.innerHTML=s;
  }
+ sel.onchange=function(){var k=sel.value;sP.value=o[k].p;sQ.value=o[k].q;upd();};
  sP.oninput=upd;sQ.oninput=upd;upd();
 })();
 // 2) Eje truncado
@@ -522,6 +545,48 @@ document.addEventListener('mousemove',function(e){
  [xP,xA,xC].forEach(function(e){e.oninput=function(){[].forEach.call(document.querySelectorAll('.scn .btn'),function(b){b.classList.remove('on');});upd();};});
  [].forEach.call(document.querySelectorAll('.scn .btn'),function(b){b.onclick=function(){var v=b.dataset.s.split(',');xP.value=v[0];xA.value=v[1];xC.value=v[2];[].forEach.call(document.querySelectorAll('.scn .btn'),function(q){q.classList.remove('on');});b.classList.add('on');upd();};});
  upd();
+})();
+
+// 7) Conjoint: ortogonalidad y simulador
+(function(){
+ var mx=document.getElementById('orthoMx');if(!mx)return;
+ var L=CJ.L9,names=CJ.A.map(function(x){return x[0];}),tint=['#DCE6FF','#C9F0EA','#FFE9C2'];
+ function grid(el,hi,small){
+  var h='<table class="mxt'+(small?' sm':'')+'"><thead><tr><th></th>'+names.map(function(n){return '<th>'+n.slice(0,small?4:12)+'</th>';}).join('')+'</tr></thead><tbody>';
+  L.forEach(function(r,i){h+='<tr'+(hi&&hi.indexOf(i)>=0?' class="hi"':'')+'><th>P'+(i+1)+'</th>'+r.map(function(v,a){return '<td style="background:'+tint[v]+'">'+CJ.A[a][1][v]+'</td>';}).join('')+'</tr>';});
+  return el.innerHTML=h+'</tbody></table>';
+ }
+ grid(mx,null,false);
+ function corr(x,y){var n=x.length,mx_=x.reduce(function(p,q){return p+q;},0)/n,my=y.reduce(function(p,q){return p+q;},0)/n,sxy=0,sxx=0,syy=0;x.forEach(function(v,i){sxy+=(v-mx_)*(y[i]-my);sxx+=Math.pow(v-mx_,2);syy+=Math.pow(y[i]-my,2);});return sxy/Math.sqrt(sxx*syy);}
+ var m=0,i,j;for(i=0;i<4;i++)for(j=i+1;j<4;j++)m=Math.max(m,Math.abs(corr(L.map(function(r){return r[i];}),L.map(function(r){return r[j];}))));
+ document.getElementById('orthoTx').innerHTML='Cada nivel aparece <b>3 veces</b> y la correlación máxima entre atributos es <b>'+m.toFixed(2)+'</b>. Así el efecto de cada atributo se puede separar de los demás con pocas preguntas.';
+ // simulador
+ var box=document.getElementById('cjCards');if(!box)return;
+ var round,shown,chosen,PIC=['cA','cB','cC'];
+ var PERF={0:['Cazador de ofertas','Decide por el precio: responde a promociones y descuentos.'],1:['Leal a la marca','Paga por confianza y reconocimiento.'],2:['Buscador de calidad','Se fija en lo que contiene: sabor, salud, ingredientes.'],3:['Práctico','Valora la conveniencia y la presentación.']};
+ function stats(){
+  var sc=CJ.A.map(function(at){return at[1].map(function(){return [0,0];});});
+  chosen.forEach(function(c,r){CJ.T[r].forEach(function(pi,k){L[pi].forEach(function(lv,a){sc[a][lv][1]++;if(k===c)sc[a][lv][0]++;});});});
+  return sc.map(function(ar){return ar.map(function(v){return v[1]?v[0]/v[1]:0;});});
+ }
+ function render(){
+  var done=round>=6;
+  document.getElementById('cjR').textContent=done?6:round+1;
+  box.innerHTML=done?'<div class="cjdone"><b>¡Listo!</b><span>Con seis elecciones ya se ve qué pesa más en tu decisión. A más personas, más claro el patrón.</span></div>':CJ.T[round].map(function(pi,k){
+   return '<div class="cjc" data-k="'+k+'"><div class="ph"><img src="assets/ph-'+PIC[k]+'.jpg" alt=""></div><h4>Producto '+(k+1)+'</h4>'+L[pi].map(function(lv,a){return '<div class="at"><span>'+CJ.A[a][0]+'</span><b>'+CJ.A[a][1][lv]+'</b></div>';}).join('')+'<button class="btn">Elegir</button></div>';}).join('');
+  document.getElementById('cjProg').innerHTML=[0,1,2,3,4,5].map(function(r){return '<i class="'+(r<round?'d':r===round?'c':'')+'"></i>';}).join('');
+  [].forEach.call(box.querySelectorAll('.cjc'),function(el){el.onclick=function(){chosen.push(+el.dataset.k);round++;render();};});
+  var bars=document.getElementById('cjBars'),perf=document.getElementById('cjPerf');
+  if(!chosen.length){bars.innerHTML='<p class="cjhint">Elige un producto en cada ronda: aquí aparecerá qué atributo pesa más.</p>';perf.innerHTML='';}
+  else{
+   var sc=stats(),rg=sc.map(function(ar){return Math.max.apply(null,ar)-Math.min.apply(null,ar);}),sum=rg.reduce(function(p,q){return p+q;},0)||1,top=rg.indexOf(Math.max.apply(null,rg));
+   bars.innerHTML=CJ.A.map(function(at,a){var best=sc[a].indexOf(Math.max.apply(null,sc[a]));return '<div class="pbar" style="--c:'+CJ.COL[a]+';grid-template-columns:96px 1fr 120px"><span>'+at[0]+'</span><div class="t"><div class="f" style="width:'+(rg[a]/sum*100)+'%"></div></div><b style="font-size:12.5px">'+Math.round(rg[a]/sum*100)+'% · '+at[1][best]+'</b></div>';}).join('');
+   perf.innerHTML=(done?'<small>TU PERFIL</small><b>'+PERF[top][0]+'</b><span>'+PERF[top][1]+'</span>':'<small>PERFIL PROVISIONAL</small><b>'+PERF[top][0]+'</b><span>Se afina con cada ronda.</span>');
+  }
+  grid(document.getElementById('cjMx'),done?null:CJ.T[round].slice(),true);
+ }
+ function reset(){round=0;chosen=[];render();}
+ document.getElementById('cjReset').onclick=reset;reset();
 })();
 // 6) Deriva del modelo y re-entrenamiento
 (function(){
