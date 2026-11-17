@@ -690,3 +690,7 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .rdr{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.rdr b{font-size:11px;font-weight:500;color:var(--mute);min-width:96px;letter-spacing:.02em}
 .rds{font-size:11.5px;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;font-family:inherit;transition:.2s}.rds:hover{border-color:#F26B5B}.rds.on{background:#F26B5B;border-color:#F26B5B;color:#fff}
 .vzbtn{padding:6px 14px}.vzbtn h4{font-size:16.5px}
+/* botones de la maqueta: fuera del marco, en una franja inferior */
+.slide.maqfull .maqbox{inset:0 0 46px 0}
+.slide.maqfull .maqbar{position:absolute;left:0;right:0;bottom:-46px;top:auto;height:46px;background:#fff;border-top:1px solid var(--line);border-radius:0;padding:0 16px;justify-content:flex-end;box-shadow:none}
+.slide.maqfull .maqbox{overflow:visible}
