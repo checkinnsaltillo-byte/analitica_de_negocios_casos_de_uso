@@ -86,7 +86,7 @@ var CASES=[
   q:'¿Cómo se habla de nuestra organización y cuándo cambia la conversación?',
   h:'La percepción pública responde a los acontecimientos y puede medirse, compararse y anticiparse con monitoreo continuo.',
   m:[['Procesamiento de lenguaje natural','Enseña a la computadora a leer y entender texto.'],['Minería de textos','Extrae temas y patrones de miles de noticias.'],['Análisis de sentimiento','Clasifica el tono: positivo, neutral o negativo.'],['Clasificación automática','Agrupa noticias por tema sin etiquetas previas (no supervisado).']],
-  k:[[650,'+','fuentes periodísticas digitales'],[5,'','etapas: del texto a la alerta'],[3,'','preguntas: percepción, tendencia, comparación']],
+  k:[['T','a','Existe un <em>creciente interés</em> en ciertos temas.'],['T','b','En el discurso del presidente <em>X</em>, los temas recurrentes o que resaltan son: <em>corrupción</em>, <em>pobreza</em>, etc.'],['T','c','El personaje cuyo discurso <em>contrasta más</em> con el de AMLO es <em>Y</em>.']],
   l:'Es el puente directo con tu carrera: escuchar al entorno y llevar esa información a quien decide.',
   ev:{t:'Evidencia: del texto a la alerta',imgs:[['med-textmining','Minería de textos'],['med-red','Red de temas y entidades'],['med-sentimiento','Tono: negativo, neutral, positivo']],
    r:['Se extraen noticias, se clasifican por tema y se mide el tono.','Las alertas por correo avisan cuando un tema empieza a crecer.','Se pueden comparar dos entidades por los conceptos con que se asocian.'],
@@ -342,6 +342,37 @@ function medios(){
  '<div class="lbl rv" style="--i:10;margin:12px 0 6px">QUÉ SE OBTIENE · GRÁFICAS GENÉRICAS</div><div class="rch rv" style="--i:10"><figure><div>'+mChart('bars')+'</div><figcaption>Notas por tema</figcaption></figure><figure><div>'+mChart('lines')+'</div><figcaption>Tono en el tiempo</figcaption></figure><figure><div>'+mChart('cloud')+'</div><figcaption>Palabras más frecuentes</figcaption></figure></div>'+
  '<div class="lbl rv" style="--i:11;margin:10px 0 6px">MÉTODOS ANALÍTICOS</div><div class="pills4 rv" style="--i:11"><span>Procesamiento de lenguaje natural</span><span>Minería de textos</span><span>Análisis multivariado</span><span>Modelación estadística</span></div></div></section>';
 }
+/* ===== Grafo de discurso (caso 5) ===== */
+var GF={
+ C:['Trump','Biden','Sanders','Warren','Buttigieg','Bloomberg'],
+ T:['Economía','Salud','Inmigración','Clima','Pandemia','Seguridad','Impuestos','Educación','Justicia racial','Política exterior'],
+ W:{
+  Trump:{'Economía':.9,'Inmigración':.95,'Seguridad':.8,'Impuestos':.6,'Pandemia':.5,'Política exterior':.55},
+  Biden:{'Economía':.6,'Salud':.7,'Pandemia':.85,'Clima':.55,'Justicia racial':.6,'Política exterior':.6,'Educación':.35},
+  Sanders:{'Salud':.95,'Clima':.7,'Educación':.75,'Impuestos':.6,'Economía':.5,'Justicia racial':.4},
+  Warren:{'Economía':.65,'Impuestos':.8,'Salud':.6,'Educación':.5,'Justicia racial':.4},
+  Buttigieg:{'Clima':.5,'Salud':.55,'Justicia racial':.55,'Educación':.4,'Política exterior':.35},
+  Bloomberg:{'Economía':.7,'Seguridad':.45,'Clima':.6,'Impuestos':.35,'Salud':.3}
+ },
+ M:{
+  grado:['Grado','Número de conexiones del nodo. Quien se conecta con más tópicos (o personajes) es más visible en la conversación.'],
+  fuerza:['Fuerza','Suma del grosor de todas sus líneas. Mide cuánto discurso concentra un nodo, no solo con cuántos se conecta.'],
+  inter:['Intermediación','Cuántas veces el nodo es el «puente» en los caminos más cortos entre otros dos. Detecta los temas que unen discursos distintos.'],
+  pr:['Vector propio (PageRank)','Importa más estar conectado a nodos importantes. Mide la influencia dentro de toda la red, no solo alrededor del nodo.']
+ }
+};
+function grafo(){
+ var B=BLOCKS[2];
+ function sw(k){return k==='c'?'<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="#2F6BFF"/></svg>':k==='t'?'<svg viewBox="0 0 30 30"><rect x="4" y="4" width="22" height="22" rx="8" fill="#F5A524"/></svg>':k==='s'?'<svg viewBox="0 0 30 30"><circle cx="7" cy="16" r="4" fill="#98A6BF"/><circle cx="21" cy="14" r="8" fill="#98A6BF"/></svg>':k==='g'?'<svg viewBox="0 0 30 30"><path d="M2 8H28" stroke="#98A6BF" stroke-width="1.5"/><path d="M2 15H28" stroke="#98A6BF" stroke-width="4"/><path d="M2 24H28" stroke="#98A6BF" stroke-width="7"/></svg>':k==='d'?'<svg viewBox="0 0 30 30"><circle cx="6" cy="15" r="4" fill="#2F6BFF"/><circle cx="14" cy="9" r="4" fill="#2F6BFF"/><circle cx="26" cy="22" r="4" fill="#2F6BFF" opacity=".45"/></svg>':'<svg viewBox="0 0 30 30"><path d="M2 15H28" stroke="#2F6BFF" stroke-width="4" stroke-dasharray="6 5"/></svg>';}
+ var L=[['c','Personaje','Candidato a la presidencia (EE. UU. 2020) mencionado en las noticias.'],['t','Tópico','Tema que aparece en las notas y discursos: economía, salud, etc.'],['s','Tamaño del nodo','Relevancia en el sistema, según la métrica elegida arriba.'],['g','Grosor de la línea','Cercanía: qué tanto aparece el tópico en el discurso (0 a 1).'],['d','Distancia en el mapa','Quienes hablan de lo mismo quedan cerca; quienes contrastan, lejos.'],['a','Línea animada','Conexiones del nodo elegido: forman el subgrafo de la derecha.']];
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Evidencia: grafo del discurso" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Evidencia</div>'+thread(2)+
+ '<h2 class="rv" style="--i:1;font-size:32px">Evidencia: el <em>grafo</em> del discurso</h2>'+
+ '<div class="gf"><div class="gfL"><div class="gfctl rv" style="--i:2"><label>Relevancia <i>(tamaño)</i><select id="gfM" class="cbx">'+Object.keys(GF.M).map(function(k){return '<option value="'+k+'">'+GF.M[k][0]+'</option>';}).join('')+'</select></label><label>Cercanía mínima <input type="range" id="gfT" min="0" max="85" value="0"><b id="gfTv">0.00</b></label><span class="gfh">Haz clic en un nodo</span></div>'+
+ '<p class="gfdef rv" style="--i:3" id="gfDef"></p>'+
+ '<svg id="gfSvg" class="gfs rv" style="--i:3" viewBox="0 0 740 350"></svg>'+
+ '<div class="gfleg rv" style="--i:4">'+L.map(function(l){return '<div><span class="sw">'+sw(l[0])+'</span><p><b>'+l[1]+'</b>'+l[2]+'</p></div>';}).join('')+'</div></div>'+
+ '<div class="gfR rv" style="--i:4" id="gfPanel"></div></div></section>';
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -355,7 +386,7 @@ function ficha(x){
   '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+(Array.isArray(x.h)?x.h.join('</p><p class="h2">'):x.h)+'</p></div>'+
   (x.id==='k2'?siteMap():(x.id==='k4'?ripple():'<figure class="pic kpic rv" style="--i:5" data-ph="'+x.id+'"></figure>'))+'</div>'+
  '<div class="r"><div class="rv" style="--i:5"><div class="lbl">MÉTODOS</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
- '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis">'+x.k.map(function(k){return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
+ '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis'+(x.k[0][0]==='T'?' kts':'')+'">'+x.k.map(function(k){if(k[0]==='T')return '<div class="kpi kt sa" style="--c:'+B.c+'"><b>'+k[1]+'</b><p>'+k[2]+'</p></div>';return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
  '<div class="strip rv" style="--i:7"><b>LECTURA PARA EL COMUNICADOR</b><span>'+x.l+'</span></div></section>';
 }
 function evid(x){
@@ -375,7 +406,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+(x.id==='k4'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=medios();
+ stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medios();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -884,6 +915,100 @@ document.addEventListener('mousemove',function(e){
  document.getElementById('retrain').onclick=function(){trained=true;draw();};
  document.getElementById('resetDrift').onclick=function(){trained=false;draw();};
  draw();
+})();
+
+// 10) Grafo de discurso: personajes y tópicos
+(function(){
+ var svg=document.getElementById('gfSvg');if(!svg)return;
+ var D=GF,N=[],idx={},E=[],NS='http://www.w3.org/2000/svg';
+ D.C.forEach(function(n){idx[n]=N.length;N.push({id:n,k:'c'});});
+ D.T.forEach(function(n){idx[n]=N.length;N.push({id:n,k:'t'});});
+ D.C.forEach(function(c){for(var t in D.W[c])E.push({a:idx[c],b:idx[t],w:D.W[c][t]});});
+ var n=N.length;
+ // disposición por fuerzas (determinista)
+ var seed=7;function r(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ N.forEach(function(o,i){var a=i/n*6.283;o.x=Math.cos(a)*170+(r()-.5)*30;o.y=Math.sin(a)*90+(r()-.5)*30;o.vx=o.vy=0;});
+ for(var it=0;it<700;it++){
+  var cool=1-it/700,i,j;
+  N.forEach(function(o){o.fx=-o.x*.004;o.fy=-o.y*.012;});
+  for(i=0;i<n;i++)for(j=i+1;j<n;j++){var dx=N[i].x-N[j].x,dy=N[i].y-N[j].y,d2=dx*dx+dy*dy+.5,d=Math.sqrt(d2),f=14000/d2;
+   if(d<64)f+=(64-d)*.5;N[i].fx+=dx/d*f;N[i].fy+=dy/d*f;N[j].fx-=dx/d*f;N[j].fy-=dy/d*f;}
+  E.forEach(function(e){var A=N[e.a],Bn=N[e.b],dx=Bn.x-A.x,dy=Bn.y-A.y,d=Math.sqrt(dx*dx+dy*dy)+.01,Ls=35+(1-e.w)*280,f=(d-Ls)*.035*(.35+e.w);
+   A.fx+=dx/d*f;A.fy+=dy/d*f;Bn.fx-=dx/d*f;Bn.fy-=dy/d*f;});
+  N.forEach(function(o){o.vx=(o.vx+o.fx)*.62;o.vy=(o.vy+o.fy)*.62;o.x+=o.vx*cool;o.y+=o.vy*cool;});
+ }
+ var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;N.forEach(function(o){x0=Math.min(x0,o.x);x1=Math.max(x1,o.x);y0=Math.min(y0,o.y);y1=Math.max(y1,o.y);});
+ N.forEach(function(o){o.X=62+(o.x-x0)/(x1-x0)*616;o.Y=44+(o.y-y0)/(y1-y0)*236;});
+ // métricas
+ var thr=0,met='fuerza',sel=idx['Trump'],M={};
+ function btw(adj){var C=[],s,i;for(i=0;i<n;i++)C[i]=0;
+  for(s=0;s<n;s++){var S=[],P=[],sg=[],d=[],dn=[];for(i=0;i<n;i++){P[i]=[];sg[i]=0;d[i]=Infinity;dn[i]=false;}
+   sg[s]=1;d[s]=0;
+   for(;;){var u=-1,m=Infinity;for(i=0;i<n;i++)if(!dn[i]&&d[i]<m){m=d[i];u=i;}if(u<0)break;dn[u]=true;S.push(u);
+    adj[u].forEach(function(e){var v=e[0],nd=d[u]+e[1];if(nd<d[v]-1e-9){d[v]=nd;sg[v]=sg[u];P[v]=[u];}else if(Math.abs(nd-d[v])<=1e-9&&!dn[v]){sg[v]+=sg[u];P[v].push(u);}});}
+   var dl=[];for(i=0;i<n;i++)dl[i]=0;
+   while(S.length){var w=S.pop();P[w].forEach(function(v){dl[v]+=sg[v]/sg[w]*(1+dl[w]);});if(w!==s)C[w]+=dl[w];}}
+  return C.map(function(c){return c/2;});}
+ function compute(){
+  var adj=[],deg=[],str=[],i;for(i=0;i<n;i++){adj[i]=[];deg[i]=0;str[i]=0;}
+  E.forEach(function(e){if(e.w<thr)return;adj[e.a].push([e.b,1/e.w]);adj[e.b].push([e.a,1/e.w]);deg[e.a]++;deg[e.b]++;str[e.a]+=e.w;str[e.b]+=e.w;});
+  var pr=[],q,k;for(i=0;i<n;i++)pr[i]=1/n;
+  for(k=0;k<60;k++){q=[];for(i=0;i<n;i++)q[i]=.15/n;
+   E.forEach(function(e){if(e.w<thr)return;q[e.b]+=.85*pr[e.a]*e.w/(str[e.a]||1);q[e.a]+=.85*pr[e.b]*e.w/(str[e.b]||1);});pr=q;}
+  M={grado:deg,fuerza:str,inter:btw(adj),pr:pr.map(function(v){return v*100;})};
+ }
+ function fmt(m,v){return m==='grado'?String(v):m==='fuerza'?v.toFixed(2):v.toFixed(1);}
+ function norm(m,i){var a=M[m],mx=Math.max.apply(null,a)||1;return a[i]/mx;}
+ function rank(m,i){var a=M[m],c=1;a.forEach(function(v){if(v>a[i]+1e-9)c++;});return c;}
+ function shape(k,rad,cls){return k==='c'?'<circle r="'+rad+'" class="'+cls+'"/>':'<rect x="'+(-rad)+'" y="'+(-rad)+'" width="'+2*rad+'" height="'+2*rad+'" rx="'+(rad*.36).toFixed(1)+'" class="'+cls+'"/>';}
+ // dibujo base
+ var h='<g id="gfE">';
+ E.forEach(function(e,i){h+='<line class="ge" data-e="'+i+'" x1="'+N[e.a].X.toFixed(1)+'" y1="'+N[e.a].Y.toFixed(1)+'" x2="'+N[e.b].X.toFixed(1)+'" y2="'+N[e.b].Y.toFixed(1)+'"/>';});
+ h+='</g><g id="gfN">';
+ N.forEach(function(o,i){h+='<g class="gn '+o.k+'" data-n="'+i+'" transform="translate('+o.X.toFixed(1)+' '+o.Y.toFixed(1)+')"><g class="nd">'+'<circle class="ring" r="20"/>'+shape(o.k,20,'shp')+'</g><text class="lb" text-anchor="middle">'+o.id+'</text></g>';});
+ svg.innerHTML=h+'</g>';
+ var gE=[].slice.call(svg.querySelectorAll('.ge')),gN=[].slice.call(svg.querySelectorAll('.gn'));
+ function nbrs(i){var a=[];E.forEach(function(e,q){if(e.w<thr)return;if(e.a===i)a.push([e.b,e.w,q]);else if(e.b===i)a.push([e.a,e.w,q]);});return a.sort(function(x,y){return y[1]-x[1];});}
+ function cos(a,b){var s=0,na=0,nb=0;D.T.forEach(function(t){var x=D.W[a][t]||0,y=D.W[b][t]||0;s+=x*y;na+=x*x;nb+=y*y;});return s/Math.sqrt(na*nb);}
+ function upd(){
+  compute();
+  document.getElementById('gfDef').innerHTML='<b>'+D.M[met][0]+':</b> '+D.M[met][1];
+  document.getElementById('gfTv').textContent=thr.toFixed(2);
+  var on={};nbrs(sel).forEach(function(q){on[q[2]]=1;});
+  E.forEach(function(e,i){var L=gE[i];L.style.strokeWidth=(.8+e.w*8).toFixed(2)+'px';L.classList.toggle('off',e.w<thr);L.classList.toggle('on',!!on[i]);});
+  gN.forEach(function(g,i){var s=.42+.95*norm(met,i),rad=20*s;
+   g.querySelector('.nd').style.transform='scale('+s.toFixed(3)+')';
+   g.querySelector('.lb').style.transform='translateY('+(rad+15).toFixed(1)+'px)';
+   g.classList.toggle('sel',i===sel);g.classList.toggle('iso',M.grado[i]===0);});
+  panel();
+ }
+ function panel(){
+  var o=N[sel],nb=nbrs(sel),m=nb.length,cx=200,cy=116,i,s='<svg viewBox="0 0 400 232" class="gfego">',pos=[];
+  nb.forEach(function(q,j){var a=-Math.PI/2+j/Math.max(m,1)*2*Math.PI;pos.push([cx+Math.cos(a)*148,cy+Math.sin(a)*78]);});
+  nb.forEach(function(q,j){s+='<line class="el" pathLength="1" style="stroke-width:'+(1+q[1]*8).toFixed(1)+'px;animation-delay:'+(j*70)+'ms" x1="'+cx+'" y1="'+cy+'" x2="'+pos[j][0].toFixed(1)+'" y2="'+pos[j][1].toFixed(1)+'"/>';});
+  nb.forEach(function(q,j){s+='<text class="ew" x="'+((cx+pos[j][0])/2).toFixed(1)+'" y="'+((cy+pos[j][1])/2+3).toFixed(1)+'" text-anchor="middle">'+q[1].toFixed(2)+'</text>';});
+  nb.forEach(function(q,j){var t=N[q[0]],sc=.42+.95*norm(met,q[0]),rad=20*sc*.62,top=pos[j][1]<cy-30;
+   s+='<g class="eg pop" style="animation-delay:'+(120+j*70)+'ms" transform="translate('+pos[j][0].toFixed(1)+' '+pos[j][1].toFixed(1)+')">'+shape(t.k,rad.toFixed(1),'shp '+t.k)+'<text class="lb" text-anchor="middle" y="'+(top?-(rad+6):rad+14).toFixed(1)+'">'+t.id+'</text></g>';});
+  var rc=20*(.42+.95*norm(met,sel))*.8;
+  s+='<g transform="translate('+cx+' '+cy+')"><circle class="ring2" r="'+rc.toFixed(1)+'"/>'+shape(o.k,rc.toFixed(1),'shp '+o.k+' c0')+'<text class="lb c0t" text-anchor="middle" y="4">'+(o.id.length>9?'':o.id)+'</text></g>';
+  if(m===0)s+='<text x="200" y="212" text-anchor="middle" class="ew">Sin conexiones con esta cercanía mínima</text>';
+  s+='</svg>';
+  var chips=['grado','fuerza','inter','pr'].map(function(k){return '<div class="chip'+(k===met?' cur':'')+'"><small>'+D.M[k][0].split(' (')[0]+'</small><b>'+fmt(k,M[k][sel])+'</b><i>#'+rank(k,sel)+' de '+n+'</i></div>';}).join('');
+  var rd='';
+  if(o.k==='c'){var cs=D.C.filter(function(c){return c!==o.id;}).map(function(c){return [c,cos(o.id,c)];}).sort(function(a,b){return b[1]-a[1];}),mx=cs[0],mn=cs[cs.length-1];
+   rd='<p><span class="dt g"></span>Discurso más <b>cercano</b>: <b>'+mx[0]+'</b> <em>('+mx[1].toFixed(2)+')</em></p><p><span class="dt r"></span>Discurso que más <b>contrasta</b>: <b>'+mn[0]+'</b> <em>('+mn[1].toFixed(2)+')</em></p><p class="mu">Similitud coseno de los pesos con cada tópico (1 = mismo discurso, 0 = nada en común).</p>';}
+  else{rd='<p><span class="dt g"></span>Lo abordan sobre todo: <b>'+(nb.slice(0,3).map(function(q){return N[q[0]].id;}).join(', ')||'—')+'</b></p><p><span class="dt r"></span>'+(m>1?'Une discursos de <b>'+m+'</b> personajes: es terreno compartido.':'Tópico casi exclusivo de un personaje.')+'</p><p class="mu">Un tópico muy compartido es campo de disputa; uno exclusivo, bandera propia.</p>';}
+  document.getElementById('gfPanel').innerHTML='<div class="gft"><span class="sw2 '+o.k+'"></span><div><small>SUBGRAFO DE</small><b>'+o.id+'</b></div><em>'+(o.k==='c'?'Personaje':'Tópico')+' · '+m+' conexiones</em></div>'+s+'<div class="chips">'+chips+'</div><div class="gfrd">'+rd+'</div>';
+ }
+ function hov(i){svg.classList.toggle('hv',i>=0);var on={};if(i>=0){nbrs(i).forEach(function(q){on[q[0]]=1;on['e'+q[2]]=1;});on[i]=1;}
+  gN.forEach(function(g,k){g.classList.toggle('nb',!!on[k]);});gE.forEach(function(L,q){L.classList.toggle('hl',!!on['e'+q]);});}
+ svg.addEventListener('click',function(e){var g=e.target.closest('.gn');if(g){sel=+g.dataset.n;upd();}});
+ svg.addEventListener('mouseover',function(e){var g=e.target.closest('.gn');hov(g?+g.dataset.n:-1);});
+ svg.addEventListener('mouseleave',function(){hov(-1);});
+ document.getElementById('gfM').value=met;
+ document.getElementById('gfM').onchange=function(){met=this.value;upd();};
+ document.getElementById('gfT').oninput=function(){thr=this.value/100;upd();};
+ upd();
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
