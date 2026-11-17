@@ -1165,21 +1165,51 @@ document.addEventListener('mousemove',function(e){
    [b[0],b[4]].forEach(function(e){s+='<line x1="'+px(e).toFixed(1)+'" y1="'+(cy-hh/2).toFixed(1)+'" x2="'+px(e).toFixed(1)+'" y2="'+(cy+hh/2).toFixed(1)+'" stroke="'+C[i]+'" stroke-width="1.8"/>';});
    b[5].forEach(function(o){s+='<circle cx="'+px(o).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="3.2" fill="'+CO+'"/>';});});
   s+=tx(w-12,h-4,'valor','end')+tx(w-12,16,'mediana ▮  atípico ●','end');return sv(w,h,s);}
- var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Radar (araña)',radar]],1.25],
+
+ var DM={z:['Centro','Norte','Sur'],p:['Producto A','Producto B','Producto C'],a:['Precio','Calidad','Servicio','Ubicación','Marca']},DN={z:'Zona',p:'Producto',a:'Atributo'},
+  DD=[[[80,65,85,60,72],[58,82,55,78,48],[66,70,62,50,60]],[[72,58,78,52,66],[52,76,48,70,50],[74,64,70,56,58]],[[60,50,70,48,55],[64,70,52,62,46],[82,60,66,44,52]]],
+  RC=['#2F6BFF','#F26B5B','#12B5A6','#F5A524','#7C5CFF'],RS={ax:'a',se:'z',fx:0};
+ function rget(o){return DD[o.z][o.p][o.a];}
+ function rdThird(){return ['z','p','a'].filter(function(k){return k!==RS.ax&&k!==RS.se;})[0];}
+ function radarGen(w,h){var th=rdThird(),axs=DM[RS.ax],ser=DM[RS.se],n=axs.length,cx=w/2,cy=h/2+6,R=Math.min(w*.30,h*.37),s='';
+  function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v];}
+  [.25,.5,.75,1].forEach(function(k){s+='<polygon points="'+axs.map(function(_,i){return pt(i,k).map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="none" stroke="#D5DCE8"/>';});
+  axs.forEach(function(nm,i){var p=pt(i,1),q=pt(i,1.18);s+='<line x1="'+cx.toFixed(1)+'" y1="'+cy.toFixed(1)+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#D5DCE8"/>'+tx(q[0].toFixed(1),(q[1]+4).toFixed(1),nm,'middle',null,12);});
+  ser.forEach(function(nm,j){var pts=axs.map(function(_,i){var o={};o[RS.ax]=i;o[RS.se]=j;o[th]=RS.fx;return pt(i,rget(o)/100);});
+   s+='<polygon points="'+pts.map(function(p){return p.map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="'+RC[j]+'" fill-opacity=".16" stroke="'+RC[j]+'" stroke-width="2.4" stroke-linejoin="round"/>';pts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.2" fill="'+RC[j]+'"/>';});
+   s+='<rect x="8" y="'+(h-18-(ser.length-1-j)*17)+'" width="10" height="10" rx="2" fill="'+RC[j]+'"/>'+tx(24,h-9-(ser.length-1-j)*17,nm,'start',null,12);});
+  return sv(w,h,s);}
+ function rdHtml(w,h){var th=rdThird(),seg=function(key,opts,cur,dis){return opts.map(function(k){return '<button type="button" class="rds'+(cur===k?' on':'')+(dis===k?' dis':'')+'" data-rd="'+key+':'+k+'">'+DN[k]+'s</button>';}).join('');};
+  var fixed=DM[th].map(function(v,i){return '<button type="button" class="rds'+(RS.fx===i?' on':'')+'" data-rd="fx:'+i+'">'+v+'</button>';}).join('');
+  return '<div class="rdc"><div class="rdr"><b>Ejes del radar</b>'+seg('ax',['a','z','p'],RS.ax,null)+'</div><div class="rdr"><b>Una línea por</b>'+seg('se',['z','p','a'].filter(function(k){return k!==RS.ax;}),RS.se,null)+'</div><div class="rdr"><b>Fijar '+DN[th].toLowerCase()+'</b>'+fixed+'</div></div>'+radarGen(w,h-104);}
+ function radarPanel(w,h){return '<div class="rdw" id="vzRad" data-w="'+w+'" data-h="'+h+'">'+rdHtml(w,h)+'</div>';}
+ function heat(w,h){var cols=DM.a,rows=[],s='',lw=124,top=36,cw=(w-lw-12)/5,rh=(h-top-10)/9;
+  function col(v){var t=Math.max(0,Math.min(1,(v-40)/50)),c0=[234,240,255],c1=[47,107,255];return 'rgb('+c0.map(function(a,i){return Math.round(a+(c1[i]-a)*t);}).join(',')+')';}
+  cols.forEach(function(c,j){s+=tx(lw+j*cw+cw/2,top-10,c,'middle',null,11.5);});
+  DM.z.forEach(function(z,zi){DM.p.forEach(function(p,pi){var r=zi*3+pi,y=top+r*rh;s+=tx(lw-6,y+rh/2+4,p.replace('Producto ','Prod. '),'end',null,11.5);
+   DD[zi][pi].forEach(function(v,j){s+='<rect x="'+(lw+j*cw+1).toFixed(1)+'" y="'+(y+1).toFixed(1)+'" width="'+(cw-2).toFixed(1)+'" height="'+(rh-2).toFixed(1)+'" rx="4" fill="'+col(v)+'"/>'+tx(lw+j*cw+cw/2,y+rh/2+4,v,'middle',v>66?'#fff':IN,12);});});
+   var y0=top+zi*3*rh;s+='<rect x="8" y="'+(y0+1).toFixed(1)+'" width="5" height="'+(3*rh-2).toFixed(1)+'" rx="2" fill="'+RC[zi]+'"/>'+tx(18,y0+1.5*rh+4,z,'start',IN,12.5);if(zi)s+='<line x1="8" y1="'+y0.toFixed(1)+'" x2="'+(w-6)+'" y2="'+y0.toFixed(1)+'" stroke="#CBD5E5" stroke-dasharray="3 3"/>';});
+  return sv(w,h,s);}
+ var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack]],1.25],
   ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base + tasa de crecimiento + pronóstico',evol]],1.5],
   ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplots horizontales',boxh]],1],
-  ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo (red)',grafo2]],1]];
+  ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo (red)',grafo2]],1],
+  ['Perfiles','varias dimensiones','var(--coral)','#FFECE9',[['Radar interactivo (zona, producto, atributo)',radarPanel],['Mapa de calor (zona × producto × atributo)',heat]],1]];
 
  var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Radar</b>: comparar perfiles en varias dimensiones (con pocas series).'],
   ['¿Cómo cambia en el tiempo y hacia dónde va?','<b>Línea base</b>: el nivel. <b>Tasa vs mes previo</b>: el ritmo (con ruido y estacionalidad). <b>Tasa vs mismo mes del año previo</b>: la tendencia sin estacionalidad. <b>Pronóstico</b>: lo esperado, siempre con su banda de incertidumbre.'],
   ['¿Cómo se reparten los valores y hay atípicos?','<b>Histograma</b>: la forma de la distribución. <b>Boxplot</b>: mediana, dispersión y atípicos; permite comparar grupos de un vistazo.'],
-  ['¿Se mueven juntas dos variables, o cómo se conectan?','<b>Dispersión</b>: relación entre dos variables numéricas (correlación no es causalidad). <b>Grafo</b>: conexiones entre entidades; el tamaño es la importancia y el grosor, la fuerza del vínculo.']];
+  ['¿Se mueven juntas dos variables, o cómo se conectan?','<b>Dispersión</b>: relación entre dos variables numéricas (correlación no es causalidad). <b>Grafo</b>: conexiones entre entidades; el tamaño es la importancia y el grosor, la fuerza del vínculo.'],
+  ['¿Cómo se compara un perfil que depende de zona, producto y atributo?','<b>Radar</b>: muestra dos dimensiones a la vez (los ejes y las líneas) y obliga a fijar la tercera; por eso conviene poder cambiar cuál va en cada lugar. <b>Mapa de calor</b>: muestra las tres a la vez, con el color como intensidad; es mejor cuando hay muchas combinaciones.']];
  var menu=document.createElement('div'),view=document.createElement('div');menu.className='vzm';view.className='vzv';rows.appendChild(menu);rows.appendChild(view);
  var curV=0;
+ function rdRender(){var el=document.getElementById('vzRad');if(el)el.innerHTML=rdHtml(+el.dataset.w,+el.dataset.h);}
+ view.addEventListener('click',function(e){var b=e.target.closest('[data-rd]');if(!b)return;var p=b.dataset.rd.split(':'),k=p[0],v=p[1];
+  if(k==='ax'){RS.ax=v;if(RS.se===v)RS.se=['z','p','a'].filter(function(q){return q!==v;})[0];RS.fx=0;}else if(k==='se'){RS.se=v;RS.fx=0;}else RS.fx=+v;rdRender();});
  function showV(i){curV=i;var r=R[i],k=r[4].length,w=k===3?272:k===2?414:852,h=352;
   [].forEach.call(menu.children,function(b,j){b.classList.toggle('on',j===i);});
   view.style.setProperty('--c',r[2]);view.style.setProperty('--t',r[3]);
-  view.innerHTML='<div class="vzg" style="grid-template-columns:repeat('+k+',1fr)">'+r[4].map(function(c){return '<figure class="vzf big"><span>'+c[0]+'</span>'+c[1](w,h)+'</figure>';}).join('')+'</div><div class="vzi"><div class="vzq">'+INFO[i][0]+'</div><p>'+INFO[i][1]+'</p></div>';}
+  view.innerHTML='<div class="vzg" style="grid-template-columns:repeat('+k+',1fr)">'+r[4].map(function(c){return '<figure class="vzf big"><span>'+c[0]+'</span>'+c[1](w,h)+'</figure>';}).join('')+'</div><div class="vzi"><div class="vzq">'+INFO[i][0]+'</div><p>'+INFO[i][1]+'</p></div>';rdRender();}
  R.forEach(function(r,i){var b=document.createElement('button');b.type='button';b.className='vzbtn';b.style.setProperty('--c',r[2]);b.style.setProperty('--t',r[3]);
   b.innerHTML='<h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzs">'+r[4].map(function(c){return '<span>'+(c[0].indexOf(' + ')>0?'Línea · tasas · pronóstico':c[0].split(' (')[0])+'</span>';}).join('')+'</div>';
   b.onclick=function(){showV(i);};menu.appendChild(b);});
