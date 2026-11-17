@@ -1207,26 +1207,26 @@ document.addEventListener('mousemove',function(e){
 
  var skSel=null;
  function sankey(w,h){
-  var Z=['Centro','Norte','Sur','Este','Oeste'],P=['Producto A','Producto B','Producto C'],AT=['Precio','Calidad','Servicio','Marca'],PC=[BL,TL,AM],
-   M=[[40,25,13],[30,22,12],[26,15,11],[22,14,9],[15,9,7]],Q=[[45,30,25,33],[18,30,15,22],[20,8,14,10]],
-   zt=M.map(function(r){return r[0]+r[1]+r[2];}),pt=[0,1,2].map(function(j){return M.reduce(function(a,r){return a+r[j];},0);}),at=[0,1,2,3].map(function(l){return Q.reduce(function(a,r){return a+r[l];},0);}),
-   tot=zt.reduce(function(a,b){return a+b;},0),gl=10,gm=26,ga=16,k=(h-44-4*gl)/tot,xa=84,xb=w*.47,xc=w-112,nw=14,s='',i,j,l;
-  var colH=function(n,g){return tot*k+(n-1)*g;},top=function(n,g){return 24+((h-44)-colH(n,g))/2;};
+  var Z=['Centro','Norte','Sur','Este','Oeste'],P=['Producto A','Producto B','Producto C'],AT=['Minisúper','Supermercado','Departamentales','Abarrotes','Plataformas digitales'],EM=['🏪','🛒','🏬','🧺','📱'],PC=[BL,TL,AM],
+   M=[[40,25,13],[30,22,12],[26,15,11],[22,14,9],[15,9,7]],Q=[[38,30,12,33,20],[14,28,17,10,16],[12,8,6,16,10]],
+   zt=M.map(function(r){return r[0]+r[1]+r[2];}),pt=[0,1,2].map(function(j){return M.reduce(function(a,r){return a+r[j];},0);}),at=[0,1,2,3,4].map(function(l){return Q.reduce(function(a,r){return a+r[l];},0);}),
+   tot=zt.reduce(function(a,b){return a+b;},0),gl=10,gm=38,ga=14,RH=h-82,k=(RH-4*ga)/tot,xa=84,xb=w*.46,xc=w-150,nw=14,s='',i,j,l;
+  var colH=function(n,g){return tot*k+(n-1)*g;},top=function(n,g){return 64+(RH-colH(n,g))/2;};
   var ly=[],y=top(5,gl);for(i=0;i<5;i++){ly.push(y);y+=zt[i]*k+gl;}
   var my=[];y=top(3,gm);for(j=0;j<3;j++){my.push(y);y+=pt[j]*k+gm;}
-  var ry=[];y=top(4,ga);for(l=0;l<4;l++){ry.push(y);y+=at[l]*k+ga;}
+  var ry=[];y=top(5,ga);for(l=0;l<5;l++){ry.push(y);y+=at[l]*k+ga;}
   function tz(i,j){return skSel===null?.4:(skSel.t==='z'?(skSel.i===i?.75:.07):skSel.t==='p'?(skSel.i===j?.75:.07):.22);}
   function ta(j,l){return skSel===null?.4:(skSel.t==='p'?(skSel.i===j?.75:.07):skSel.t==='a'?(skSel.i===l?.75:.07):.22);}
   var lo=ly.slice(),mo=my.slice(),mo2=my.slice(),ro=ry.slice(),xm1=(xa+nw+xb)/2,xm2=(xb+nw+xc)/2;
   function rib(xs,ys,xe,ye,v,xm,col,op){return '<path d="M'+xs+' '+ys.toFixed(1)+'C'+xm+' '+ys.toFixed(1)+','+xm+' '+ye.toFixed(1)+','+xe+' '+ye.toFixed(1)+'L'+xe+' '+(ye+v).toFixed(1)+'C'+xm+' '+(ye+v).toFixed(1)+','+xm+' '+(ys+v).toFixed(1)+','+xs+' '+(ys+v).toFixed(1)+'Z" fill="'+col+'" opacity="'+op+'" style="transition:opacity .25s"/>';}
   for(i=0;i<5;i++)for(j=0;j<3;j++){var v=M[i][j]*k;s+=rib(xa+nw,lo[i],xb,mo[j],v,xm1,PC[j],tz(i,j));lo[i]+=v;mo[j]+=v;}
-  for(j=0;j<3;j++)for(l=0;l<4;l++){var v2=Q[j][l]*k;s+=rib(xb+nw,mo2[j],xc,ro[l],v2,xm2,PC[j],ta(j,l));mo2[j]+=v2;ro[l]+=v2;}
+  for(j=0;j<3;j++)for(l=0;l<5;l++){var v2=Q[j][l]*k;s+=rib(xb+nw,mo2[j],xc,ro[l],v2,xm2,PC[j],ta(j,l));mo2[j]+=v2;ro[l]+=v2;}
   var halo='paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round;';
   function sel(t,i){return skSel&&skSel.t===t&&skSel.i===i;}
-  for(i=0;i<5;i++)s+='<g data-sk="z'+i+'" style="cursor:pointer"><rect x="'+xa+'" y="'+ly[i].toFixed(1)+'" width="'+nw+'" height="'+(zt[i]*k).toFixed(1)+'" rx="3" fill="'+(sel('z',i)?'#0B1F44':'#5B6B86')+'"/>'+tx(xa-6,(ly[i]+zt[i]*k/2+4).toFixed(1),Z[i],'end',IN,12)+'</g>';
-  for(j=0;j<3;j++)s+='<g data-sk="p'+j+'" style="cursor:pointer"><rect x="'+xb+'" y="'+my[j].toFixed(1)+'" width="'+nw+'" height="'+(pt[j]*k).toFixed(1)+'" rx="3" fill="'+PC[j]+'" stroke="'+(sel('p',j)?'#0B1F44':'#fff')+'" stroke-width="'+(sel('p',j)?2.5:1.5)+'"/><text x="'+(xb+nw/2)+'" y="'+(my[j]-6).toFixed(1)+'" text-anchor="middle" class="vt" style="font-weight:600;fill:#1B2336;'+halo+'">'+P[j]+' · '+pt[j]+'</text></g>';
-  for(l=0;l<4;l++)s+='<g data-sk="a'+l+'" style="cursor:pointer"><rect x="'+xc+'" y="'+ry[l].toFixed(1)+'" width="'+nw+'" height="'+(at[l]*k).toFixed(1)+'" rx="3" fill="'+(sel('a',l)?'#0B1F44':'#5B6B86')+'"/>'+tx(xc+nw+6,(ry[l]+at[l]*k/2-1).toFixed(1),AT[l],'start',IN,12)+tx(xc+nw+6,(ry[l]+at[l]*k/2+13).toFixed(1),at[l]+' ('+Math.round(at[l]/tot*100)+' %)','start','#667085',11)+'</g>';
-  s+=tx(xa+nw/2,12,'ZONA','middle','#667085',10.5)+tx(xb+nw/2,12,'PRODUCTO','middle','#667085',10.5)+tx(xc+nw/2,12,'ATRIBUTO VALORADO','middle','#667085',10.5)+tx(w/2,h-6,'Clic en una zona, un producto o un atributo para seguir su flujo','middle','#667085',10.5);
+  for(i=0;i<5;i++)s+='<g data-sk="z'+i+'" style="cursor:pointer"><rect x="'+xa+'" y="'+ly[i].toFixed(1)+'" width="'+nw+'" height="'+(zt[i]*k).toFixed(1)+'" rx="3" fill="'+(sel('z',i)?'#0B1F44':'#5B6B86')+'"/>'+tx(xa-6,(ly[i]+zt[i]*k/2-1).toFixed(1),Z[i],'end',IN,12)+tx(xa-6,(ly[i]+zt[i]*k/2+12).toFixed(1),zt[i],'end','#667085',10.5)+'</g>';
+  for(j=0;j<3;j++)s+='<g data-sk="p'+j+'" style="cursor:pointer"><rect x="'+xb+'" y="'+my[j].toFixed(1)+'" width="'+nw+'" height="'+(pt[j]*k).toFixed(1)+'" rx="3" fill="'+PC[j]+'" stroke="'+(sel('p',j)?'#0B1F44':'#fff')+'" stroke-width="'+(sel('p',j)?2.5:1.5)+'"/><text x="'+(xb+nw/2)+'" y="'+(my[j]-9).toFixed(1)+'" text-anchor="middle" class="vt" style="font-weight:600;fill:'+PC[j]+';font-size:12.5px;'+halo+'">'+P[j]+'</text><text x="'+(xb+nw/2)+'" y="'+(my[j]-22).toFixed(1)+'" text-anchor="middle" class="vt" style="'+halo+'">'+pt[j]+' ('+Math.round(pt[j]/tot*100)+' %)</text></g>';
+  for(l=0;l<5;l++)s+='<g data-sk="a'+l+'" style="cursor:pointer"><rect x="'+xc+'" y="'+ry[l].toFixed(1)+'" width="'+nw+'" height="'+(at[l]*k).toFixed(1)+'" rx="3" fill="'+(sel('a',l)?'#0B1F44':'#5B6B86')+'"/>'+tx(xc+nw+6,(ry[l]+at[l]*k/2-1).toFixed(1),EM[l]+' '+AT[l],'start',IN,11.5)+tx(xc+nw+6,(ry[l]+at[l]*k/2+12).toFixed(1),at[l]+' ('+Math.round(at[l]/tot*100)+' %)','start','#667085',10.5)+'</g>';
+  s+=tx(xa+nw/2,14,'ZONA','middle','#667085',10.5)+tx(xb+nw/2,14,'PRODUCTO','middle','#667085',10.5)+tx(xc+nw/2,14,'FORMATO DE TIENDA','middle','#667085',10.5)+tx(w/2,h-6,'Clic en una zona, un producto o un formato para seguir su flujo','middle','#667085',10.5);
   return sv(w,h,s);}
  function radar(w,h){var ax=['Precio','Calidad','Servicio','Ubicación','Marca'],A=[.78,.62,.85,.55,.7],B=[.55,.8,.5,.78,.45],cx=w/2+10,cy=h/2+8,R=Math.min(w*.27,h*.33),s='';
   function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/5;return [cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v];}
@@ -1297,13 +1297,13 @@ document.addEventListener('mousemove',function(e){
    DD[zi][pi].forEach(function(v,j){s+='<rect x="'+(lw+j*cw+1).toFixed(1)+'" y="'+(y+1).toFixed(1)+'" width="'+(cw-2).toFixed(1)+'" height="'+(rh-2).toFixed(1)+'" rx="4" fill="'+col(v,zi)+'"/>'+tx(lw+j*cw+cw/2,y+rh/2+4,v,'middle',v>66?'#fff':IN,12);});});
    var y0=top+zi*3*rh;s+='<rect x="8" y="'+(y0+1).toFixed(1)+'" width="5" height="'+(3*rh-2).toFixed(1)+'" rx="2" fill="'+RC[zi]+'"/>'+tx(18,y0+1.5*rh+4,z,'start',IN,12.5);if(zi)s+='<line x1="8" y1="'+y0.toFixed(1)+'" x2="'+(w-6)+'" y2="'+y0.toFixed(1)+'" stroke="#CBD5E5" stroke-dasharray="3 3"/>';});
   return sv(w,h,s);}
- var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Sankey (zona → producto → atributo)',sankey]],1.25],
+ var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Sankey (zona → producto → formato de tienda)',sankey]],1.25],
   ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base + tasa de crecimiento + pronóstico',evol]],1.5],
   ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplots horizontales',boxh]],1],
   ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo: productos que se compran juntos',grafo2]],1],
   ['Perfiles','varias dimensiones','var(--coral)','#FFECE9',[['Radar interactivo (zona, producto, atributo)',radarPanel],['Mapa de calor (zona × producto × atributo)',heat]],1]];
 
- var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Sankey</b>: mostrar cómo fluye una cantidad entre varias categorías (aquí, de zona a producto y a atributo valorado); el ancho de cada banda es el valor.'],
+ var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Sankey</b>: mostrar cómo fluye una cantidad entre varias categorías (aquí, de zona a producto y a formato de tienda); el ancho de cada banda es el valor.'],
   ['¿Cómo cambia en el tiempo y hacia dónde va?','<b>Línea base</b>: el nivel. <b>Tasa vs mes previo</b>: el ritmo (con ruido y estacionalidad). <b>Tasa vs mismo mes del año previo</b>: la tendencia sin estacionalidad. <b>Pronóstico</b>: lo esperado, siempre con su banda de incertidumbre.'],
   ['¿Cómo se reparten los valores y hay atípicos?','<b>Histograma</b>: la forma de la distribución. <b>Boxplot</b>: mediana, dispersión y atípicos; permite comparar grupos de un vistazo.'],
   ['¿Se mueven juntas dos variables, o cómo se conectan?','<b>Dispersión</b>: relación entre dos variables numéricas (correlación no es causalidad). <b>Grafo</b>: conexiones entre entidades; el tamaño es la importancia y el grosor, la fuerza del vínculo.'],
