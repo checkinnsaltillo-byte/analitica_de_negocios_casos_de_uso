@@ -1,4 +1,4 @@
-# Datos para decidir · Probabilidad y estadística aplicada
+# Estadística para comunicar decisiones · Probabilidad y estadística
 
 Presentación ejecutiva (HTML, 43 slides, 60 min) para alumnos de Comunicación Corporativa.
 

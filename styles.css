@@ -694,3 +694,16 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .slide.maqfull .maqbox{inset:0 0 46px 0}
 .slide.maqfull .maqbar{position:absolute;left:0;right:0;bottom:-46px;top:auto;height:46px;background:#fff;border-top:1px solid var(--line);border-radius:0;padding:0 16px;justify-content:flex-end;box-shadow:none}
 .slide.maqfull .maqbox{overflow:visible}
+
+/* ===== Cuatro enfoques (lámina 8) ===== */
+.enfs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;height:100%}
+.enf{display:flex;flex-direction:column;border:1.5px solid var(--line);border-top:5px solid var(--c);border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 8px 24px rgba(8,20,43,.06)}
+.eim{height:104px;background:var(--t);flex:none}.eim svg{width:100%;height:100%;display:block}
+.eh{display:flex;align-items:center;gap:10px;padding:10px 14px 4px}.eh b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;font-weight:500;font-size:14px;display:flex;align-items:center;justify-content:center}.eh h4{font-size:16.5px;font-weight:500;line-height:1.2;color:var(--ink)}
+.enf ul{list-style:none;padding:4px 14px 0;flex:1}.enf li{position:relative;font-size:12.5px;line-height:1.4;color:#344054;padding-left:14px;margin-bottom:6px}.enf li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--c)}
+.elb{font-size:10px;letter-spacing:.14em;color:var(--mute);padding:0 14px 5px}
+.etc{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 12px}
+.tch{font-size:11.5px;line-height:1.2;padding:5px 9px;border-radius:99px;background:color-mix(in srgb,var(--c) 10%,#fff);color:var(--ink);border:1px solid color-mix(in srgb,var(--c) 30%,#fff);transition:.25s}
+.tch[data-go]{cursor:pointer}.tch[data-go]::after{content:" ↗";opacity:.55}
+.tch[data-go]:hover{background:var(--c);color:#fff;border-color:var(--c);transform:translateY(-2px)}
+.etc{min-height:104px;align-content:flex-start}.enf ul{flex:none;min-height:196px}
