@@ -5,7 +5,7 @@
   --top:56px; --bot:46px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:300;-webkit-font-smoothing:antialiased}
+html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:300;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 a{color:inherit;text-decoration:none}
 
@@ -754,3 +754,10 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .ocu{font-style:normal;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#EEF2F8;color:#667085;border-radius:99px;padding:2px 8px;margin-left:8px}
 .crumb .stp-tag.ocu2{background:#98A6BF}
 .gmc p.uso{background:#EEF3FF;border-left:3px solid #2F6BFF;border-radius:0 8px 8px 0;padding:4px 8px;color:#243350;font-size:11.2px}.gmc p.uso b{color:#2F6BFF}
+
+/* ===== Móvil: aviso para girar el teléfono ===== */
+#rot{position:fixed;inset:0;z-index:9999;background:radial-gradient(900px 600px at 70% 20%,#16346B,#08142B);color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:30px}
+#rot.on{display:flex}#rot svg{width:84px;height:84px;margin-bottom:18px;animation:rotPh 2.2s ease-in-out infinite}
+@keyframes rotPh{0%,25%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+#rot p{font-size:19px;font-weight:300;line-height:1.4;max-width:300px;margin:0 auto 22px}#rot b{font-weight:500}
+#rot button{background:#fff;color:#08142B;border:0;border-radius:99px;padding:11px 24px;font-size:14px;font-family:inherit;cursor:pointer}

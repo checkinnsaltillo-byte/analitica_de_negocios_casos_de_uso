@@ -671,13 +671,16 @@ document.addEventListener('wheel',function(e){var n=Date.now();if(n-wl<700||idx.
 
 /* ================= Escala del escenario ================= */
 var stage=document.getElementById('stage');
+var rotOff=false,rotEl=document.getElementById('rot');
+function rotChk(){if(!rotEl)return;var vw=document.documentElement.clientWidth||innerWidth,vh=innerHeight;rotEl.classList.toggle('on',!rotOff&&vw<760&&vh>vw);}
+if(rotEl)document.getElementById('rotGo').onclick=function(){rotOff=true;rotChk();};
 function fit(){
- var top=56,bot=46,w=innerWidth,h=innerHeight-top-bot;
+ var top=56,bot=46,w=document.documentElement.clientWidth||innerWidth,h=innerHeight-top-bot;rotChk();
  var s=Math.min(w/1280,h/720)*.97;
  stage.style.transform='translate(-50%,-50%) scale('+s+')';
  stage.style.top=(top+h/2)+'px';
 }
-addEventListener('resize',fit);fit();
+addEventListener('resize',fit);addEventListener('orientationchange',function(){setTimeout(fit,200);});fit();
 
 /* ================= Tooltips y resaltado ================= */
 var tip=document.getElementById('tip');
