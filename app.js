@@ -1204,20 +1204,29 @@ document.addEventListener('mousemove',function(e){
   s+=tx(10,h-22,'Tamaño = fuerza total de sus vínculos · Grosor = frecuencia con la que se compran juntos','start','#667085',10.5)+tx(10,h-8,'Color = comunidad · Línea punteada = puente entre comunidades · Clic en un producto para ver sus vínculos','start','#667085',10.5);
   return sv(w,h,s);}
 
+
  var skSel=null;
  function sankey(w,h){
-  var Z=['Centro','Norte','Sur','Este','Oeste'],P=['Producto A','Producto B','Producto C'],PC=[BL,TL,AM],
-   M=[[40,25,13],[30,22,12],[26,15,11],[22,14,9],[15,9,7]],zt=M.map(function(r){return r[0]+r[1]+r[2];}),pt=[0,1,2].map(function(j){return M.reduce(function(a,r){return a+r[j];},0);}),
-   tot=zt.reduce(function(a,b){return a+b;},0),gl=9,gr=22,k=(h-30-4*gl)/tot,x0=62,x1=w-86,nw=14,s='',i,j;
-  var ly=[],y=14;for(i=0;i<5;i++){ly.push(y);y+=zt[i]*k+gl;}
-  var ry=[],yr=14+((h-30-4*gl)-(tot*k))/2+((4*gl)-(2*gr))/2;for(j=0;j<3;j++){ry.push(yr);yr+=pt[j]*k+gr;}
-  var lo=ly.slice(),ro=ry.slice(),xm=(x0+nw+x1)/2;
-  function on(zi,pj){return skSel===null||(skSel.t==='z'&&skSel.i===zi)||(skSel.t==='p'&&skSel.i===pj);}
-  for(i=0;i<5;i++)for(j=0;j<3;j++){var v=M[i][j]*k,a1=lo[i],b1=ro[j];lo[i]+=v;ro[j]+=v;
-   s+='<path d="M'+(x0+nw)+' '+a1.toFixed(1)+'C'+xm+' '+a1.toFixed(1)+','+xm+' '+b1.toFixed(1)+','+x1+' '+b1.toFixed(1)+'L'+x1+' '+(b1+v).toFixed(1)+'C'+xm+' '+(b1+v).toFixed(1)+','+xm+' '+(a1+v).toFixed(1)+','+(x0+nw)+' '+(a1+v).toFixed(1)+'Z" fill="'+PC[j]+'" opacity="'+(on(i,j)?(skSel===null?.42:.7):.07)+'" style="transition:opacity .25s"/>';}
-  for(i=0;i<5;i++)s+='<g data-sk="z'+i+'" style="cursor:pointer"><rect x="'+x0+'" y="'+ly[i].toFixed(1)+'" width="'+nw+'" height="'+(zt[i]*k).toFixed(1)+'" rx="3" fill="'+(skSel&&skSel.t==='z'&&skSel.i===i?'#0B1F44':'#5B6B86')+'"/>'+tx(x0-6,(ly[i]+zt[i]*k/2+4).toFixed(1),Z[i],'end',IN,12)+'</g>';
-  for(j=0;j<3;j++)s+='<g data-sk="p'+j+'" style="cursor:pointer"><rect x="'+x1+'" y="'+ry[j].toFixed(1)+'" width="'+nw+'" height="'+(pt[j]*k).toFixed(1)+'" rx="3" fill="'+PC[j]+'"/>'+tx(x1+nw+6,(ry[j]+pt[j]*k/2-1).toFixed(1),P[j],'start',IN,12)+tx(x1+nw+6,(ry[j]+pt[j]*k/2+13).toFixed(1),pt[j]+' ('+Math.round(pt[j]/tot*100)+' %)','start','#667085',11)+'</g>';
-  s+=tx(x0+nw/2,10,'ZONA','middle','#667085',10.5)+tx(x1+nw/2,10,'PRODUCTO','middle','#667085',10.5)+tx(w/2,h-6,'Clic en una zona o un producto para seguir su flujo','middle','#667085',10.5);
+  var Z=['Centro','Norte','Sur','Este','Oeste'],P=['Producto A','Producto B','Producto C'],AT=['Precio','Calidad','Servicio','Marca'],PC=[BL,TL,AM],
+   M=[[40,25,13],[30,22,12],[26,15,11],[22,14,9],[15,9,7]],Q=[[45,30,25,33],[18,30,15,22],[20,8,14,10]],
+   zt=M.map(function(r){return r[0]+r[1]+r[2];}),pt=[0,1,2].map(function(j){return M.reduce(function(a,r){return a+r[j];},0);}),at=[0,1,2,3].map(function(l){return Q.reduce(function(a,r){return a+r[l];},0);}),
+   tot=zt.reduce(function(a,b){return a+b;},0),gl=10,gm=26,ga=16,k=(h-44-4*gl)/tot,xa=84,xb=w*.47,xc=w-112,nw=14,s='',i,j,l;
+  var colH=function(n,g){return tot*k+(n-1)*g;},top=function(n,g){return 24+((h-44)-colH(n,g))/2;};
+  var ly=[],y=top(5,gl);for(i=0;i<5;i++){ly.push(y);y+=zt[i]*k+gl;}
+  var my=[];y=top(3,gm);for(j=0;j<3;j++){my.push(y);y+=pt[j]*k+gm;}
+  var ry=[];y=top(4,ga);for(l=0;l<4;l++){ry.push(y);y+=at[l]*k+ga;}
+  function tz(i,j){return skSel===null?.4:(skSel.t==='z'?(skSel.i===i?.75:.07):skSel.t==='p'?(skSel.i===j?.75:.07):.22);}
+  function ta(j,l){return skSel===null?.4:(skSel.t==='p'?(skSel.i===j?.75:.07):skSel.t==='a'?(skSel.i===l?.75:.07):.22);}
+  var lo=ly.slice(),mo=my.slice(),mo2=my.slice(),ro=ry.slice(),xm1=(xa+nw+xb)/2,xm2=(xb+nw+xc)/2;
+  function rib(xs,ys,xe,ye,v,xm,col,op){return '<path d="M'+xs+' '+ys.toFixed(1)+'C'+xm+' '+ys.toFixed(1)+','+xm+' '+ye.toFixed(1)+','+xe+' '+ye.toFixed(1)+'L'+xe+' '+(ye+v).toFixed(1)+'C'+xm+' '+(ye+v).toFixed(1)+','+xm+' '+(ys+v).toFixed(1)+','+xs+' '+(ys+v).toFixed(1)+'Z" fill="'+col+'" opacity="'+op+'" style="transition:opacity .25s"/>';}
+  for(i=0;i<5;i++)for(j=0;j<3;j++){var v=M[i][j]*k;s+=rib(xa+nw,lo[i],xb,mo[j],v,xm1,PC[j],tz(i,j));lo[i]+=v;mo[j]+=v;}
+  for(j=0;j<3;j++)for(l=0;l<4;l++){var v2=Q[j][l]*k;s+=rib(xb+nw,mo2[j],xc,ro[l],v2,xm2,PC[j],ta(j,l));mo2[j]+=v2;ro[l]+=v2;}
+  var halo='paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round;';
+  function sel(t,i){return skSel&&skSel.t===t&&skSel.i===i;}
+  for(i=0;i<5;i++)s+='<g data-sk="z'+i+'" style="cursor:pointer"><rect x="'+xa+'" y="'+ly[i].toFixed(1)+'" width="'+nw+'" height="'+(zt[i]*k).toFixed(1)+'" rx="3" fill="'+(sel('z',i)?'#0B1F44':'#5B6B86')+'"/>'+tx(xa-6,(ly[i]+zt[i]*k/2+4).toFixed(1),Z[i],'end',IN,12)+'</g>';
+  for(j=0;j<3;j++)s+='<g data-sk="p'+j+'" style="cursor:pointer"><rect x="'+xb+'" y="'+my[j].toFixed(1)+'" width="'+nw+'" height="'+(pt[j]*k).toFixed(1)+'" rx="3" fill="'+PC[j]+'" stroke="'+(sel('p',j)?'#0B1F44':'#fff')+'" stroke-width="'+(sel('p',j)?2.5:1.5)+'"/><text x="'+(xb+nw/2)+'" y="'+(my[j]-6).toFixed(1)+'" text-anchor="middle" class="vt" style="font-weight:600;fill:#1B2336;'+halo+'">'+P[j]+' · '+pt[j]+'</text></g>';
+  for(l=0;l<4;l++)s+='<g data-sk="a'+l+'" style="cursor:pointer"><rect x="'+xc+'" y="'+ry[l].toFixed(1)+'" width="'+nw+'" height="'+(at[l]*k).toFixed(1)+'" rx="3" fill="'+(sel('a',l)?'#0B1F44':'#5B6B86')+'"/>'+tx(xc+nw+6,(ry[l]+at[l]*k/2-1).toFixed(1),AT[l],'start',IN,12)+tx(xc+nw+6,(ry[l]+at[l]*k/2+13).toFixed(1),at[l]+' ('+Math.round(at[l]/tot*100)+' %)','start','#667085',11)+'</g>';
+  s+=tx(xa+nw/2,12,'ZONA','middle','#667085',10.5)+tx(xb+nw/2,12,'PRODUCTO','middle','#667085',10.5)+tx(xc+nw/2,12,'ATRIBUTO VALORADO','middle','#667085',10.5)+tx(w/2,h-6,'Clic en una zona, un producto o un atributo para seguir su flujo','middle','#667085',10.5);
   return sv(w,h,s);}
  function radar(w,h){var ax=['Precio','Calidad','Servicio','Ubicación','Marca'],A=[.78,.62,.85,.55,.7],B=[.55,.8,.5,.78,.45],cx=w/2+10,cy=h/2+8,R=Math.min(w*.27,h*.33),s='';
   function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/5;return [cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v];}
@@ -1288,13 +1297,13 @@ document.addEventListener('mousemove',function(e){
    DD[zi][pi].forEach(function(v,j){s+='<rect x="'+(lw+j*cw+1).toFixed(1)+'" y="'+(y+1).toFixed(1)+'" width="'+(cw-2).toFixed(1)+'" height="'+(rh-2).toFixed(1)+'" rx="4" fill="'+col(v,zi)+'"/>'+tx(lw+j*cw+cw/2,y+rh/2+4,v,'middle',v>66?'#fff':IN,12);});});
    var y0=top+zi*3*rh;s+='<rect x="8" y="'+(y0+1).toFixed(1)+'" width="5" height="'+(3*rh-2).toFixed(1)+'" rx="2" fill="'+RC[zi]+'"/>'+tx(18,y0+1.5*rh+4,z,'start',IN,12.5);if(zi)s+='<line x1="8" y1="'+y0.toFixed(1)+'" x2="'+(w-6)+'" y2="'+y0.toFixed(1)+'" stroke="#CBD5E5" stroke-dasharray="3 3"/>';});
   return sv(w,h,s);}
- var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Sankey (flujo zona → producto)',sankey]],1.25],
+ var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Sankey (zona → producto → atributo)',sankey]],1.25],
   ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base + tasa de crecimiento + pronóstico',evol]],1.5],
   ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplots horizontales',boxh]],1],
   ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo: productos que se compran juntos',grafo2]],1],
   ['Perfiles','varias dimensiones','var(--coral)','#FFECE9',[['Radar interactivo (zona, producto, atributo)',radarPanel],['Mapa de calor (zona × producto × atributo)',heat]],1]];
 
- var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Sankey</b>: mostrar cómo se reparte o fluye una cantidad entre categorías (aquí, de zona a producto); el ancho de cada banda es el valor.'],
+ var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Sankey</b>: mostrar cómo fluye una cantidad entre varias categorías (aquí, de zona a producto y a atributo valorado); el ancho de cada banda es el valor.'],
   ['¿Cómo cambia en el tiempo y hacia dónde va?','<b>Línea base</b>: el nivel. <b>Tasa vs mes previo</b>: el ritmo (con ruido y estacionalidad). <b>Tasa vs mismo mes del año previo</b>: la tendencia sin estacionalidad. <b>Pronóstico</b>: lo esperado, siempre con su banda de incertidumbre.'],
   ['¿Cómo se reparten los valores y hay atípicos?','<b>Histograma</b>: la forma de la distribución. <b>Boxplot</b>: mediana, dispersión y atípicos; permite comparar grupos de un vistazo.'],
   ['¿Se mueven juntas dos variables, o cómo se conectan?','<b>Dispersión</b>: relación entre dos variables numéricas (correlación no es causalidad). <b>Grafo</b>: conexiones entre entidades; el tamaño es la importancia y el grosor, la fuerza del vínculo.'],
@@ -1310,7 +1319,9 @@ document.addEventListener('mousemove',function(e){
  function showV(i){curV=i;var r=R[i],k=r[4].length,w=k===3?272:k===2?414:852,h=352,WS=r[0]==='Relación'?[290,536]:r[0]==='Comparar'?[240,240,380]:null;
   [].forEach.call(menu.children,function(b,j){b.classList.toggle('on',j===i);});
   view.style.setProperty('--c',r[2]);view.style.setProperty('--t',r[3]);
-  view.innerHTML='<div class="vzg" style="grid-template-columns:'+(WS?(r[0]==='Comparar'?'1fr 1fr 1.6fr':'1fr 1.85fr'):'repeat('+k+',1fr)')+'">'+r[4].map(function(c,ci){return '<figure class="vzf big"><span>'+c[0]+'</span>'+c[1](WS?WS[ci]:w,h)+'</figure>';}).join('')+'</div><div class="vzi"><div class="vzq">'+INFO[i][0]+'</div><p>'+INFO[i][1]+'</p></div>';rdRender();}
+  var fg=function(c,ww,hh){return '<figure class="vzf big"><span>'+c[0]+'</span>'+c[1](ww,hh)+'</figure>';};
+  var grid=r[0]==='Comparar'?'<div class="vzg" style="grid-template-columns:1fr 2.2fr"><div class="vzcol">'+fg(r[4][0],330,170)+fg(r[4][1],330,170)+'</div>'+fg(r[4][2],560,352)+'</div>':'<div class="vzg" style="grid-template-columns:'+(WS?'1fr 1.85fr':'repeat('+k+',1fr)')+'">'+r[4].map(function(c,ci){return fg(c,WS?WS[ci]:w,h);}).join('')+'</div>';
+  view.innerHTML=grid+'<div class="vzi"><div class="vzq">'+INFO[i][0]+'</div><p>'+INFO[i][1]+'</p></div>';rdRender();}
  R.forEach(function(r,i){var b=document.createElement('button');b.type='button';b.className='vzbtn';b.style.setProperty('--c',r[2]);b.style.setProperty('--t',r[3]);
   b.innerHTML='<h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzs">'+r[4].map(function(c){return '<span>'+(c[0].indexOf(' + ')>0?'Línea · tasas · pronóstico':c[0].split(' (')[0])+'</span>';}).join('')+'</div>';
   b.onclick=function(){showV(i);};menu.appendChild(b);});

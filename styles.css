@@ -750,3 +750,4 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vlt{font-size:10.5px;letter-spacing:.14em;color:var(--mute);margin:6px 0 2px}
 .vtx{font-size:10px;fill:#667085;font-family:var(--font)}
 #vlLine svg,#vlHeat svg{width:100%;display:block}
+.vzcol{display:flex;flex-direction:column;gap:12px;min-height:0}.vzcol .vzf{flex:1;min-height:0}
