@@ -751,3 +751,5 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vtx{font-size:10px;fill:#667085;font-family:var(--font)}
 #vlLine svg,#vlHeat svg{width:100%;display:block}
 .vzcol{display:flex;flex-direction:column;gap:12px;min-height:0}.vzcol .vzf{flex:1;min-height:0}
+.ocu{font-style:normal;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#EEF2F8;color:#667085;border-radius:99px;padding:2px 8px;margin-left:8px}
+.crumb .stp-tag.ocu2{background:#98A6BF}

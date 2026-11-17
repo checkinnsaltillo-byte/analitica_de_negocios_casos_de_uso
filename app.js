@@ -337,7 +337,7 @@ function mChart(k){
 function medios(){
  var B=BLOCKS[2],M=[['1','Normalización','Limpia el texto: minúsculas, sin ruido ni símbolos.','n1','A'],['2','Tokenización','Separa el texto en palabras o frases.','n2','A'],['3','Representación de documentos','Convierte cada nota en números (matriz documento-término).','n3','A'],['4','Reconocimiento de entidades','Detecta personas, lugares y organizaciones.','n4','B'],['5','Georreferenciación','Ubica cada noticia en el mapa.','n5','B'],['6','Clasificación','Asigna temas automáticamente a cada nota.','n6','B'],['7','Análisis de sentimientos','Mide el tono: negativo, neutral o positivo.','n7','B']];
  function card(m,i){return '<div class="mcard sa rv '+m[4]+'" style="--i:'+(4+i)+'" data-tip="'+m[1]+'|'+m[2]+'"><div class="mt"><b>'+m[0]+'</b>'+m[1]+'</div><svg viewBox="0 0 150 100" class="mv">'+MM[m[3]]()+'</svg><p>'+m[2]+'</p></div>';}
- return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Métodos del monitor de medios" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Métodos</div>'+thread(2)+
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Métodos del monitor de medios" data-oculta="1" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Métodos</div>'+thread(2)+
  '<h2 class="rv" style="--i:1">Del texto al dato: los <em>métodos</em> del monitor</h2><p class="lead rv" style="--i:2">¿Cuáles son las noticias de interés y qué clasificación automática recibe cada una? Siete pasos en dos etapas.</p>'+
  '<div class="body" style="top:196px;bottom:44px"><div class="mgr rv" style="--i:3"><div class="mgh A">A · Pre-procesamiento <small>preparar el texto</small></div><div class="mgh B">B · Análisis <small>extraer significado</small></div></div><div class="mrow7">'+M.map(card).join('')+'</div>'+
  '<div class="lbl rv" style="--i:10;margin:12px 0 6px">QUÉ SE OBTIENE · GRÁFICAS GENÉRICAS</div><div class="rch rv" style="--i:10"><figure><div>'+mChart('bars')+'</div><figcaption>Notas por tema</figcaption></figure><figure><div>'+mChart('lines')+'</div><figcaption>Tono en el tiempo</figcaption></figure><figure><div>'+mChart('cloud')+'</div><figcaption>Palabras más frecuentes</figcaption></figure></div>'+
@@ -605,7 +605,7 @@ function listHTML(g){
  g.items.forEach(function(i){
   var s=slides[i],b=s.dataset.block;
   if(b&&b!==last&&b!=='Enlace'){last=b;h+='<div class="subh" style="--c:'+BLOCKS[+s.dataset.bi].c+'"><i></i>'+b+'</div>';}
-  h+='<button data-i="'+i+'"><b>'+pad(i+1)+'</b>'+s.dataset.title+'</button>';
+  h+='<button data-i="'+i+'"><b>'+pad(i+1)+'</b>'+s.dataset.title+(s.dataset.oculta?' <i class="ocu">oculta</i>':'')+'</button>';
  });
  return h;
 }
@@ -647,16 +647,17 @@ function countUp(s){
   (function f(t){var p=Math.min(1,(t-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('en-US');if(p<1)requestAnimationFrame(f);})(t0);
  });
 }
-document.getElementById('prev').onclick=function(){go(cur-1);};
-document.getElementById('next').onclick=function(){go(cur+1);};
+function step(d){var j=cur+d;while(j>=0&&j<N&&slides[j].dataset.oculta)j+=d;if(j>=0&&j<N)go(j);}
+document.getElementById('prev').onclick=function(){step(-1);};
+document.getElementById('next').onclick=function(){step(1);};
 var idx=document.getElementById('index');
 function openIdx(){idx.classList.add('on');}function closeIdx(){idx.classList.remove('on');}
 document.getElementById('idxBtn').onclick=openIdx;document.getElementById('idxClose').onclick=closeIdx;
 document.addEventListener('keydown',function(e){
  if(/INPUT|TEXTAREA/.test(e.target.tagName)&&e.key!=='Escape')return;
  var k=e.key;
- if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();go(cur+1);}
- else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1);}
+ if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();step(1);}
+ else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();step(-1);}
  else if(k==='Home')go(0);else if(k==='End')go(N-1);
  else if(k==='m'||k==='M'){idx.classList.contains('on')?closeIdx():openIdx();}
  else if(k==='Escape')closeIdx();
@@ -664,9 +665,9 @@ document.addEventListener('keydown',function(e){
 });
 var tx=null;
 document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(cur+(d<0?1:-1));tx=null;});
+document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)step(d<0?1:-1);tx=null;});
 var wl=0;
-document.addEventListener('wheel',function(e){var n=Date.now();if(n-wl<700||idx.classList.contains('on')||e.target.closest('.sub')||Math.abs(e.deltaY)<30)return;wl=n;go(cur+(e.deltaY>0?1:-1));},{passive:true});
+document.addEventListener('wheel',function(e){var n=Date.now();if(n-wl<700||idx.classList.contains('on')||e.target.closest('.sub')||Math.abs(e.deltaY)<30)return;wl=n;step(e.deltaY>0?1:-1);},{passive:true});
 
 /* ================= Escala del escenario ================= */
 var stage=document.getElementById('stage');
@@ -1386,6 +1387,7 @@ document.addEventListener('mousemove',function(e){
   else if(/Conjoint: ventajas|Tiendas espejo|Medidas del grafo|Métodos del monitor/.test(t))h=chip(3);
   else if(/Conjoint: simulador|Un modelo por grupo/.test(t))h=chip(3)+chip(4);
   else h='';
+  if(sl.dataset.oculta)h+='<span class="stp-tag ocu2">Oculta · no se muestra al avanzar</span>';
   cr.insertAdjacentHTML('beforeend',h);});
 })();
 
@@ -1419,6 +1421,7 @@ document.addEventListener('mousemove',function(e){
  draw();
 })();
 
+[].forEach.call(document.querySelectorAll('.slide[data-oculta]:not([data-block])'),function(sl){var cr=sl.querySelector('.crumb');if(cr&&!cr.querySelector('.ocu2'))cr.insertAdjacentHTML('beforeend','<span class="stp-tag ocu2">Oculta · no se muestra al avanzar</span>');});
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
 var start=parseInt(location.hash.slice(1),10);
 go(isNaN(start)?0:start-1);
