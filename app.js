@@ -344,15 +344,14 @@ function medios(){
 }
 /* ===== Grafo de discurso (caso 5) ===== */
 var GF={
- C:['Trump','Biden','Sanders','Warren','Buttigieg','Bloomberg'],
- T:['Economía','Salud','Inmigración','Clima','Pandemia','Seguridad','Impuestos','Educación','Justicia racial','Política exterior'],
+ C:['AMLO','Anaya','Meade','Zavala','El Bronco'],
+ T:['Corrupción','Seguridad','Economía','Pobreza','Educación','Salud','Energía','Empleo','Migración','Relación con EE. UU.'],
  W:{
-  Trump:{'Economía':.9,'Inmigración':.95,'Seguridad':.8,'Impuestos':.6,'Pandemia':.5,'Política exterior':.55},
-  Biden:{'Economía':.6,'Salud':.7,'Pandemia':.85,'Clima':.55,'Justicia racial':.6,'Política exterior':.6,'Educación':.35},
-  Sanders:{'Salud':.95,'Clima':.7,'Educación':.75,'Impuestos':.6,'Economía':.5,'Justicia racial':.4},
-  Warren:{'Economía':.65,'Impuestos':.8,'Salud':.6,'Educación':.5,'Justicia racial':.4},
-  Buttigieg:{'Clima':.5,'Salud':.55,'Justicia racial':.55,'Educación':.4,'Política exterior':.35},
-  Bloomberg:{'Economía':.7,'Seguridad':.45,'Clima':.6,'Impuestos':.35,'Salud':.3}
+  'AMLO':{'Corrupción':.95,'Pobreza':.9,'Energía':.6,'Seguridad':.5,'Empleo':.5,'Educación':.4,'Salud':.35},
+  'Anaya':{'Economía':.7,'Empleo':.65,'Seguridad':.6,'Educación':.6,'Corrupción':.55,'Relación con EE. UU.':.45,'Salud':.3},
+  'Meade':{'Economía':.85,'Empleo':.7,'Educación':.6,'Salud':.55,'Pobreza':.5,'Relación con EE. UU.':.5,'Migración':.4,'Seguridad':.4},
+  'Zavala':{'Seguridad':.7,'Educación':.5,'Empleo':.5,'Salud':.45,'Corrupción':.45,'Economía':.4},
+  'El Bronco':{'Corrupción':.8,'Seguridad':.65,'Empleo':.4,'Economía':.35,'Migración':.3,'Educación':.3}
  },
  M:{
   grado:['Grado','Número de conexiones del nodo. Quien se conecta con más tópicos (o personajes) es más visible en la conversación.'],
@@ -364,7 +363,7 @@ var GF={
 function grafo(){
  var B=BLOCKS[2];
  function sw(k){return k==='c'?'<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="#2F6BFF"/></svg>':k==='t'?'<svg viewBox="0 0 30 30"><rect x="4" y="4" width="22" height="22" rx="8" fill="#F5A524"/></svg>':k==='s'?'<svg viewBox="0 0 30 30"><circle cx="7" cy="16" r="4" fill="#98A6BF"/><circle cx="21" cy="14" r="8" fill="#98A6BF"/></svg>':k==='g'?'<svg viewBox="0 0 30 30"><path d="M2 8H28" stroke="#98A6BF" stroke-width="1.5"/><path d="M2 15H28" stroke="#98A6BF" stroke-width="4"/><path d="M2 24H28" stroke="#98A6BF" stroke-width="7"/></svg>':k==='d'?'<svg viewBox="0 0 30 30"><circle cx="6" cy="15" r="4" fill="#2F6BFF"/><circle cx="14" cy="9" r="4" fill="#2F6BFF"/><circle cx="26" cy="22" r="4" fill="#2F6BFF" opacity=".45"/></svg>':'<svg viewBox="0 0 30 30"><path d="M2 15H28" stroke="#2F6BFF" stroke-width="4" stroke-dasharray="6 5"/></svg>';}
- var L=[['c','Personaje','Candidato a la presidencia (EE. UU. 2020) mencionado en las noticias.'],['t','Tópico','Tema que aparece en las notas y discursos: economía, salud, etc.'],['s','Tamaño del nodo','Relevancia en el sistema, según la métrica elegida arriba.'],['g','Grosor de la línea','Cercanía: qué tanto aparece el tópico en el discurso (0 a 1).'],['d','Distancia en el mapa','Quienes hablan de lo mismo quedan cerca; quienes contrastan, lejos.'],['a','Línea animada','Conexiones del nodo elegido: forman el subgrafo de la derecha.']];
+ var L=[['c','Personaje','Candidato a la presidencia (México 2018) mencionado en las noticias.'],['t','Tópico','Tema que aparece en las notas y discursos: economía, salud, etc.'],['s','Tamaño del nodo','Relevancia en el sistema, según la métrica elegida arriba.'],['g','Grosor de la línea','Cercanía: qué tanto aparece el tópico en el discurso (0 a 1).'],['d','Distancia en el mapa','Quienes hablan de lo mismo quedan cerca; quienes contrastan, lejos.'],['a','Línea animada','Conexiones del nodo elegido: forman el subgrafo de la derecha.']];
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Evidencia: grafo del discurso" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Evidencia</div>'+thread(2)+
  '<h2 class="rv" style="--i:1;font-size:32px">Evidencia: el <em>grafo</em> del discurso</h2>'+
  '<div class="gf"><div class="gfL"><div class="gfctl rv" style="--i:2"><label>Relevancia <i>(tamaño)</i><select id="gfM" class="cbx">'+Object.keys(GF.M).map(function(k){return '<option value="'+k+'">'+GF.M[k][0]+'</option>';}).join('')+'</select></label><label>Cercanía mínima <input type="range" id="gfT" min="0" max="85" value="0"><b id="gfTv">0.00</b></label><span class="gfh">Haz clic en un nodo</span></div>'+
@@ -940,7 +939,7 @@ document.addEventListener('mousemove',function(e){
  var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;N.forEach(function(o){x0=Math.min(x0,o.x);x1=Math.max(x1,o.x);y0=Math.min(y0,o.y);y1=Math.max(y1,o.y);});
  N.forEach(function(o){o.X=62+(o.x-x0)/(x1-x0)*616;o.Y=44+(o.y-y0)/(y1-y0)*236;});
  // métricas
- var thr=0,met='fuerza',sel=idx['Trump'],M={};
+ var thr=0,met='fuerza',sel=idx['AMLO'],M={};
  function btw(adj){var C=[],s,i;for(i=0;i<n;i++)C[i]=0;
   for(s=0;s<n;s++){var S=[],P=[],sg=[],d=[],dn=[];for(i=0;i<n;i++){P[i]=[];sg[i]=0;d[i]=Infinity;dn[i]=false;}
    sg[s]=1;d[s]=0;
