@@ -357,12 +357,12 @@ var GF={
  },
  /* nombre, qué responde, cómo se calcula, cómo leerla */
  M:{
-  grado:['Grado','¿Con cuántos nodos se conecta?','Cuenta las líneas del nodo: k = número de vínculos directos.','Un tópico con grado alto lo tocan muchos personajes; un personaje con grado alto habla de muchos temas.'],
-  fuerza:['Fuerza','¿Cuánto discurso concentra?','Suma del grosor (cercanía) de todas sus líneas: s = Σ w.','Distingue a quien menciona mucho un tema de quien solo lo menciona de paso.'],
-  cercania:['Cercanía','¿Qué tan pronto llega a todos los demás?','Inversa de la distancia promedio a los demás nodos (distancia = 1 / cercanía de cada línea).','Alta = está «en el centro»: su mensaje alcanza rápido a toda la conversación.'],
-  inter:['Intermediación','¿Es puente entre otros nodos?','Fracción de los caminos más cortos entre pares de nodos que pasan por él.','Alta = conecta discursos que de otra forma estarían separados; quitarlo fragmenta la red.'],
-  propio:['Vector propio','¿Se conecta con nodos importantes?','Su valor es proporcional a la suma de los valores de sus vecinos: Ax = λx.','Importa la calidad de los vínculos: pocos pero con nodos centrales pesa más.'],
-  pr:['PageRank','¿Dónde «cae» alguien que navega al azar?','Probabilidad de estar en el nodo al saltar de línea en línea (más probable por las líneas gruesas).','Es el vector propio con amortiguación (0.85); lo usa Google para ordenar páginas.']
+  grado:['Grado','¿Con cuántos nodos se conecta?','Cuenta las líneas del nodo: k = número de vínculos directos.','Un tópico con grado alto lo tocan muchos personajes; un personaje con grado alto habla de muchos temas.','Detectar los nodos más conectados: temas que tocan a muchos personajes, o personajes que cubren muchos temas.'],
+  fuerza:['Fuerza','¿Cuánto discurso concentra?','Suma del grosor (cercanía) de todas sus líneas: s = Σ w.','Distingue a quien menciona mucho un tema de quien solo lo menciona de paso.','Medir cuánto peso total concentra un nodo: quién o qué acapara más discurso.'],
+  cercania:['Cercanía','¿Qué tan pronto llega a todos los demás?','Inversa de la distancia promedio a los demás nodos (distancia = 1 / cercanía de cada línea).','Alta = está «en el centro»: su mensaje alcanza rápido a toda la conversación.','Identificar quién llega más rápido a todos los demás: el tema o personaje central de la conversación.'],
+  inter:['Intermediación','¿Es puente entre otros nodos?','Fracción de los caminos más cortos entre pares de nodos que pasan por él.','Alta = conecta discursos que de otra forma estarían separados; quitarlo fragmenta la red.','Encontrar los puentes: temas que unen discursos distintos y cuya ausencia fragmentaría la red.'],
+  propio:['Vector propio','¿Se conecta con nodos importantes?','Su valor es proporcional a la suma de los valores de sus vecinos: Ax = λx.','Importa la calidad de los vínculos: pocos pero con nodos centrales pesa más.','Valorar la calidad de las conexiones: importa estar vinculado a nodos que a su vez son importantes.'],
+  pr:['PageRank','¿Dónde «cae» alguien que navega al azar?','Probabilidad de estar en el nodo al saltar de línea en línea (más probable por las líneas gruesas).','Es el vector propio con amortiguación (0.85); lo usa Google para ordenar páginas.','Ordenar los nodos por influencia global, como un ranking de relevancia en toda la red.']
  }
 };
 function grafo(){
@@ -390,7 +390,7 @@ function medidas(){
  var ks=Object.keys(GF.M);
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Medidas del grafo" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Medidas</div>'+thread(2)+
  '<h2 class="rv" style="--i:1">¿Qué significa que un nodo sea <em>relevante</em>?</h2><p class="lead rv" style="--i:2">Las seis medidas de centralidad más usadas en redes: cada una responde otra pregunta.</p>'+
- '<div class="body" style="top:160px;bottom:40px"><div class="gmed">'+ks.map(function(k,i){var m=GF.M[k];return '<div class="gmc sa rv" style="--i:'+(3+i)+'"><svg viewBox="0 0 140 76" class="gmv">'+S[k]+'</svg><h4>'+m[0]+'</h4><p class="qq">'+m[1]+'</p><p><b>Cómo se calcula</b>'+m[2]+'</p><p><b>Cómo leerla</b>'+m[3]+'</p><div class="ld">Líderes (personaje · tópico): <b data-ld="'+k+'">—</b></div></div>';}).join('')+'</div>'+
+ '<div class="body" style="top:160px;bottom:40px"><div class="gmed">'+ks.map(function(k,i){var m=GF.M[k];return '<div class="gmc sa rv" style="--i:'+(3+i)+'"><svg viewBox="0 0 140 76" class="gmv">'+S[k]+'</svg><h4>'+m[0]+'</h4><p class="qq">'+m[1]+'</p><p><b>Cómo se calcula</b>'+m[2]+'</p><p class="uso"><b>Sirve para</b>'+m[4]+'</p><div class="ld">Líderes (personaje · tópico): <b data-ld="'+k+'">—</b></div></div>';}).join('')+'</div>'+
  '<div class="strip rv" style="--i:10;position:static;margin-top:10px"><b>LECTURA</b><span>Ninguna medida es «la correcta»: se comparan. Grado alto con intermediación baja = popular, pero no puente.</span></div></div></section>';
 }
 /* ===== Caso 1: MCA genérico + perfiles ===== */

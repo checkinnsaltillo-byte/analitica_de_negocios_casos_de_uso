@@ -753,3 +753,4 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vzcol{display:flex;flex-direction:column;gap:12px;min-height:0}.vzcol .vzf{flex:1;min-height:0}
 .ocu{font-style:normal;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#EEF2F8;color:#667085;border-radius:99px;padding:2px 8px;margin-left:8px}
 .crumb .stp-tag.ocu2{background:#98A6BF}
+.gmc p.uso{background:#EEF3FF;border-left:3px solid #2F6BFF;border-radius:0 8px 8px 0;padding:4px 8px;color:#243350;font-size:11.2px}.gmc p.uso b{color:#2F6BFF}
