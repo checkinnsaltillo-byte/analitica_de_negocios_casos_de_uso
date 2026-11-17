@@ -679,3 +679,9 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vzf.big{padding:6px 8px}.vzf.big>span{font-size:12px;left:12px;top:8px}.vzf.big .vt{font-size:12px}
 .vzi{background:#fff;border-radius:14px;padding:10px 16px;border:1px solid var(--line)}
 .vzq{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:3px}.vzi p{font-size:13px;line-height:1.45;color:#344054;margin:0}.vzi p b{font-weight:500;color:var(--ink)}
+.vz2{position:relative}
+.vzvs{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:5;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#0B1F44,#2F6BFF);color:#fff;font-size:20px;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 12px 28px rgba(8,20,43,.30);animation:vzPulse 2.4s ease-in-out infinite}
+@keyframes vzPulse{0%,100%{box-shadow:0 12px 28px rgba(8,20,43,.30),0 0 0 0 rgba(47,107,255,.35)}50%{box-shadow:0 12px 28px rgba(8,20,43,.30),0 0 0 14px rgba(47,107,255,0)}}
+.vzh em{float:right;font-style:normal;letter-spacing:.02em;font-size:11.5px;color:var(--mute)}.vzh.g em{color:#12A37A;font-weight:500}
+.vz2 .vzp:first-of-type{filter:saturate(.7);opacity:.92}
+.vz2{column-gap:70px}
