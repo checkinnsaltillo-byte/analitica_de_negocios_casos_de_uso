@@ -166,14 +166,15 @@ function conjoint(){
 }
 
 function mirror(){
- var B=BLOCKS[0];
+ var B=BLOCKS[0],K=CASES.filter(function(c){return c.id==='k2';})[0].ev;
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="0" data-title="Caso 2 · Tiendas espejo" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 2 · Tiendas espejo</div>'+thread(0)+
- '<h2 class="rv" style="--i:1">Predecir con <em>tiendas espejo</em></h2><p class="lead rv" style="--i:2">Una cadena con miles de sucursales ya tiene la respuesta: las que se parecen a la nueva. Su pasado es el futuro más probable de la nueva tienda.</p>'+
- '<div class="body" style="top:200px"><div class="demo rv" style="--i:3;grid-template-columns:1.45fr 1fr;gap:24px"><div class="panel" style="padding:14px 16px"><div class="lbl">MAPA DE SIMILITUD · CADA PUNTO ES UNA SUCURSAL (320)</div><svg id="mrSvg" viewBox="0 0 600 330" style="width:100%;height:330px"></svg></div>'+
+ '<h2 class="rv" style="--i:1">Predecir con <em>tiendas espejo</em></h2><p class="lead rv" style="--i:2">Una cadena con miles de sucursales ya tiene la respuesta: las que se parecen a la nueva.</p>'+
+ '<div class="body" style="top:178px"><div class="demo rv" style="--i:3;grid-template-columns:1.45fr 1fr;gap:24px;align-items:start;height:auto"><div class="panel" style="padding:14px 16px"><div class="lbl">MAPA DE SIMILITUD · CADA PUNTO ES UNA SUCURSAL (320)</div><svg id="mrSvg" viewBox="0 0 600 330" style="width:100%;height:300px"></svg></div>'+
  '<div class="panel"><div class="selrow"><div class="lbl">TIENDA NUEVA EN</div><select id="mrSel" class="cbx"><option value="0">Zona comercial central</option><option value="1">Colonia residencial</option><option value="2">Periferia en crecimiento</option></select></div>'+
  '<div class="row2" style="margin-top:10px"><label style="min-width:110px">Espejos (k)</label><input type="range" id="mrK" min="3" max="25" step="1" value="8"><b id="mrKv" class="xv">8</b></div>'+
  '<div class="lbl" style="margin-top:8px">VENTAS MENSUALES ESPERADAS</div><div class="big2"><span id="mrY">—</span><small> miles de pesos</small></div><div class="ci"><div class="cib"><div id="mrBar"></div></div><span id="mrTxt"></span></div>'+
- '<ol class="mrsteps"><li><b>Describe</b> el sitio: tipo, entorno, ubicación.</li><li><b>Busca</b> las sucursales más parecidas (distancia de Gower).</li><li><b>Mira</b> cuánto vendieron esas tiendas «espejo».</li><li><b>Estima</b> con su promedio y su rango, no con una sola cifra.</li></ol></div></div></div></section>';
+ '<ol class="mrsteps"><li><b>Describe</b> el sitio: tipo, entorno, ubicación.</li><li><b>Busca</b> las sucursales más parecidas (distancia de Gower).</li><li><b>Mira</b> cuánto vendieron esas tiendas «espejo».</li><li><b>Estima</b> con su promedio y su rango, no con una sola cifra.</li></ol></div></div></div>'+
+ '<div class="rdb rv" style="--i:6"><div class="lbl s5t"><i class="sn s5">05</i>LECTURA · CÓMO SE LEE</div><div class="rdg">'+K.r.map(function(t,i){return '<div class="rdc2"><u>'+(i+1)+'</u><span>'+t+'</span></div>';}).join('')+'<div class="rdw2"><b>CUIDADO</b>'+K.w+'</div></div></div></section>';
 }
 
 
@@ -468,7 +469,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':x.id==='k1'?evidMCA(x):evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
+ stream+=ficha(x)+(x.id==='k4'||x.id==='k5'||x.id==='k2'?'':x.id==='k1'?evidMCA(x):evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -1313,6 +1314,7 @@ document.addEventListener('mousemove',function(e){
   var t=sl.dataset.title||'',cr=sl.querySelector('.crumb');if(!cr||!/^Caso /.test(t))return;var h='';
   if(/ · evidencia$/.test(t))h=chip(4)+chip(5);
   else if(/Evidencia|Impactos positivos/.test(t))h=chip(4);
+  else if(/Tiendas espejo/.test(t))h=chip(3)+chip(5);
   else if(/Conjoint: ventajas|Tiendas espejo|Medidas del grafo|Métodos del monitor/.test(t))h=chip(3);
   else if(/Conjoint: simulador|Un modelo por grupo/.test(t))h=chip(3)+chip(4);
   else h='';
