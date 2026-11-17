@@ -1134,12 +1134,12 @@ document.addEventListener('mousemove',function(e){
   ED.forEach(function(e){s+='<line x1="'+N[e[0]][0].toFixed(1)+'" y1="'+N[e[0]][1].toFixed(1)+'" x2="'+N[e[1]][0].toFixed(1)+'" y2="'+N[e[1]][1].toFixed(1)+'" stroke="'+GR+'" stroke-width="'+e[2]+'" stroke-linecap="round" opacity=".7"/>';});
   N.forEach(function(o){s+='<circle cx="'+o[0].toFixed(1)+'" cy="'+o[1].toFixed(1)+'" r="'+o[2]+'" fill="'+o[3]+'" stroke="#fff" stroke-width="1.5"/>';});s+=tx(cx,cy+4,'','middle');return sv(w,h,s);}
 
- function radar(w,h){var ax=['Precio','Calidad','Servicio','Ubicación','Marca'],A=[.78,.62,.85,.55,.7],B=[.55,.8,.5,.78,.45],cx=w/2-52,cy=h/2+5,R=h*.34,s='';
+ function radar(w,h){var ax=['Precio','Calidad','Servicio','Ubicación','Marca'],A=[.78,.62,.85,.55,.7],B=[.55,.8,.5,.78,.45],cx=w/2+10,cy=h/2+8,R=Math.min(w*.27,h*.33),s='';
   function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/5;return [cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v];}
   [.33,.66,1].forEach(function(k){s+='<polygon points="'+ax.map(function(_,i){return pt(i,k).map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="none" stroke="#D5DCE8"/>';});
   ax.forEach(function(n,i){var p=pt(i,1),q=pt(i,1.2);s+='<line x1="'+cx.toFixed(1)+'" y1="'+cy.toFixed(1)+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#D5DCE8"/>'+tx(q[0].toFixed(1),(q[1]+3).toFixed(1),n);});
   [[A,BL],[B,CO]].forEach(function(z){s+='<polygon points="'+z[0].map(function(v,i){return pt(i,v).map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="'+z[1]+'" fill-opacity=".2" stroke="'+z[1]+'" stroke-width="2.2" stroke-linejoin="round"/>';z[0].forEach(function(v,i){var p=pt(i,v);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="'+z[1]+'"/>';});});
-  s+='<rect x="'+(w-78)+'" y="34" width="9" height="9" rx="2" fill="'+BL+'"/>'+tx(w-65,42,'Nosotros','start')+'<rect x="'+(w-78)+'" y="50" width="9" height="9" rx="2" fill="'+CO+'"/>'+tx(w-65,58,'Competencia','start');return sv(w,h,s);}
+  s+='<rect x="10" y="'+(h-44)+'" width="9" height="9" rx="2" fill="'+BL+'"/>'+tx(24,h-36,'Nosotros','start')+'<rect x="10" y="'+(h-28)+'" width="9" height="9" rx="2" fill="'+CO+'"/>'+tx(24,h-20,'Competencia','start');return sv(w,h,s);}
  function evol(w,h){
   var H=[100,92,98,104,111,103,96,108,115,121,148,176,112,101,107,99,118,126,109,104,119,128,161,189],F=[123,111,118,109],n=H.length+F.length,
    G=H.map(function(v,i){return i?(v/H[i-1]-1)*100:null;}),
@@ -1148,7 +1148,7 @@ document.addEventListener('mousemove',function(e){
   s+='<line x1="40" y1="'+yg(0).toFixed(1)+'" x2="'+(w-246)+'" y2="'+yg(0).toFixed(1)+'" stroke="#C9D3E3" stroke-dasharray="2 3"/>'+tx(w-242,yg(0)+3,'0 %','start',VI);
   var bd='';F.forEach(function(v,i){});
   var up='',dn='';F.forEach(function(v,i){var k=H.length+i,e=6+i*4;up+=(i?'L':'M')+x(k).toFixed(1)+' '+yb(v+e).toFixed(1);});F.slice().reverse().forEach(function(v,i){var k=n-1-i,e=6+(F.length-1-i)*4;dn+='L'+x(k).toFixed(1)+' '+yb(v-e).toFixed(1);});
-  s+='<path d="M'+x(H.length-1).toFixed(1)+' '+yb(H[H.length-1]).toFixed(1)+'L'+up.slice(1)+dn+'Z" fill="'+TL+'" opacity=".16"/><line x1="'+x(H.length-1).toFixed(1)+'" y1="8" x2="'+x(H.length-1).toFixed(1)+'" y2="'+(h-18)+'" stroke="#B7C2D6" stroke-dasharray="3 3"/>'+tx(x(H.length-1)-5,14,'hoy','end');
+  s+='<path d="M'+x(H.length-1).toFixed(1)+' '+yb(H[H.length-1]).toFixed(1)+'L'+up.slice(1)+dn+'Z" fill="'+TL+'" opacity=".16"/><line x1="'+x(H.length-1).toFixed(1)+'" y1="8" x2="'+x(H.length-1).toFixed(1)+'" y2="'+(h-18)+'" stroke="#B7C2D6" stroke-dasharray="3 3"/>'+tx(x(H.length-1)+4,h-30,'hoy','start',GR);
   var dg='';G.forEach(function(g,i){if(g!==null)dg+=(dg?'L':'M')+x(i).toFixed(1)+' '+yg(g).toFixed(1);});
   var dy='';H.forEach(function(v,i){if(i>=12)dy+=(dy?'L':'M')+x(i).toFixed(1)+' '+yg((v/H[i-12]-1)*100).toFixed(1);});s+='<path d="'+dy+'" fill="none" stroke="'+AM+'" stroke-width="2" stroke-dasharray="2 3" stroke-linecap="round"/>';H.forEach(function(v,i){if(i>=12)s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yg((v/H[i-12]-1)*100).toFixed(1)+'" r="2.4" fill="'+AM+'"/>';});
   s+='<path d="'+dg+'" fill="none" stroke="'+VI+'" stroke-width="1.8" stroke-linejoin="round" opacity=".9"/>';G.forEach(function(g,i){if(g!==null)s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yg(g).toFixed(1)+'" r="2.2" fill="'+VI+'"/>';});
@@ -1156,7 +1156,7 @@ document.addEventListener('mousemove',function(e){
   s+='<path d="'+db+'" fill="none" stroke="'+BL+'" stroke-width="2.8" stroke-linejoin="round"/>';
   s+='<path d="M'+x(H.length-1).toFixed(1)+' '+yb(H[H.length-1]).toFixed(1)+F.map(function(v,i){return 'L'+x(H.length+i).toFixed(1)+' '+yb(v).toFixed(1);}).join('')+'" fill="none" stroke="'+TL+'" stroke-width="2.8" stroke-dasharray="6 4"/>';
   [11,23].forEach(function(i){s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yb(H[i]).toFixed(1)+'" r="3.4" fill="'+BL+'"/>';});
-  s+=tx(x(11),yb(H[11])-8,'pico Dic','middle',IN)+tx(x(23)-2,yb(H[23])-8,'pico Dic','middle',IN)+tx(x(n-2),yb(F[2])+26,'pronóstico ±','middle',TL)+
+  s+=tx(x(11),yb(H[11])-8,'pico Dic','middle',IN)+tx(x(23)-8,yb(H[23])-8,'pico Dic','end',IN)+tx(x(n-2),yb(F[2])+26,'pronóstico ±','middle',TL)+
    tx(40,h-4,'Mes 1','start')+tx(w-250,h-4,'Mes 25','end')+tx(36,12,'índice','end',BL)+tx(w-242,12,'var. mensual','start',VI);
   s+='<g transform="translate('+(w-196)+' '+(h/2-34)+')"><line x1="0" y1="4" x2="18" y2="4" stroke="'+BL+'" stroke-width="3"/>'+tx(24,7,'Línea base (índice)','start')+'<line x1="0" y1="20" x2="18" y2="20" stroke="'+VI+'" stroke-width="2"/>'+tx(24,23,'Tasa vs mes previo','start')+'<line x1="0" y1="36" x2="18" y2="36" stroke="'+AM+'" stroke-width="2" stroke-dasharray="2 3"/>'+tx(24,39,'Tasa vs mismo mes año previo','start')+'<line x1="0" y1="52" x2="18" y2="52" stroke="'+TL+'" stroke-width="3" stroke-dasharray="5 3"/>'+tx(24,55,'Pronóstico','start')+'</g>';
   return sv(w,h,s);}
@@ -1169,7 +1169,21 @@ document.addEventListener('mousemove',function(e){
   ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base + tasa de crecimiento + pronóstico',evol]],1.5],
   ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplots horizontales',boxh]],1],
   ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo (red)',grafo2]],1]];
- rows.innerHTML=R.map(function(r,i){var k=r[4].length,w=k===3?318:k===1?964:482,hh=Math.round(98*r[5]);return '<div class="vzr rv" style="--c:'+r[2]+';--t:'+r[3]+';--i:'+(3+i)+';flex:'+r[5]+'"><h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzc">'+r[4].map(function(c){return '<figure class="vzf sa"><span>'+c[0]+'</span>'+c[1](w,hh)+'</figure>';}).join('')+'</div></div>';}).join('');
+
+ var INFO=[['¿Cuál es mayor o menor, o cómo se compone el total?','<b>Barras</b>: comparar magnitudes. <b>Stacked bar</b>: comparar y ver la composición. <b>Radar</b>: comparar perfiles en varias dimensiones (con pocas series).'],
+  ['¿Cómo cambia en el tiempo y hacia dónde va?','<b>Línea base</b>: el nivel. <b>Tasa vs mes previo</b>: el ritmo (con ruido y estacionalidad). <b>Tasa vs mismo mes del año previo</b>: la tendencia sin estacionalidad. <b>Pronóstico</b>: lo esperado, siempre con su banda de incertidumbre.'],
+  ['¿Cómo se reparten los valores y hay atípicos?','<b>Histograma</b>: la forma de la distribución. <b>Boxplot</b>: mediana, dispersión y atípicos; permite comparar grupos de un vistazo.'],
+  ['¿Se mueven juntas dos variables, o cómo se conectan?','<b>Dispersión</b>: relación entre dos variables numéricas (correlación no es causalidad). <b>Grafo</b>: conexiones entre entidades; el tamaño es la importancia y el grosor, la fuerza del vínculo.']];
+ var menu=document.createElement('div'),view=document.createElement('div');menu.className='vzm';view.className='vzv';rows.appendChild(menu);rows.appendChild(view);
+ var curV=0;
+ function showV(i){curV=i;var r=R[i],k=r[4].length,w=k===3?272:k===2?414:852,h=352;
+  [].forEach.call(menu.children,function(b,j){b.classList.toggle('on',j===i);});
+  view.style.setProperty('--c',r[2]);view.style.setProperty('--t',r[3]);
+  view.innerHTML='<div class="vzg" style="grid-template-columns:repeat('+k+',1fr)">'+r[4].map(function(c){return '<figure class="vzf big"><span>'+c[0]+'</span>'+c[1](w,h)+'</figure>';}).join('')+'</div><div class="vzi"><div class="vzq">'+INFO[i][0]+'</div><p>'+INFO[i][1]+'</p></div>';}
+ R.forEach(function(r,i){var b=document.createElement('button');b.type='button';b.className='vzbtn';b.style.setProperty('--c',r[2]);b.style.setProperty('--t',r[3]);
+  b.innerHTML='<h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzs">'+r[4].map(function(c){return '<span>'+(c[0].indexOf(' + ')>0?'Línea · tasas · pronóstico':c[0].split(' (')[0])+'</span>';}).join('')+'</div>';
+  b.onclick=function(){showV(i);};menu.appendChild(b);});
+ showV(0);
 
  // --- tabla vs gráfica (con tasas de crecimiento) ---
  var TB=[['Centro',1.0,1.1,1.2,1.5,1.3],['Norte',.9,.9,1.0,1.1,1.0],['Sur',.7,.8,.9,.7,.8],['Oriente',.6,.7,.7,.6,.7],['Poniente',.5,.6,.6,.5,.6],['Periférico',.3,.3,.4,.4,.3]]; /* T1..T4 y T4 del año previo */

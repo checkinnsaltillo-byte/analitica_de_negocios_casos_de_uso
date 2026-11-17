@@ -666,3 +666,16 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vzl{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font-size:13px;color:var(--ink);cursor:pointer;transition:.25s}.vzl i{width:22px;height:4px;border-radius:2px;background:var(--c)}
 .vzl:hover{border-color:var(--c);box-shadow:0 6px 16px rgba(8,20,43,.10)}.vzl.on{background:var(--c);border-color:var(--c);color:#fff;box-shadow:0 8px 20px rgba(8,20,43,.18)}.vzl.on i{background:#fff}.vzl.off{opacity:.5}
 #vzMsg{min-height:46px;display:flex;align-items:center;font-size:13.5px;color:#344054}
+.vzx{display:grid;grid-template-columns:250px 1fr;gap:20px;height:100%}
+.vzm{display:flex;flex-direction:column;gap:10px}
+.vzbtn{flex:1;text-align:left;border:1.5px solid var(--line);border-left:6px solid var(--c);border-radius:16px;background:#fff;padding:10px 16px;cursor:pointer;transition:.25s;font-family:inherit;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.vzbtn h4{font-size:18px;font-weight:500;color:var(--ink)}.vzbtn h4 small{display:block;font-size:12.5px;font-weight:300;color:var(--mute);margin-top:2px}
+.vzs{display:flex;flex-wrap:wrap;gap:4px}.vzs span{font-size:10.5px;color:var(--mute);background:#F3F6FB;border-radius:99px;padding:2px 8px}
+.vzbtn:hover{transform:translateX(4px);box-shadow:0 10px 24px rgba(8,20,43,.10)}
+.vzbtn.on{background:var(--t);border-color:var(--c);box-shadow:0 12px 28px rgba(8,20,43,.12);transform:translateX(6px)}.vzbtn.on .vzs span{background:#fff;color:var(--ink)}
+.vzv{display:flex;flex-direction:column;gap:12px;background:var(--t);border:1.5px solid var(--c);border-radius:20px;padding:14px;min-height:0;animation:vzIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes vzIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.vzg{display:grid;gap:12px;flex:1;min-height:0}
+.vzf.big{padding:6px 8px}.vzf.big>span{font-size:12px;left:12px;top:8px}.vzf.big .vt{font-size:12px}
+.vzi{background:#fff;border-radius:14px;padding:10px 16px;border:1px solid var(--line)}
+.vzq{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:3px}.vzi p{font-size:13px;line-height:1.45;color:#344054;margin:0}.vzi p b{font-weight:500;color:var(--ink)}
