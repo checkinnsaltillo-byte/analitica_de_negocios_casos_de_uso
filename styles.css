@@ -659,3 +659,6 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .vzt{font-size:15.5px;font-weight:500;color:var(--ink);margin-bottom:6px}
 .vzp figcaption{font-size:12.5px;color:var(--mute);padding:8px 14px;border-top:1px solid var(--line);background:#FAFBFD}
 .vztb{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}.vztb th{font-weight:500;text-align:right;padding:8px 10px;border-bottom:2px solid var(--ink);color:var(--ink)}.vztb th:first-child,.vztb td:first-child{text-align:left}.vztb td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);color:#344054}.vztb tr.tt td{border-top:2px solid var(--ink);font-weight:500;color:var(--ink)}
+.vztb .gu{color:#12A37A;font-weight:500}.vztb .gd{color:#E0503F;font-weight:500}.vztb .gz{color:#98A6BF}
+.vztb th.gh{line-height:1.15;white-space:nowrap}.vztb th.gh small{display:block;font-weight:300;font-size:10px;color:var(--mute);margin-top:2px}
+.vztb{font-size:12.5px}.vztb th,.vztb td{padding:7px 7px}

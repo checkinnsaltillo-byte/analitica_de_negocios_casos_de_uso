@@ -1133,23 +1133,79 @@ document.addEventListener('mousemove',function(e){
   var ED=[[0,1,3],[0,2,5],[0,3,2],[0,4,4],[0,5,2.4],[0,6,3.6],[0,7,1.6],[1,2,1.4],[3,4,1.4],[5,6,1.4],[2,3,1.2]];
   ED.forEach(function(e){s+='<line x1="'+N[e[0]][0].toFixed(1)+'" y1="'+N[e[0]][1].toFixed(1)+'" x2="'+N[e[1]][0].toFixed(1)+'" y2="'+N[e[1]][1].toFixed(1)+'" stroke="'+GR+'" stroke-width="'+e[2]+'" stroke-linecap="round" opacity=".7"/>';});
   N.forEach(function(o){s+='<circle cx="'+o[0].toFixed(1)+'" cy="'+o[1].toFixed(1)+'" r="'+o[2]+'" fill="'+o[3]+'" stroke="#fff" stroke-width="1.5"/>';});s+=tx(cx,cy+4,'','middle');return sv(w,h,s);}
- var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack]]],
-  ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base',linea],['Tasa de crecimiento',tasa],['Pronóstico',pron]]],
-  ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplot (caja y bigotes)',box]]],
-  ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo (red)',grafo2]]]];
- rows.innerHTML=R.map(function(r,i){var w=r[4].length===3?318:482;return '<div class="vzr rv" style="--c:'+r[2]+';--t:'+r[3]+';--i:'+(3+i)+'"><h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzc">'+r[4].map(function(c){return '<figure class="vzf sa"><span>'+c[0]+'</span>'+c[1](w,98)+'</figure>';}).join('')+'</div></div>';}).join('');
- // --- tabla vs gráfica ---
- var TB=[['Centro',1.0,1.1,1.2,1.5],['Norte',.9,.9,1.0,1.1],['Sur',.7,.8,.8,.8],['Oriente',.6,.6,.7,.7],['Poniente',.5,.5,.6,.6],['Periférico',.3,.3,.4,.4]];
+
+ function radar(w,h){var ax=['Precio','Calidad','Servicio','Ubicación','Marca'],A=[.78,.62,.85,.55,.7],B=[.55,.8,.5,.78,.45],cx=w/2-52,cy=h/2+5,R=h*.34,s='';
+  function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/5;return [cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v];}
+  [.33,.66,1].forEach(function(k){s+='<polygon points="'+ax.map(function(_,i){return pt(i,k).map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="none" stroke="#D5DCE8"/>';});
+  ax.forEach(function(n,i){var p=pt(i,1),q=pt(i,1.2);s+='<line x1="'+cx.toFixed(1)+'" y1="'+cy.toFixed(1)+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#D5DCE8"/>'+tx(q[0].toFixed(1),(q[1]+3).toFixed(1),n);});
+  [[A,BL],[B,CO]].forEach(function(z){s+='<polygon points="'+z[0].map(function(v,i){return pt(i,v).map(function(x){return x.toFixed(1);}).join(',');}).join(' ')+'" fill="'+z[1]+'" fill-opacity=".2" stroke="'+z[1]+'" stroke-width="2.2" stroke-linejoin="round"/>';z[0].forEach(function(v,i){var p=pt(i,v);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="'+z[1]+'"/>';});});
+  s+='<rect x="'+(w-78)+'" y="34" width="9" height="9" rx="2" fill="'+BL+'"/>'+tx(w-65,42,'Nosotros','start')+'<rect x="'+(w-78)+'" y="50" width="9" height="9" rx="2" fill="'+CO+'"/>'+tx(w-65,58,'Competencia','start');return sv(w,h,s);}
+ function evol(w,h){
+  var H=[100,92,98,104,111,103,96,108,115,121,148,176,112,101,107,99,118,126,109,104,119,128,161,189],F=[123,111,118,109],n=H.length+F.length,
+   G=H.map(function(v,i){return i?(v/H[i-1]-1)*100:null;}),
+   x=function(i){return 40+i*(w-260)/(n-1);},yb=function(v){return h-18-(h-34)*(v-80)/(205-80);},yg=function(g){return h-18-(h-34)*(g+25)/(75);},s='';
+  [0,1,2,3].forEach(function(k){var y=18+k*(h-36)/3;s+='<line x1="40" y1="'+y.toFixed(1)+'" x2="'+(w-246)+'" y2="'+y.toFixed(1)+'" stroke="#EEF2F8"/>';});
+  s+='<line x1="40" y1="'+yg(0).toFixed(1)+'" x2="'+(w-246)+'" y2="'+yg(0).toFixed(1)+'" stroke="#C9D3E3" stroke-dasharray="2 3"/>'+tx(w-242,yg(0)+3,'0 %','start',VI);
+  var bd='';F.forEach(function(v,i){});
+  var up='',dn='';F.forEach(function(v,i){var k=H.length+i,e=6+i*4;up+=(i?'L':'M')+x(k).toFixed(1)+' '+yb(v+e).toFixed(1);});F.slice().reverse().forEach(function(v,i){var k=n-1-i,e=6+(F.length-1-i)*4;dn+='L'+x(k).toFixed(1)+' '+yb(v-e).toFixed(1);});
+  s+='<path d="M'+x(H.length-1).toFixed(1)+' '+yb(H[H.length-1]).toFixed(1)+'L'+up.slice(1)+dn+'Z" fill="'+TL+'" opacity=".16"/><line x1="'+x(H.length-1).toFixed(1)+'" y1="8" x2="'+x(H.length-1).toFixed(1)+'" y2="'+(h-18)+'" stroke="#B7C2D6" stroke-dasharray="3 3"/>'+tx(x(H.length-1)-5,14,'hoy','end');
+  var dg='';G.forEach(function(g,i){if(g!==null)dg+=(dg?'L':'M')+x(i).toFixed(1)+' '+yg(g).toFixed(1);});
+  var dy='';H.forEach(function(v,i){if(i>=12)dy+=(dy?'L':'M')+x(i).toFixed(1)+' '+yg((v/H[i-12]-1)*100).toFixed(1);});s+='<path d="'+dy+'" fill="none" stroke="'+AM+'" stroke-width="2" stroke-dasharray="2 3" stroke-linecap="round"/>';H.forEach(function(v,i){if(i>=12)s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yg((v/H[i-12]-1)*100).toFixed(1)+'" r="2.4" fill="'+AM+'"/>';});
+  s+='<path d="'+dg+'" fill="none" stroke="'+VI+'" stroke-width="1.8" stroke-linejoin="round" opacity=".9"/>';G.forEach(function(g,i){if(g!==null)s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yg(g).toFixed(1)+'" r="2.2" fill="'+VI+'"/>';});
+  var db='';H.forEach(function(v,i){db+=(i?'L':'M')+x(i).toFixed(1)+' '+yb(v).toFixed(1);});
+  s+='<path d="'+db+'" fill="none" stroke="'+BL+'" stroke-width="2.8" stroke-linejoin="round"/>';
+  s+='<path d="M'+x(H.length-1).toFixed(1)+' '+yb(H[H.length-1]).toFixed(1)+F.map(function(v,i){return 'L'+x(H.length+i).toFixed(1)+' '+yb(v).toFixed(1);}).join('')+'" fill="none" stroke="'+TL+'" stroke-width="2.8" stroke-dasharray="6 4"/>';
+  [11,23].forEach(function(i){s+='<circle cx="'+x(i).toFixed(1)+'" cy="'+yb(H[i]).toFixed(1)+'" r="3.4" fill="'+BL+'"/>';});
+  s+=tx(x(11),yb(H[11])-8,'pico Dic','middle',IN)+tx(x(23)-2,yb(H[23])-8,'pico Dic','middle',IN)+tx(x(n-2),yb(F[2])+26,'pronóstico ±','middle',TL)+
+   tx(40,h-4,'Mes 1','start')+tx(w-250,h-4,'Mes 25','end')+tx(36,12,'índice','end',BL)+tx(w-242,12,'var. mensual','start',VI);
+  s+='<g transform="translate('+(w-196)+' '+(h/2-34)+')"><line x1="0" y1="4" x2="18" y2="4" stroke="'+BL+'" stroke-width="3"/>'+tx(24,7,'Línea base (índice)','start')+'<line x1="0" y1="20" x2="18" y2="20" stroke="'+VI+'" stroke-width="2"/>'+tx(24,23,'Tasa vs mes previo','start')+'<line x1="0" y1="36" x2="18" y2="36" stroke="'+AM+'" stroke-width="2" stroke-dasharray="2 3"/>'+tx(24,39,'Tasa vs mismo mes año previo','start')+'<line x1="0" y1="52" x2="18" y2="52" stroke="'+TL+'" stroke-width="3" stroke-dasharray="5 3"/>'+tx(24,55,'Pronóstico','start')+'</g>';
+  return sv(w,h,s);}
+ function boxh(w,h){var B=[[14,30,40,52,66,[88,94]],[34,48,58,68,82,[]]],l=['Grupo A','Grupo B'],C=[BL,AM],px=function(v){return 66+(w-90)*v/100;},bh=(h-34)/2,s='<line x1="66" y1="'+(h-16)+'" x2="'+(w-10)+'" y2="'+(h-16)+'" stroke="#D5DCE8"/>';
+  B.forEach(function(b,i){var cy=14+bh*i+bh/2,hh=bh*.26;s+=tx(60,cy+3.5,l[i],'end',IN)+'<line x1="'+px(b[0]).toFixed(1)+'" y1="'+cy.toFixed(1)+'" x2="'+px(b[4]).toFixed(1)+'" y2="'+cy.toFixed(1)+'" stroke="'+C[i]+'" stroke-width="1.8"/><rect x="'+px(b[1]).toFixed(1)+'" y="'+(cy-hh).toFixed(1)+'" width="'+(px(b[3])-px(b[1])).toFixed(1)+'" height="'+(2*hh).toFixed(1)+'" rx="3" fill="'+C[i]+'" opacity=".28" stroke="'+C[i]+'" stroke-width="1.8"/><line x1="'+px(b[2]).toFixed(1)+'" y1="'+(cy-hh).toFixed(1)+'" x2="'+px(b[2]).toFixed(1)+'" y2="'+(cy+hh).toFixed(1)+'" stroke="'+IN+'" stroke-width="2.4"/>';
+   [b[0],b[4]].forEach(function(e){s+='<line x1="'+px(e).toFixed(1)+'" y1="'+(cy-hh/2).toFixed(1)+'" x2="'+px(e).toFixed(1)+'" y2="'+(cy+hh/2).toFixed(1)+'" stroke="'+C[i]+'" stroke-width="1.8"/>';});
+   b[5].forEach(function(o){s+='<circle cx="'+px(o).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="3.2" fill="'+CO+'"/>';});});
+  s+=tx(w-12,h-4,'valor','end')+tx(w-12,16,'mediana ▮  atípico ●','end');return sv(w,h,s);}
+ var R=[['Comparar','categorías','var(--blue)','#EAF0FF',[['Barras',barras],['Stacked bar (barras apiladas)',stack],['Radar (araña)',radar]],1.25],
+  ['Evolución','en el tiempo','var(--teal)','#E6F7F5',[['Línea base + tasa de crecimiento + pronóstico',evol]],1.5],
+  ['Distribución','y atípicos','var(--violet)','#EFEBFF',[['Histograma',hist],['Boxplots horizontales',boxh]],1],
+  ['Relación','entre variables','var(--amber)','#FFF5E1',[['Dispersión (scatterplot)',scat],['Grafo (red)',grafo2]],1]];
+ rows.innerHTML=R.map(function(r,i){var k=r[4].length,w=k===3?318:k===1?964:482,hh=Math.round(98*r[5]);return '<div class="vzr rv" style="--c:'+r[2]+';--t:'+r[3]+';--i:'+(3+i)+';flex:'+r[5]+'"><h4>'+r[0]+'<small>'+r[1]+'</small></h4><div class="vzc">'+r[4].map(function(c){return '<figure class="vzf sa"><span>'+c[0]+'</span>'+c[1](w,hh)+'</figure>';}).join('')+'</div></div>';}).join('');
+
+ // --- tabla vs gráfica (con tasas de crecimiento) ---
+ var TB=[['Centro',1.0,1.1,1.2,1.5,1.3],['Norte',.9,.9,1.0,1.1,1.0],['Sur',.7,.8,.9,.7,.8],['Oriente',.6,.7,.7,.6,.7],['Poniente',.5,.6,.6,.5,.6],['Periférico',.3,.3,.4,.4,.3]]; /* T1..T4 y T4 del año previo */
+ function gr(a,b){return (a/b-1)*100;}
+ function gtx(g){var z=Math.abs(g)<.05;return '<span class="'+(z?'gz':g>0?'gu':'gd')+'">'+(z?'●':g>0?'▲':'▼')+' '+Math.abs(g).toFixed(1)+' %</span>';}
  var tb=document.getElementById('vzTab');
- if(tb){tb.innerHTML='<thead><tr><th>Sucursal</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>Total</th></tr></thead><tbody>'+TB.map(function(r){var t=r[1]+r[2]+r[3]+r[4];return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(1)+'</td><td>'+r[2].toFixed(1)+'</td><td>'+r[3].toFixed(1)+'</td><td>'+r[4].toFixed(1)+'</td><td><b>'+t.toFixed(1)+'</b></td></tr>';}).join('')+'<tr class="tt"><td>Total</td><td>4.0</td><td>4.2</td><td>4.7</td><td>5.1</td><td><b>18.0</b></td></tr></tbody>';}
+ if(tb){var tot=[0,0,0,0,0];TB.forEach(function(r){for(var k=0;k<5;k++)tot[k]+=r[1+k];});
+  tb.innerHTML='<thead><tr><th>Sucursal</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>Total</th><th class="gh">T4 vs T3<small>periodo previo</small></th><th class="gh">T4 vs T4 año ant.<small>mismo periodo</small></th></tr></thead><tbody>'+TB.map(function(r){var t=r[1]+r[2]+r[3]+r[4];return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(1)+'</td><td>'+r[2].toFixed(1)+'</td><td>'+r[3].toFixed(1)+'</td><td>'+r[4].toFixed(1)+'</td><td><b>'+t.toFixed(1)+'</b></td><td>'+gtx(gr(r[4],r[3]))+'</td><td>'+gtx(gr(r[4],r[5]))+'</td></tr>';}).join('')+'<tr class="tt"><td>Total</td><td>'+tot[0].toFixed(1)+'</td><td>'+tot[1].toFixed(1)+'</td><td>'+tot[2].toFixed(1)+'</td><td>'+tot[3].toFixed(1)+'</td><td><b>'+(tot[0]+tot[1]+tot[2]+tot[3]).toFixed(1)+'</b></td><td>'+gtx(gr(tot[3],tot[2]))+'</td><td>'+gtx(gr(tot[3],tot[4]))+'</td></tr></tbody>';}
  var tg=document.getElementById('vzBars');
- if(tg){var T=TB.map(function(r){return [r[0],r[1]+r[2]+r[3]+r[4]];}).sort(function(a,b){return b[1]-a[1];}),w=520,h=300,s='';
-  T.forEach(function(t,i){var y=14+i*44,bw=(w-170)*t[1]/5,c=i<2?BL:i===5?CO:'#B9C9EA';s+=tx(86,y+18,t[0],'end',IN,13)+'<rect x="96" y="'+y+'" width="'+bw.toFixed(1)+'" height="28" rx="6" fill="'+c+'"/>'+tx((96+bw+8).toFixed(1),y+19,t[1].toFixed(1),'start',IN,13);});
+ if(tg){var T=TB.map(function(r){return [r[0],r[1]+r[2]+r[3]+r[4],gr(r[4],r[3]),gr(r[4],r[5])];}).sort(function(a,b){return b[1]-a[1];}),w=520,h=312,s='';
+  s+=tx(398,12,'vs T3','middle',VI,12)+tx(478,12,'vs año ant.','middle',TL,12);
+  T.forEach(function(t,i){var y=22+i*46,bw=(w-300)*t[1]/5,c=i<2?BL:i===5?CO:'#B9C9EA';s+=tx(86,y+19,t[0],'end',IN,13)+'<rect x="96" y="'+y+'" width="'+bw.toFixed(1)+'" height="28" rx="6" fill="'+c+'"/>'+tx((96+bw+8).toFixed(1),y+19,t[1].toFixed(1),'start',IN,13);
+   [[398,t[2]],[478,t[3]]].forEach(function(p){var g=p[1],col=Math.abs(g)<.05?GR:g>0?'#12A37A':CO;s+='<rect x="'+(p[0]-34)+'" y="'+(y+2)+'" width="68" height="24" rx="12" fill="'+col+'" opacity=".14"/>'+tx(p[0],y+19,(Math.abs(g)<.05?'●':g>0?'▲':'▼')+' '+Math.abs(g).toFixed(0)+' %','middle',col,12.5);});});
   tg.innerHTML=sv(w,h,s);}
  // --- serie y tasas ---
+
+ var V2=[100,92,98,104,111,103,96,108,115,121,148,176,112,101,107,99,118,126,109,104,119,128,161,189],
+  MM=['E','F','M','A','M','J','J','A','S','O','N','D'];
+ function sx(i,w){return 40+i*(w-64)/23;}
+ function serie2(w,h){var lo=80,hi=205,y=function(v){return h-22-(h-38)*(v-lo)/(hi-lo);},s='';
+  [0,1,2,3].forEach(function(k){var yy=16+k*(h-38)/3;s+='<line x1="40" y1="'+yy.toFixed(1)+'" x2="'+(w-24)+'" y2="'+yy.toFixed(1)+'" stroke="#EEF2F8"/>';});
+  s+='<line x1="'+((sx(11,w)+sx(12,w))/2).toFixed(1)+'" y1="10" x2="'+((sx(11,w)+sx(12,w))/2).toFixed(1)+'" y2="'+(h-22)+'" stroke="#B7C2D6" stroke-dasharray="3 3"/>'+tx(sx(5.5,w),12,'AÑO 1','middle',GR)+tx(sx(17.5,w),12,'AÑO 2','middle',GR);
+  var d='';V2.forEach(function(v,i){d+=(i?'L':'M')+sx(i,w).toFixed(1)+' '+y(v).toFixed(1);});
+  s+='<path d="'+d+'L'+sx(23,w).toFixed(1)+' '+(h-22)+'L'+sx(0,w).toFixed(1)+' '+(h-22)+'Z" fill="'+BL+'" opacity=".1"/><path d="'+d+'" fill="none" stroke="'+BL+'" stroke-width="2.4" stroke-linejoin="round"/>';
+  V2.forEach(function(v,i){s+='<circle cx="'+sx(i,w).toFixed(1)+'" cy="'+y(v).toFixed(1)+'" r="2.6" fill="'+BL+'"/>';s+=(i%12===11?tx(sx(i,w),y(v)-8,v,'middle',IN,12):'');s+=tx(sx(i,w),h-8,MM[i%12],'middle',null,11);});
+  s+=tx(36,y(100)+4,'100','end',null,11)+tx(36,y(190)+4,'190','end',null,11);return sv(w,h,s);}
+ function tasas2(w,h){var lo=-45,hi=32,y=function(g){return h-22-(h-38)*(g-lo)/(hi-lo);},s='';
+  [-40,-20,0,20].forEach(function(g){s+='<line x1="40" y1="'+y(g).toFixed(1)+'" x2="'+(w-24)+'" y2="'+y(g).toFixed(1)+'" stroke="'+(g?'#EEF2F8':'#C9D3E3')+'"/>'+tx(36,y(g)+4,g+' %','end',null,11);});
+  s+='<line x1="'+((sx(11,w)+sx(12,w))/2).toFixed(1)+'" y1="10" x2="'+((sx(11,w)+sx(12,w))/2).toFixed(1)+'" y2="'+(h-22)+'" stroke="#B7C2D6" stroke-dasharray="3 3"/>';
+  var dm='',dy='';V2.forEach(function(v,i){if(i)dm+=(dm?'L':'M')+sx(i,w).toFixed(1)+' '+y((v/V2[i-1]-1)*100).toFixed(1);if(i>=12)dy+=(dy?'L':'M')+sx(i,w).toFixed(1)+' '+y((v/V2[i-12]-1)*100).toFixed(1);});
+  s+='<path d="'+dm+'" fill="none" stroke="'+VI+'" stroke-width="2" stroke-linejoin="round"/><path d="'+dy+'" fill="none" stroke="'+AM+'" stroke-width="3" stroke-linejoin="round"/>';
+  V2.forEach(function(v,i){if(i)s+='<circle cx="'+sx(i,w).toFixed(1)+'" cy="'+y((v/V2[i-1]-1)*100).toFixed(1)+'" r="2.3" fill="'+VI+'"/>';if(i>=12)s+='<circle cx="'+sx(i,w).toFixed(1)+'" cy="'+y((v/V2[i-12]-1)*100).toFixed(1)+'" r="3" fill="'+AM+'"/>';s+=tx(sx(i,w),h-8,MM[i%12],'middle',null,11);});
+  s+='<g transform="translate(48 '+(h-86)+')"><line x1="0" y1="4" x2="20" y2="4" stroke="'+VI+'" stroke-width="2"/>'+tx(26,8,'vs mes previo','start',null,12)+'<line x1="0" y1="22" x2="20" y2="22" stroke="'+AM+'" stroke-width="3"/>'+tx(26,26,'vs mismo mes del año previo','start',null,12)+'</g>';return sv(w,h,s);}
  var sa=document.getElementById('vzSer'),sb=document.getElementById('vzRate');
- if(sa)sa.innerHTML=linea(520,250).replace(/class="vt"/g,'class="vt big"');
- if(sb)sb.innerHTML=tasa(520,250).replace(/class="vt"/g,'class="vt big"');
+ if(sa)sa.innerHTML=serie2(520,250);
+ if(sb)sb.innerHTML=tasas2(520,250);
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
