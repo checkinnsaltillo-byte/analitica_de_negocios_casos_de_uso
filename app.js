@@ -98,7 +98,7 @@ var CASES=[
   k:[[3,'','niveles de vialidad analizados'],[24,'h','curva diaria de velocidad'],[7,'días','de patrón semanal']],
   l:'Los datos masivos de tráfico convierten «hay mucho tránsito» en un indicador comparable.',
   ev:{t:'Evidencia: la velocidad cambia con la hora',imgs:[['vial-velocidad','Velocidad por hora y vialidad (línea resaltada: un día)']],
-   r:['La velocidad cae en horas pico: ahí están las horas críticas.','Cada panel es una vialidad; las líneas tenues son el resto de la semana.','Con carriles y velocidad se estima el flujo potencial de vehículos.'],
+   r:['La velocidad cae en horas pico (cerca de las 8 h y de las 18 a 19 h): ahí están las horas críticas.','Cada línea es un día de la semana; en el mapa de calor, más rojo significa más lento.','Con carriles y velocidad se estima el flujo potencial de vehículos.'],
    w:'Es un flujo potencial estimado, no un conteo real de vehículos.'}},
  {id:'k7',b:['leaf','bin','pin'],bi:4,n:7,t:'Entorno ambiental: residuos sólidos',em:'residuos sólidos',sub:'¿Cuánta basura se genera y dónde conviene disponerla?',
   q:'¿Cuánta basura se genera, dónde conviene disponerla y dónde aparecen basureros clandestinos?',
@@ -436,6 +436,14 @@ function evidMCA(x){
  '<div class="mcr rv" style="--i:4"><div class="mch">PERFIL DE CADA GRUPO · IMPORTANCIA DE LAS PREFERENCIAS</div>'+tb+'<div class="mcl"><span class="sy ok2">✓✓</span> muy importante <span class="sy ok">✓</span> importante <span class="sy mid">≈</span> indiferente <span class="sy no">✗</span> irrelevante</div></div></div>'+
  '<div class="mcb rv" style="--i:5"><div class="mcn"><b><i class="sn s5">05</i>LECTURA</b>'+x.ev.r.map(function(t,i){return '<span><u>'+(i+1)+'</u>'+t+'</span>';}).join('')+'</div><div class="warn"><b>CUIDADO</b>'+x.ev.w+'</div></div></section>';
 }
+function evidVel(x){
+ var B=BLOCKS[x.bi],e=x.ev;
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
+ '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
+ '<h2 class="rv" style="--i:1;font-size:32px">'+e.t+'</h2>'+
+ '<div class="evid" style="top:130px"><div class="vlc rv" style="--i:3"><div class="vlh"><b>VIALIDAD: FCO. MÁRQUEZ – REVOLUCIÓN</b><span>velocidad promedio (km/h) · datos simulados</span></div><div class="vlg" id="vlLeg"></div><div id="vlLine"></div><div class="vlt">MAPA DE CALOR · DÍA DE LA SEMANA × HORA DEL DÍA</div><div id="vlHeat"></div></div>'+
+ '<div class="read"><div class="lbl rv s5t" style="--i:4;margin:0"><i class="sn s5">05</i>LECTURA · CÓMO SE LEE</div>'+e.r.map(function(r,i){return '<div class="rd sa rv" style="--i:'+(5+i)+'"><b>'+(i+1)+'</b><span>'+r+'</span></div>';}).join('')+'<div class="warn rv" style="--i:9"><b>CUIDADO</b>'+e.w+'</div></div></div></section>';
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -469,7 +477,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+(x.id==='k4'||x.id==='k5'||x.id==='k2'?'':x.id==='k1'?evidMCA(x):evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
+ stream+=ficha(x)+(x.id==='k4'||x.id==='k5'||x.id==='k2'?'':x.id==='k1'?evidMCA(x):x.id==='k6'?evidVel(x):evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -1319,6 +1327,36 @@ document.addEventListener('mousemove',function(e){
   else if(/Conjoint: simulador|Un modelo por grupo/.test(t))h=chip(3)+chip(4);
   else h='';
   cr.insertAdjacentHTML('beforeend',h);});
+})();
+
+// 12) Velocidad por hora y día (caso 6)
+(function(){
+ var L=document.getElementById('vlLine');if(!L)return;
+ var HG=document.getElementById('vlHeat'),LG=document.getElementById('vlLeg');
+ var D=['lunes','martes','miércoles','jueves','viernes','sábado','domingo'],C=['#2F6BFF','#F5A524','#F26B5B','#12B5A6','#7C5CFF','#8CA64A','#B07AC9'];
+ var seed=17;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ function g(h,c,w){return Math.exp(-Math.pow((h-c)/w,2));}
+ var V=D.map(function(_,d){var wk=d<5,a=[];for(var h=0;h<24;h++){var v=47+(h<5?3:0)-(wk?9*g(h,8,1.6)+4*g(h,13.5,2.6)+(d===4?15:12)*g(h,18.5,1.8):4*g(h,13,3)+(d===5?5:3)*g(h,19,2));
+  if(d===2)v-=9*g(h,14,1.4);if(d===3&&h>=9&&h<=13)v+=4;if(d===6)v+=2;a.push(v+(rnd()-.5)*2.2);}return a;});
+ var sel=0,W=640,H1=236,H2=196;
+ function lines(){var l=44,r=10,t=10,b=22,X=function(h){return l+h*(W-l-r)/23;},Y=function(v){return t+(1-(v-22)/(56-22))*(H1-t-b);},s='';
+  [25,35,45,55].forEach(function(v){s+='<line x1="'+l+'" y1="'+Y(v).toFixed(1)+'" x2="'+(W-r)+'" y2="'+Y(v).toFixed(1)+'" stroke="#EEF2F8"/><text x="'+(l-6)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end" class="vtx">'+v+'</text>';});
+  for(var h=0;h<24;h+=2)s+='<text x="'+X(h).toFixed(1)+'" y="'+(H1-6)+'" text-anchor="middle" class="vtx">'+h+'</text>';
+  s+='<text x="12" y="'+(H1/2)+'" transform="rotate(-90 12 '+(H1/2)+')" text-anchor="middle" class="vtx">km/h</text>';
+  var order=D.map(function(_,i){return i;}).sort(function(a,b){return (a===sel)-(b===sel);});
+  order.forEach(function(d){var on=sel===null||sel===d,hi=sel===d;s+='<path d="'+V[d].map(function(v,h){return (h?'L':'M')+X(h).toFixed(1)+' '+Y(v).toFixed(1);}).join('')+'" fill="none" stroke="'+C[d]+'" stroke-width="'+(hi?3.6:2)+'" stroke-linejoin="round" opacity="'+(on?1:.18)+'"/>';});
+  if(sel!==null){var mn=0,vs=V[sel];vs.forEach(function(v,h){if(v<vs[mn])mn=h;});s+='<circle cx="'+X(mn).toFixed(1)+'" cy="'+Y(vs[mn]).toFixed(1)+'" r="5" fill="'+C[sel]+'" stroke="#fff" stroke-width="2"/><text x="'+X(mn).toFixed(1)+'" y="'+(Y(vs[mn])+17).toFixed(1)+'" text-anchor="middle" class="vtx" style="font-weight:600;fill:#1B2336">hora crítica: '+mn+' h · '+vs[mn].toFixed(0)+' km/h</text>';}
+  return '<svg viewBox="0 0 '+W+' '+H1+'">'+s+'</svg>';}
+ function ramp(v){var t=Math.max(0,Math.min(1,(v-30)/(50-30))),st=[[242,107,91],[251,227,181],[191,232,226],[18,181,166]],f=t*3,i=Math.min(2,Math.floor(f)),u=f-i;return 'rgb('+[0,1,2].map(function(k){return Math.round(st[i][k]*(1-u)+st[i+1][k]*u);}).join(',')+')';}
+ function heat(){var l=64,r=10,t=4,b=20,cw=(W-l-r)/24,rh=(H2-t-b)/7,s='';
+  D.forEach(function(d,i){var y=t+i*rh;s+='<text x="'+(l-6)+'" y="'+(y+rh/2+3).toFixed(1)+'" text-anchor="end" class="vtx"'+(sel===i?' style="font-weight:600;fill:#1B2336"':'')+'>'+d+'</text>';
+   V[i].forEach(function(v,h){s+='<rect x="'+(l+h*cw+.5).toFixed(1)+'" y="'+(y+.5).toFixed(1)+'" width="'+(cw-1).toFixed(1)+'" height="'+(rh-1).toFixed(1)+'" rx="2" fill="'+ramp(v)+'" opacity="'+(sel===null||sel===i?1:.55)+'"/><text x="'+(l+h*cw+cw/2).toFixed(1)+'" y="'+(y+rh/2+3).toFixed(1)+'" text-anchor="middle" class="vtx" style="font-size:8.5px;fill:#243350">'+Math.round(v)+'</text>';});
+   if(sel===i)s+='<rect x="'+l+'" y="'+y.toFixed(1)+'" width="'+(cw*24).toFixed(1)+'" height="'+rh.toFixed(1)+'" fill="none" stroke="'+C[i]+'" stroke-width="2.4" rx="3"/>';});
+  for(var h=0;h<24;h+=2)s+='<text x="'+(l+h*cw+cw/2).toFixed(1)+'" y="'+(H2-6)+'" text-anchor="middle" class="vtx">'+h+'</text>';
+  s+='<g transform="translate('+(W-170)+' '+(H2-18)+')"></g>';return '<svg viewBox="0 0 '+W+' '+H2+'">'+s+'</svg>';}
+ function draw(){L.innerHTML=lines();HG.innerHTML=heat();LG.innerHTML=D.map(function(d,i){return '<button type="button" class="vld'+(sel===i?' on':'')+(sel!==null&&sel!==i?' off':'')+'" data-d="'+i+'" style="--c:'+C[i]+'"><i></i>'+d+'</button>';}).join('')+'<span class="vlk"><i style="background:#F26B5B"></i>lento<i style="background:#12B5A6;margin-left:8px"></i>fluido</span>';}
+ LG.addEventListener('click',function(e){var b=e.target.closest('[data-d]');if(!b)return;var d=+b.dataset.d;sel=sel===d?null:d;draw();});
+ draw();
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});

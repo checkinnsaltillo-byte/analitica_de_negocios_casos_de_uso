@@ -739,3 +739,14 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .rdg{display:grid;grid-template-columns:repeat(3,1fr) 1.15fr;gap:10px}
 .rdc2{display:flex;gap:10px;align-items:flex-start;background:#F5F7FB;border:1px solid var(--line);border-radius:12px;padding:8px 12px}.rdc2 u{text-decoration:none;font-size:20px;font-weight:300;color:#2F6BFF;line-height:1}.rdc2 span{font-size:11.5px;line-height:1.35;color:#243350}
 .rdw2{background:#FFF4DC;border:1px solid #F3DEA6;border-radius:12px;padding:8px 12px;font-size:11.5px;line-height:1.35;color:#7A5200}.rdw2 b{display:block;font-size:9.5px;letter-spacing:.18em;font-weight:500;margin-bottom:2px;color:#B97800}
+
+/* ===== Caso 6: velocidad por hora y día ===== */
+.vlc{border:1px solid var(--line);border-radius:16px;background:#fff;padding:10px 16px 8px;display:flex;flex-direction:column;min-height:0;box-shadow:0 8px 24px rgba(8,20,43,.06)}
+.vlh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.vlh b{font-size:12px;letter-spacing:.14em;font-weight:500;color:var(--ink)}.vlh span{font-size:11.5px;color:var(--mute)}
+.vlg{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0 2px}
+.vld{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:3px 11px;font-size:12px;color:var(--ink);cursor:pointer;font-family:inherit;transition:.2s}.vld i{width:14px;height:4px;border-radius:2px;background:var(--c)}
+.vld:hover{border-color:var(--c)}.vld.on{background:var(--c);border-color:var(--c);color:#fff}.vld.on i{background:#fff}.vld.off{opacity:.55}
+.vlk{margin-left:auto;font-size:11px;color:var(--mute);display:flex;align-items:center;gap:4px}.vlk i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.vlt{font-size:10.5px;letter-spacing:.14em;color:var(--mute);margin:6px 0 2px}
+.vtx{font-size:10px;fill:#667085;font-family:var(--font)}
+#vlLine svg,#vlHeat svg{width:100%;display:block}
