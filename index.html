@@ -397,6 +397,13 @@
   <div class="cover-in"><div class="eyebrow rv" style="--i:0">Bloque 05</div><h1 class="rv" style="--i:1">Visualizar<br>y <b>comunicar</b></h1><p class="rv" style="--i:2">El mejor análisis no sirve si quien decide no lo entiende, o lo entiende mal.</p><span class="time rv" style="--i:3">5 MIN</span></div>
 </section>
 
+<section class="slide content" data-sec="5" data-title="Elegir el gráfico adecuado" data-theme="light">
+  <div class="crumb rv" style="--i:0">Visualizar · Tabla vs. gráfico</div>
+  <h2 class="rv" style="--i:1">El gráfico <em>adecuado</em> a la pregunta</h2>
+  <p class="lead rv" style="--i:2">Cada pregunta pide una forma. Estos son los gráficos que más usamos, con un ejemplo de cada uno.</p>
+  <div class="body" style="top:170px;bottom:40px"><div class="vzrows" id="vzRows"></div></div>
+</section>
+
 <section class="slide content" data-sec="5" data-title="Mismos datos, dos historias" data-theme="light">
   <div class="crumb rv" style="--i:0">Visualizar · El eje importa</div>
   <h2 class="rv" style="--i:1">Mismos datos, <em>dos historias</em></h2>
@@ -416,23 +423,26 @@
   </div></div>
 </section>
 
-<section class="slide content" data-sec="5" data-title="Elegir el gráfico adecuado" data-theme="light">
+<section class="slide content" data-sec="5" data-title="Misma información, dos formas" data-theme="light">
   <div class="crumb rv" style="--i:0">Visualizar · Tabla vs. gráfico</div>
-  <h2 class="rv" style="--i:1">El gráfico <em>adecuado</em> a la pregunta</h2>
-  <p class="lead rv" style="--i:2">El mismo resultado, en una tabla y en un gráfico. ¿Cuál se entiende en cinco segundos?</p>
-  <div class="body" style="top:196px;display:grid;grid-template-columns:1.1fr 1fr;gap:26px">
-    <div class="tw rv" style="--i:3;grid-template-columns:1fr 1fr;gap:14px">
-      <figure class="shot"><div class="img"><img src="assets/viz-tabla.jpg" alt="Tabla de estadísticos"></div><figcaption>Tabla: exacta, pero hay que leerla fila por fila.</figcaption></figure>
-      <figure class="shot"><div class="img"><img src="assets/viz-barras.jpg" alt="Gráficas de barras"></div><figcaption>Barras: la comparación salta a la vista.</figcaption></figure>
-    </div>
-    <div class="layers rv" style="--i:4;gap:8px">
-      <div class="layer sa" style="--c:var(--blue);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Comparar<small>categorías</small></h4><div class="tags"><span class="tag">Barras</span></div></div>
-      <div class="layer sa" style="--c:var(--teal);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Evolución<small>en el tiempo</small></h4><div class="tags"><span class="tag">Líneas</span></div></div>
-      <div class="layer sa" style="--c:var(--violet);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Distribución<small>y atípicos</small></h4><div class="tags"><span class="tag">Histograma</span><span class="tag">Caja</span></div></div>
-      <div class="layer sa" style="--c:var(--amber);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Relación<small>entre variables</small></h4><div class="tags"><span class="tag">Dispersión</span></div></div>
-      <div class="layer sa" style="--c:var(--green);grid-template-columns:150px 1fr;padding:12px 18px"><h4 style="font-size:14.5px">Ubicación<small>geográfica</small></h4><div class="tags"><span class="tag">Mapa</span></div></div>
-    </div>
+  <h2 class="rv" style="--i:1">La misma información, <em>dos formas</em></h2>
+  <p class="lead rv" style="--i:2">Ventas anuales por sucursal (millones de pesos). ¿Cuál se entiende en cinco segundos?</p>
+  <div class="body" style="top:180px;bottom:40px"><div class="vz2">
+    <figure class="vzp rv" style="--i:3"><div class="vzh">TABLA</div><div class="vzb"><table class="vztb" id="vzTab"></table></div><figcaption>Exacta, pero hay que leerla fila por fila.</figcaption></figure>
+    <figure class="vzp rv" style="--i:4"><div class="vzh g">GRÁFICO</div><div class="vzb"><div class="vzt">Centro y Norte concentran casi la mitad de las ventas</div><div id="vzBars"></div></div><figcaption>La comparación salta a la vista y el título ya dice la conclusión.</figcaption></figure>
   </div>
+  <div class="strip rv" style="--i:6;position:static;margin-top:12px"><b>LECTURA</b><span>Los números son los mismos. Lo que cambia es el esfuerzo de quien los lee y qué se lleva a la reunión.</span></div></div>
+</section>
+
+<section class="slide content" data-sec="5" data-title="La serie y su tasa de crecimiento" data-theme="light">
+  <div class="crumb rv" style="--i:0">Visualizar · La forma cambia el mensaje</div>
+  <h2 class="rv" style="--i:1">La serie dice una cosa, su <em>tasa de crecimiento</em>, otra</h2>
+  <p class="lead rv" style="--i:2">Mismas ventas mensuales de un año (índice, enero = 100), mostradas de dos maneras.</p>
+  <div class="body" style="top:180px;bottom:40px"><div class="vz2">
+    <figure class="vzp rv" style="--i:3"><div class="vzh">SERIE ORIGINAL</div><div class="vzb"><div class="vzt">«Las ventas suben todos los meses»</div><div id="vzSer"></div></div><figcaption>Mensaje: todo va bien, el negocio crece.</figcaption></figure>
+    <figure class="vzp rv" style="--i:4"><div class="vzh g">TASA DE CRECIMIENTO MENSUAL</div><div class="vzb"><div class="vzt">«El crecimiento se redujo de 12 % a 1 %»</div><div id="vzRate"></div></div><figcaption>Mensaje: el negocio se está frenando; hay que actuar.</figcaption></figure>
+  </div>
+  <div class="strip rv" style="--i:6;position:static;margin-top:12px"><b>LECTURA</b><span>Ninguna gráfica miente, pero cada una invita a una decisión distinta. Elegir cuál mostrar es parte de comunicar con rigor.</span></div></div>
 </section>
 
 <section class="slide content" data-sec="5" data-title="Comunicar a la alta dirección" data-theme="light">
