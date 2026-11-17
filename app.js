@@ -44,7 +44,7 @@ var CASES=[
   k:[[76,'%','opinión buena o muy buena'],[5,'%','opinión negativa'],[3,'','perfiles de cliente']],
   l:'No existe «el cliente promedio»: el mensaje de precio o promoción debe hablarle a cada perfil.',
   ev:{t:'Evidencia: tres perfiles de cliente',imgs:[['cons-mca','Mapa de correspondencias: grupos A, B y C de clientes']],
-   r:['Cada punto es un taller; los puntos cercanos tienen perfiles parecidos.','Jóvenes/pequeños, maduros/medianos y adultos/grandes responden distinto.','Fortalezas: disponibilidad, calidad y atención. Debilidad: precio.'],
+   r:['Cada punto es un cliente: los puntos cercanos tienen respuestas parecidas y forman un grupo.','Calidad y promociones importan a todos; el precio pesa más en el grupo C y la atención en el A.','Cada grupo pide un mensaje distinto: no existe «el cliente promedio».'],
    w:'Lo que la gente dice en una encuesta no siempre coincide con lo que realmente compra.'}},
  {id:'k2',b:['store','trend','cluster'],bi:0,n:2,t:'Predicción de ventas de una tienda nueva',em:'tienda nueva',sub:'¿Cuánto venderá algo que aún no existe?',
   q:'¿Cuánto venderá una tienda que todavía no existe?',
@@ -392,6 +392,49 @@ function medidas(){
  '<div class="body" style="top:160px;bottom:40px"><div class="gmed">'+ks.map(function(k,i){var m=GF.M[k];return '<div class="gmc sa rv" style="--i:'+(3+i)+'"><svg viewBox="0 0 140 76" class="gmv">'+S[k]+'</svg><h4>'+m[0]+'</h4><p class="qq">'+m[1]+'</p><p><b>Cómo se calcula</b>'+m[2]+'</p><p><b>Cómo leerla</b>'+m[3]+'</p><div class="ld">Líderes (personaje · tópico): <b data-ld="'+k+'">—</b></div></div>';}).join('')+'</div>'+
  '<div class="strip rv" style="--i:10;position:static;margin-top:10px"><b>LECTURA</b><span>Ninguna medida es «la correcta»: se comparan. Grado alto con intermediación baja = popular, pero no puente.</span></div></div></section>';
 }
+/* ===== Caso 1: MCA genérico + perfiles ===== */
+function mcaSvg(){
+ var W=640,H=400,L=50,R=14,T=12,Bm=36,seed=9;
+ function r(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ function nrm(){return (r()+r()+r()+r()-2)*1.73;}
+ function X(x){return L+(x+2)/4*(W-L-R);}function Y(y){return T+(1.3-y)/2.6*(H-T-Bm);}
+ var G=[{n:'Grupo A',d:'jóvenes / pequeños',c:'#F26B5B',cx:-.85,cy:-.5,sx:.34,sy:.26},{n:'Grupo B',d:'maduros / medianos',c:'#7C5CFF',cx:.85,cy:-.45,sx:.3,sy:.25},{n:'Grupo C',d:'adultos / grandes',c:'#2F6BFF',cx:.05,cy:.8,sx:.36,sy:.22}];
+ var s='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
+ [-2,-1,0,1,2].forEach(function(v){s+='<line x1="'+X(v).toFixed(1)+'" y1="'+T+'" x2="'+X(v).toFixed(1)+'" y2="'+(H-Bm)+'" stroke="'+(v?'#EEF2F8':'#9AA6BA')+'" '+(v?'':'stroke-dasharray="4 4" ')+'/><text x="'+X(v).toFixed(1)+'" y="'+(H-Bm+14)+'" text-anchor="middle" class="mt">'+v+'</text>';});
+ [-1,-.5,0,.5,1].forEach(function(v){s+='<line x1="'+L+'" y1="'+Y(v).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(v).toFixed(1)+'" stroke="'+(v?'#EEF2F8':'#9AA6BA')+'" '+(v?'':'stroke-dasharray="4 4" ')+'/><text x="'+(L-6)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end" class="mt">'+v+'</text>';});
+ s+='<text x="'+((L+W-R)/2)+'" y="'+(H-6)+'" text-anchor="middle" class="mt b">Dim 1 (11.1 %)</text><text transform="translate(12 '+((T+H-Bm)/2)+') rotate(-90)" text-anchor="middle" class="mt b">Dim 2 (10.3 %)</text>';
+ // elipses de segmentación
+ G.forEach(function(g){s+='<ellipse cx="'+X(g.cx).toFixed(1)+'" cy="'+Y(g.cy).toFixed(1)+'" rx="'+(2.1*g.sx/4*(W-L-R)).toFixed(1)+'" ry="'+(2.1*g.sy/2.6*(H-T-Bm)).toFixed(1)+'" fill="'+g.c+'" fill-opacity=".09" stroke="'+g.c+'" stroke-width="2.4"/>';});
+ // individuos
+ G.forEach(function(g){for(var i=0;i<46;i++){var x=g.cx+nrm()*g.sx*.85,y=g.cy+nrm()*g.sy*.85;s+='<circle cx="'+X(x).toFixed(1)+'" cy="'+Y(y).toFixed(1)+'" r="3" fill="'+g.c+'" fill-opacity=".75"/>';}});
+ for(var k=0;k<14;k++){var x=(r()-.5)*3.4,y=(r()-.5)*2.1;s+='<circle cx="'+X(x).toFixed(1)+'" cy="'+Y(y).toFixed(1)+'" r="2.4" fill="#98A6BF" fill-opacity=".55"/>';}
+ // modalidades de las variables (etiquetas)
+ var V={a:'#00A3E0',e:'#F5A524',m:'#E5322D',p:'#7C5CFF',s:'#12A84F'};
+ var M=[['años 1–10','a',-1.15,-.78],['empleados 1–3','e',-1.0,-.18],['monto 1–5 mil','m',-.55,-.92],['pedidos diarios','p',-.5,-.12],
+  ['años 10–24','a',.55,-.1],['empleados 4–5','e',1.2,-.22],['monto 10–20 mil','m',.95,-.82],['pedidos semanales','p',1.15,.12],
+  ['años 25–70','a',-.35,1.08],['empleados 6–30','e',.6,1.0],['monto 20–30 mil','m',.15,.55],['pedidos mensuales','p',.45,.45],
+  ['servicio: bien','s',-.15,.0],['servicio: muy mal','s',-1.55,.45]];
+ M.forEach(function(m){var w=m[0].length*5.3+14,x=X(m[2])-w/2,y=Y(m[3])-9;s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="17" rx="3" fill="#fff" stroke="'+V[m[1]]+'" stroke-width="1.6"/><text x="'+(x+w/2).toFixed(1)+'" y="'+(y+12).toFixed(1)+'" text-anchor="middle" class="mt tg" fill="'+V[m[1]]+'">'+m[0]+'</text>';});
+ // rótulos de grupo
+ s+='<text x="'+X(-1.97)+'" y="'+Y(-.02)+'" class="mg" fill="#F26B5B">Grupo A</text><text x="'+X(1.28)+'" y="'+Y(-1.17)+'" class="mg" fill="#7C5CFF">Grupo B</text><text x="'+X(-1.2)+'" y="'+Y(1.12)+'" class="mg" fill="#2F6BFF">Grupo C</text>';
+ return '<svg viewBox="0 0 '+W+' '+H+'" class="mcasvg">'+s+'</svg>';
+}
+function evidMCA(x){
+ var B=BLOCKS[x.bi];
+ var P=[['🏅','Calidad','todos'],['🏷️','Promociones masivas','todos'],['💲','Precio','✓','✓','✓✓'],['📦','Disponibilidad','✓','✓✓','✓✓'],['💳','Facilidades financieras','✗','≈','✗'],['🛠️','Atención al cliente','✓✓','≈','✓'],['📍','Ubicación','✗','✗','≈']];
+ function sym(v){var c=v==='✗'?'no':v==='≈'?'mid':v==='✓✓'?'ok2':'ok';return '<span class="sy '+c+'">'+v+'</span>';}
+ var ic={A:'<svg viewBox="0 0 40 52"><circle cx="20" cy="9" r="7" fill="#F26B5B"/><path d="M8 24q12-8 24 0l-3 12H11z" fill="#F26B5B"/><rect x="12" y="36" width="6" height="14" rx="2" fill="#F26B5B"/><rect x="22" y="36" width="6" height="14" rx="2" fill="#F26B5B"/></svg>',
+  B:'<svg viewBox="0 0 40 52"><circle cx="19" cy="9" r="7" fill="#7C5CFF"/><path d="M8 22q11-6 22 2l-2 14H10z" fill="#7C5CFF"/><rect x="12" y="36" width="6" height="14" rx="2" fill="#7C5CFF"/><rect x="21" y="36" width="6" height="14" rx="2" fill="#7C5CFF"/><path d="M33 26v24" stroke="#7C5CFF" stroke-width="3" stroke-linecap="round"/></svg>',
+  C:'<svg viewBox="0 0 40 52"><circle cx="20" cy="7" r="7" fill="#2F6BFF"/><rect x="9" y="17" width="22" height="20" rx="6" fill="#2F6BFF"/><rect x="12" y="35" width="7" height="16" rx="2" fill="#2F6BFF"/><rect x="21" y="35" width="7" height="16" rx="2" fill="#2F6BFF"/></svg>'};
+ var tb='<table class="mcat"><thead><tr><th></th><th>Preferencia</th>'+[['A','Grupo A','jóvenes / pequeños'],['B','Grupo B','maduros / medianos'],['C','Grupo C','adultos / grandes']].map(function(g){return '<th class="gcol"><div class="gi">'+ic[g[0]]+'</div><b>'+g[1]+'</b><small>'+g[2]+'</small></th>';}).join('')+'</tr></thead><tbody>'+
+  P.map(function(p){return '<tr><td class="ei">'+p[0]+'</td><td class="en">'+p[1]+'</td>'+(p[2]==='todos'?'<td colspan="3" class="all">'+sym('✓')+' <i>importante para todos los grupos</i></td>':[2,3,4].map(function(k){return '<td>'+sym(p[k])+'</td>';}).join(''))+'</tr>';}).join('')+'</tbody></table>';
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="'+x.bi+'" data-title="Caso '+x.n+' · evidencia" data-theme="light" style="--c:'+B.c+'">'+
+ '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
+ '<h2 class="rv" style="--i:1;font-size:32px">Evidencia: tres <em>perfiles</em> de cliente</h2>'+
+ '<div class="mca"><figure class="mcf rv" style="--i:3"><div class="mch">MCA · MAPA DE 2 DIMENSIONES + SEGMENTACIÓN</div>'+mcaSvg()+'<figcaption>Cada punto es un cliente; las etiquetas son categorías de sus respuestas. Datos simulados.</figcaption></figure>'+
+ '<div class="mcr rv" style="--i:4"><div class="mch">PERFIL DE CADA GRUPO · IMPORTANCIA DE LAS PREFERENCIAS</div>'+tb+'<div class="mcl"><span class="sy ok2">✓✓</span> muy importante <span class="sy ok">✓</span> importante <span class="sy mid">≈</span> indiferente <span class="sy no">✗</span> irrelevante</div></div></div>'+
+ '<div class="mcb rv" style="--i:5"><div class="mcn"><b><i class="sn s5">05</i>LECTURA</b>'+x.ev.r.map(function(t,i){return '<span><u>'+(i+1)+'</u>'+t+'</span>';}).join('')+'</div><div class="warn"><b>CUIDADO</b>'+x.ev.w+'</div></div></section>';
+}
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
 }
@@ -425,7 +468,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
+ stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':x.id==='k1'?evidMCA(x):evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
