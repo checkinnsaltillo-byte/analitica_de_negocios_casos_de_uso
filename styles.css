@@ -707,3 +707,16 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 .tch[data-go]{cursor:pointer}.tch[data-go]::after{content:" ↗";opacity:.55}
 .tch[data-go]:hover{background:var(--c);color:#fff;border-color:var(--c);transform:translateY(-2px)}
 .etc{min-height:104px;align-content:flex-start}.enf ul{flex:none;min-height:196px}
+
+/* ===== Los 5 pasos de cada caso ===== */
+.sn{display:inline-flex;align-items:center;justify-content:center;font-style:normal;min-width:24px;height:20px;padding:0 6px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:.04em;color:#fff;margin-right:8px;vertical-align:1px}
+.sn.s1{background:#2F6BFF}.sn.s2{background:#12B5A6}.sn.s3{background:#7C5CFF}.sn.s4{background:#F5A524}.sn.s5{background:#F26B5B}
+.pq.q{border-left-color:#2F6BFF}.pq.q small{color:#2F6BFF}
+.pq.h{background:#E8F8F6;border-color:#BFEBE5}.pq.h small{color:#0E8F83}
+.lbl.s3t{color:#5B3FD6}.lbl.s4t{color:#B97800}
+.strip b .sn{margin-right:10px}
+.crumb .stp-tag{display:inline-flex;align-items:center;gap:6px;margin-left:12px;padding:3px 12px 3px 4px;border-radius:99px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:#fff}
+.crumb .stp-tag i{font-style:normal;background:rgba(255,255,255,.25);border-radius:99px;padding:1px 7px;font-weight:600}
+.crumb .stp-tag.s1{background:#2F6BFF}.crumb .stp-tag.s2{background:#12B5A6}.crumb .stp-tag.s3{background:#7C5CFF}.crumb .stp-tag.s4{background:#F5A524}.crumb .stp-tag.s5{background:#F26B5B}
+.crumb .stp-all{display:inline-flex;gap:4px;margin-left:14px}.crumb .stp-all .sn{margin:0;min-width:22px;height:18px;font-size:10px;padding:0 5px}
+.lbl.s5t{color:#D9473A}

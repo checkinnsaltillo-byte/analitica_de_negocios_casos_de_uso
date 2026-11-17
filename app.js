@@ -401,12 +401,12 @@ function ficha(x){
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+'</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1">'+t+'</h2><p class="lead rv" style="--i:2">'+x.sub+'</p>'+
  '<div class="fiche"><div class="l">'+
-  '<div class="pq q rv" style="--i:3"><small>PREGUNTA</small><p>'+x.q+'</p></div>'+
-  '<div class="pq h rv" style="--i:4"><small>HIPÓTESIS</small><p>'+(Array.isArray(x.h)?x.h.join('</p><p class="h2">'):x.h)+'</p></div>'+
+  '<div class="pq q rv" style="--i:3"><small><i class="sn s1">01</i>PREGUNTA</small><p>'+x.q+'</p></div>'+
+  '<div class="pq h rv" style="--i:4"><small><i class="sn s2">02</i>HIPÓTESIS</small><p>'+(Array.isArray(x.h)?x.h.join('</p><p class="h2">'):x.h)+'</p></div>'+
   (x.id==='k2'?siteMap():(x.id==='k4'?ripple():'<figure class="pic kpic rv" style="--i:5" data-ph="'+x.id+'"></figure>'))+'</div>'+
- '<div class="r"><div class="rv" style="--i:5"><div class="lbl">MÉTODOS</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
- '<div class="rv" style="--i:6"><div class="lbl">EJEMPLO DE RESULTADO</div><div class="kpis'+(x.k[0][0]==='T'?' kts':'')+'">'+x.k.map(function(k){if(k[0]==='T')return '<div class="kpi kt sa" style="--c:'+B.c+'"><b>'+k[1]+'</b><p>'+k[2]+'</p></div>';return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
- '<div class="strip rv" style="--i:7"><b>LECTURA PARA EL COMUNICADOR</b><span>'+x.l+'</span></div></section>';
+ '<div class="r"><div class="rv" style="--i:5"><div class="lbl s3t"><i class="sn s3">03</i>MÉTODO · ¿CON QUÉ TÉCNICAS?</div><div class="mets">'+x.m.map(function(m){return '<div class="met" data-tip="'+m[0]+'|'+m[1]+'"><i></i>'+m[0]+'</div>';}).join('')+'</div></div>'+
+ '<div class="rv" style="--i:6"><div class="lbl s4t"><i class="sn s4">04</i>RESULTADO · EJEMPLO</div><div class="kpis'+(x.k[0][0]==='T'?' kts':'')+'">'+x.k.map(function(k){if(k[0]==='T')return '<div class="kpi kt sa" style="--c:'+B.c+'"><b>'+k[1]+'</b><p>'+k[2]+'</p></div>';return '<div class="kpi sa" style="--c:'+B.c+'"><div class="v"><span data-count="'+k[0]+'">0</span><small>'+k[1]+'</small></div><p>'+k[2]+'</p></div>';}).join('')+'</div></div></div></div>'+
+ '<div class="strip rv" style="--i:7"><b><i class="sn s5">05</i>LECTURA PARA EL COMUNICADOR</b><span>'+x.l+'</span></div></section>';
 }
 function evid(x){
  var B=BLOCKS[x.bi],e=x.ev,n=e.imgs.length;
@@ -414,7 +414,7 @@ function evid(x){
  '<div class="crumb rv" style="--i:0">'+B.n+' · Caso '+x.n+' · Evidencia</div>'+thread(x.bi)+
  '<h2 class="rv" style="--i:1;font-size:32px">'+e.t+'</h2>'+
  '<div class="evid'+(e.imgs[0][0].indexOf('svg:')===0||(n===1&&e.imgs[0][0].indexOf('map:')===0)?' wide':'')+'" style="top:130px"><div class="shots n'+n+' rv" style="--i:3">'+e.imgs.map(function(i){return '<figure class="shot"><div class="img">'+(/^(svg|map):/.test(i[0])?EVSVG[i[0].split(':')[1]]():'<img src="assets/'+i[0]+'.jpg" alt="'+i[1]+'">')+'</div><figcaption>'+i[1]+'</figcaption></figure>';}).join('')+'</div>'+
- '<div class="read"><div class="lbl rv" style="--i:4;margin:0">CÓMO SE LEE</div>'+e.r.map(function(r,i){return '<div class="rd sa rv" style="--i:'+(5+i)+'"><b>'+(i+1)+'</b><span>'+r+'</span></div>';}).join('')+
+ '<div class="read"><div class="lbl rv s5t" style="--i:4;margin:0"><i class="sn s5">05</i>LECTURA · CÓMO SE LEE</div>'+e.r.map(function(r,i){return '<div class="rd sa rv" style="--i:'+(5+i)+'"><b>'+(i+1)+'</b><span>'+r+'</span></div>';}).join('')+
  '<div class="warn rv" style="--i:9"><b>CUIDADO</b>'+e.w+'</div></div></div></section>';
 }
 function bridge(b){
@@ -1259,6 +1259,21 @@ document.addEventListener('mousemove',function(e){
   leg.addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;cur=cur===b.dataset.s?null:b.dataset.s;draw();});
   draw();
  }
+})();
+
+
+// Pasos de cada caso: marcar en la migaja a qué paso corresponde cada lámina
+(function(){
+ var ST={1:['Pregunta','s1'],2:['Hipótesis','s2'],3:['Método','s3'],4:['Resultado','s4'],5:['Lectura','s5']};
+ function chip(n){return '<span class="stp-tag '+ST[n][1]+'"><i>0'+n+'</i>'+ST[n][0]+'</span>';}
+ [].forEach.call(document.querySelectorAll('.slide[data-block]'),function(sl){
+  var t=sl.dataset.title||'',cr=sl.querySelector('.crumb');if(!cr||!/^Caso /.test(t))return;var h='';
+  if(/ · evidencia$/.test(t))h=chip(4)+chip(5);
+  else if(/Evidencia|Impactos positivos/.test(t))h=chip(4);
+  else if(/Conjoint: ventajas|Tiendas espejo|Medidas del grafo|Métodos del monitor/.test(t))h=chip(3);
+  else if(/Conjoint: simulador|Un modelo por grupo/.test(t))h=chip(3)+chip(4);
+  else h='<span class="stp-all">'+[1,2,3,4,5].map(function(n){return '<i class="sn '+ST[n][1]+'" title="'+ST[n][0]+'">0'+n+'</i>';}).join('')+'</span>';
+  cr.insertAdjacentHTML('beforeend',h);});
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
