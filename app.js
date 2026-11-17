@@ -1315,7 +1315,7 @@ document.addEventListener('mousemove',function(e){
   else if(/Evidencia|Impactos positivos/.test(t))h=chip(4);
   else if(/Conjoint: ventajas|Tiendas espejo|Medidas del grafo|Métodos del monitor/.test(t))h=chip(3);
   else if(/Conjoint: simulador|Un modelo por grupo/.test(t))h=chip(3)+chip(4);
-  else h='<span class="stp-all">'+[1,2,3,4,5].map(function(n){return '<i class="sn '+ST[n][1]+'" title="'+ST[n][0]+'">0'+n+'</i>';}).join('')+'</span>';
+  else h='';
   cr.insertAdjacentHTML('beforeend',h);});
 })();
 
