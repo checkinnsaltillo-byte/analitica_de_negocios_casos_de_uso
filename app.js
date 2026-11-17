@@ -342,35 +342,55 @@ function medios(){
  '<div class="lbl rv" style="--i:10;margin:12px 0 6px">QUÉ SE OBTIENE · GRÁFICAS GENÉRICAS</div><div class="rch rv" style="--i:10"><figure><div>'+mChart('bars')+'</div><figcaption>Notas por tema</figcaption></figure><figure><div>'+mChart('lines')+'</div><figcaption>Tono en el tiempo</figcaption></figure><figure><div>'+mChart('cloud')+'</div><figcaption>Palabras más frecuentes</figcaption></figure></div>'+
  '<div class="lbl rv" style="--i:11;margin:10px 0 6px">MÉTODOS ANALÍTICOS</div><div class="pills4 rv" style="--i:11"><span>Procesamiento de lenguaje natural</span><span>Minería de textos</span><span>Análisis multivariado</span><span>Modelación estadística</span></div></div></section>';
 }
-/* ===== Grafo de discurso (caso 5) ===== */
+/* ===== Grafo de discurso 3D (caso 5) ===== */
 var GF={
  C:['AMLO','Anaya','Meade','Zavala','El Bronco'],
- T:['Corrupción','Seguridad','Economía','Pobreza','Educación','Salud','Energía','Empleo','Migración','Relación con EE. UU.'],
+ T:['Corrupción','Seguridad','Economía','Pobreza','Educación','Salud','Reforma energética','Empleo','Aeropuerto (NAIM)','Relación con EE. UU.','Migración','Equidad de género','Austeridad'],
+ /* Pesos de 0 a 1: énfasis cualitativo de la campaña presidencial de 2018 (plataformas y propuestas públicas). Ilustrativo, no es un conteo de notas. */
  W:{
-  'AMLO':{'Corrupción':.95,'Pobreza':.9,'Energía':.6,'Seguridad':.5,'Empleo':.5,'Educación':.4,'Salud':.35},
-  'Anaya':{'Economía':.7,'Empleo':.65,'Seguridad':.6,'Educación':.6,'Corrupción':.55,'Relación con EE. UU.':.45,'Salud':.3},
-  'Meade':{'Economía':.85,'Empleo':.7,'Educación':.6,'Salud':.55,'Pobreza':.5,'Relación con EE. UU.':.5,'Migración':.4,'Seguridad':.4},
-  'Zavala':{'Seguridad':.7,'Educación':.5,'Empleo':.5,'Salud':.45,'Corrupción':.45,'Economía':.4},
-  'El Bronco':{'Corrupción':.8,'Seguridad':.65,'Empleo':.4,'Economía':.35,'Migración':.3,'Educación':.3}
+  'AMLO':{'Corrupción':.95,'Pobreza':.9,'Austeridad':.8,'Aeropuerto (NAIM)':.75,'Reforma energética':.7,'Seguridad':.55,'Empleo':.5,'Educación':.5,'Relación con EE. UU.':.4,'Migración':.35,'Salud':.3},
+  'Anaya':{'Economía':.65,'Corrupción':.6,'Empleo':.6,'Educación':.6,'Seguridad':.55,'Pobreza':.5,'Aeropuerto (NAIM)':.5,'Relación con EE. UU.':.5,'Reforma energética':.45,'Salud':.35},
+  'Meade':{'Economía':.85,'Empleo':.7,'Relación con EE. UU.':.65,'Educación':.6,'Pobreza':.55,'Aeropuerto (NAIM)':.55,'Salud':.5,'Reforma energética':.5,'Seguridad':.45,'Migración':.4,'Corrupción':.4},
+  'Zavala':{'Equidad de género':.9,'Seguridad':.65,'Corrupción':.55,'Educación':.5,'Salud':.4,'Economía':.4,'Empleo':.35,'Pobreza':.3},
+  'El Bronco':{'Corrupción':.85,'Seguridad':.75,'Austeridad':.6,'Empleo':.35,'Economía':.3,'Educación':.25}
  },
+ /* nombre, qué responde, cómo se calcula, cómo leerla */
  M:{
-  grado:['Grado','Número de conexiones del nodo. Quien se conecta con más tópicos (o personajes) es más visible en la conversación.'],
-  fuerza:['Fuerza','Suma del grosor de todas sus líneas. Mide cuánto discurso concentra un nodo, no solo con cuántos se conecta.'],
-  inter:['Intermediación','Cuántas veces el nodo es el «puente» en los caminos más cortos entre otros dos. Detecta los temas que unen discursos distintos.'],
-  pr:['Vector propio (PageRank)','Importa más estar conectado a nodos importantes. Mide la influencia dentro de toda la red, no solo alrededor del nodo.']
+  grado:['Grado','¿Con cuántos nodos se conecta?','Cuenta las líneas del nodo: k = número de vínculos directos.','Un tópico con grado alto lo tocan muchos personajes; un personaje con grado alto habla de muchos temas.'],
+  fuerza:['Fuerza','¿Cuánto discurso concentra?','Suma del grosor (cercanía) de todas sus líneas: s = Σ w.','Distingue a quien menciona mucho un tema de quien solo lo menciona de paso.'],
+  cercania:['Cercanía','¿Qué tan pronto llega a todos los demás?','Inversa de la distancia promedio a los demás nodos (distancia = 1 / cercanía de cada línea).','Alta = está «en el centro»: su mensaje alcanza rápido a toda la conversación.'],
+  inter:['Intermediación','¿Es puente entre otros nodos?','Fracción de los caminos más cortos entre pares de nodos que pasan por él.','Alta = conecta discursos que de otra forma estarían separados; quitarlo fragmenta la red.'],
+  propio:['Vector propio','¿Se conecta con nodos importantes?','Su valor es proporcional a la suma de los valores de sus vecinos: Ax = λx.','Importa la calidad de los vínculos: pocos pero con nodos centrales pesa más.'],
+  pr:['PageRank','¿Dónde «cae» alguien que navega al azar?','Probabilidad de estar en el nodo al saltar de línea en línea (más probable por las líneas gruesas).','Es el vector propio con amortiguación (0.85); lo usa Google para ordenar páginas.']
  }
 };
 function grafo(){
  var B=BLOCKS[2];
- function sw(k){return k==='c'?'<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="#2F6BFF"/></svg>':k==='t'?'<svg viewBox="0 0 30 30"><rect x="4" y="4" width="22" height="22" rx="8" fill="#F5A524"/></svg>':k==='s'?'<svg viewBox="0 0 30 30"><circle cx="7" cy="16" r="4" fill="#98A6BF"/><circle cx="21" cy="14" r="8" fill="#98A6BF"/></svg>':k==='g'?'<svg viewBox="0 0 30 30"><path d="M2 8H28" stroke="#98A6BF" stroke-width="1.5"/><path d="M2 15H28" stroke="#98A6BF" stroke-width="4"/><path d="M2 24H28" stroke="#98A6BF" stroke-width="7"/></svg>':k==='d'?'<svg viewBox="0 0 30 30"><circle cx="6" cy="15" r="4" fill="#2F6BFF"/><circle cx="14" cy="9" r="4" fill="#2F6BFF"/><circle cx="26" cy="22" r="4" fill="#2F6BFF" opacity=".45"/></svg>':'<svg viewBox="0 0 30 30"><path d="M2 15H28" stroke="#2F6BFF" stroke-width="4" stroke-dasharray="6 5"/></svg>';}
- var L=[['c','Personaje','Candidato a la presidencia (México 2018) mencionado en las noticias.'],['t','Tópico','Tema que aparece en las notas y discursos: economía, salud, etc.'],['s','Tamaño del nodo','Relevancia en el sistema, según la métrica elegida arriba.'],['g','Grosor de la línea','Cercanía: qué tanto aparece el tópico en el discurso (0 a 1).'],['d','Distancia en el mapa','Quienes hablan de lo mismo quedan cerca; quienes contrastan, lejos.'],['a','Línea animada','Conexiones del nodo elegido: forman el subgrafo de la derecha.']];
+ function sw(k){return k==='c'?'<svg viewBox="0 0 30 30"><defs><clipPath id="swc"><circle cx="15" cy="15" r="11"/></clipPath></defs><circle cx="15" cy="15" r="12" fill="#fff" stroke="#2F6BFF" stroke-width="2"/><circle cx="15" cy="12" r="4" fill="#98A6BF"/><path d="M6 25q9-12 18 0z" fill="#98A6BF" clip-path="url(#swc)"/></svg>':k==='t'?'<svg viewBox="0 0 30 30"><rect x="4" y="4" width="22" height="22" rx="8" fill="#F5A524"/></svg>':k==='s'?'<svg viewBox="0 0 30 30"><circle cx="7" cy="16" r="4" fill="#98A6BF"/><circle cx="21" cy="14" r="8" fill="#98A6BF"/></svg>':k==='g'?'<svg viewBox="0 0 30 30"><path d="M2 8H28" stroke="#98A6BF" stroke-width="1.5"/><path d="M2 15H28" stroke="#98A6BF" stroke-width="4"/><path d="M2 24H28" stroke="#98A6BF" stroke-width="7"/></svg>':k==='d'?'<svg viewBox="0 0 30 30"><circle cx="6" cy="15" r="4" fill="#2F6BFF"/><circle cx="14" cy="9" r="4" fill="#2F6BFF"/><circle cx="26" cy="22" r="4" fill="#2F6BFF" opacity=".45"/></svg>':'<svg viewBox="0 0 30 30"><path d="M2 15H28" stroke="#2F6BFF" stroke-width="4" stroke-dasharray="6 5"/></svg>';}
+ var L=[['c','Personaje','Candidato presidencial 2018, con su foto.'],['t','Tópico','Tema de la conversación pública y de las campañas.'],['s','Tamaño del nodo','Relevancia en la red, según la medida elegida.'],['g','Grosor de la línea','Cercanía: cuánto aparece el tópico en su discurso (0 a 1).'],['d','Distancia en 3D','Quienes hablan de lo mismo quedan cerca; quienes contrastan, lejos.'],['a','Línea animada','Conexiones del nodo elegido: es el subgrafo de la derecha.']];
  return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Evidencia: grafo del discurso" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Evidencia</div>'+thread(2)+
  '<h2 class="rv" style="--i:1;font-size:32px">Evidencia: el <em>grafo</em> del discurso</h2>'+
- '<div class="gf"><div class="gfL"><div class="gfctl rv" style="--i:2"><label>Relevancia <i>(tamaño)</i><select id="gfM" class="cbx">'+Object.keys(GF.M).map(function(k){return '<option value="'+k+'">'+GF.M[k][0]+'</option>';}).join('')+'</select></label><label>Cercanía mínima <input type="range" id="gfT" min="0" max="85" value="0"><b id="gfTv">0.00</b></label><span class="gfh">Haz clic en un nodo</span></div>'+
+ '<div class="gf"><div class="gfL"><div class="gfctl rv" style="--i:2"><label>Relevancia <i>(tamaño)</i><select id="gfM" class="cbx">'+Object.keys(GF.M).map(function(k){return '<option value="'+k+'">'+GF.M[k][0]+'</option>';}).join('')+'</select></label><label>Cercanía mínima <input type="range" id="gfT" min="0" max="85" value="0"><b id="gfTv">0.00</b></label><button class="gfb" id="gfRot" type="button">⟳ Girar</button><button class="gfb" id="gfRst" type="button">Restablecer</button></div>'+
  '<p class="gfdef rv" style="--i:3" id="gfDef"></p>'+
- '<svg id="gfSvg" class="gfs rv" style="--i:3" viewBox="0 0 740 350"></svg>'+
+ '<div class="gfcw rv" style="--i:3"><canvas id="gfCv" class="gfs"></canvas><span class="gfh">Arrastra para girar · rueda para acercar · clic en un nodo</span></div>'+
  '<div class="gfleg rv" style="--i:4">'+L.map(function(l){return '<div><span class="sw">'+sw(l[0])+'</span><p><b>'+l[1]+'</b>'+l[2]+'</p></div>';}).join('')+'</div></div>'+
  '<div class="gfR rv" style="--i:4" id="gfPanel"></div></div></section>';
+}
+function medidas(){
+ var B=BLOCKS[2];
+ var S={
+  grado:'<circle cx="70" cy="38" r="9" fill="#2F6BFF"/>'+[0,1,2,3,4].map(function(i){var a=-1.2+i*.62,x=70+Math.cos(a)*48,y=38+Math.sin(a+.4)*28;return '<line x1="70" y1="38" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="#98A6BF" stroke-width="2"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5" fill="#F5A524"/>';}).join(''),
+  fuerza:'<circle cx="70" cy="38" r="9" fill="#2F6BFF"/>'+[0,1,2,3,4].map(function(i){var a=-1.2+i*.62,x=70+Math.cos(a)*48,y=38+Math.sin(a+.4)*28;return '<line x1="70" y1="38" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="#98A6BF" stroke-width="'+[1,6,3,8,2][i]+'" stroke-linecap="round"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5" fill="#F5A524"/>';}).join(''),
+  cercania:'<circle cx="70" cy="38" r="14" fill="none" stroke="#2F6BFF" stroke-dasharray="3 3" opacity=".6"/><circle cx="70" cy="38" r="30" fill="none" stroke="#2F6BFF" stroke-dasharray="3 3" opacity=".35"/><circle cx="70" cy="38" r="9" fill="#2F6BFF"/>'+[[84,30],[56,26],[66,56],[100,50],[38,44],[108,22],[28,18]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="#F5A524"/>';}).join(''),
+  inter:'<g stroke="#98A6BF" stroke-width="2"><line x1="20" y1="22" x2="34" y2="40"/><line x1="20" y1="58" x2="34" y2="40"/><line x1="34" y1="40" x2="70" y2="38"/><line x1="70" y1="38" x2="106" y2="40"/><line x1="120" y1="22" x2="106" y2="40"/><line x1="120" y1="58" x2="106" y2="40"/><line x1="20" y1="22" x2="20" y2="58"/><line x1="120" y1="22" x2="120" y2="58"/></g><circle cx="70" cy="38" r="10" fill="#2F6BFF"/>'+[[20,22],[20,58],[34,40],[106,40],[120,22],[120,58]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5" fill="#F5A524"/>';}).join(''),
+  propio:'<g stroke="#98A6BF" stroke-width="2"><line x1="32" y1="38" x2="70" y2="38"/><line x1="70" y1="38" x2="108" y2="20"/><line x1="70" y1="38" x2="108" y2="56"/><line x1="32" y1="38" x2="14" y2="22"/><line x1="32" y1="38" x2="14" y2="54"/></g><circle cx="70" cy="38" r="12" fill="#2F6BFF"/><circle cx="32" cy="38" r="6" fill="#F5A524"/><circle cx="108" cy="20" r="9" fill="#F5A524"/><circle cx="108" cy="56" r="9" fill="#F5A524"/><circle cx="14" cy="22" r="4" fill="#F5A524"/><circle cx="14" cy="54" r="4" fill="#F5A524"/>',
+  pr:'<defs><marker id="mpr" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L6 3L0 6z" fill="#98A6BF"/></marker></defs><g stroke="#98A6BF" stroke-width="2" marker-end="url(#mpr)"><line x1="18" y1="14" x2="58" y2="32"/><line x1="18" y1="62" x2="58" y2="46"/><line x1="44" y1="38" x2="58" y2="38"/><line x1="122" y1="14" x2="84" y2="32"/><line x1="122" y1="62" x2="84" y2="46"/></g><circle cx="70" cy="38" r="14" fill="#2F6BFF"/><circle cx="14" cy="12" r="5" fill="#F5A524"/><circle cx="14" cy="64" r="5" fill="#F5A524"/><circle cx="38" cy="38" r="5" fill="#F5A524"/><circle cx="126" cy="12" r="5" fill="#F5A524"/><circle cx="126" cy="64" r="5" fill="#F5A524"/>'
+ };
+ var ks=Object.keys(GF.M);
+ return '<section class="slide content" data-sec="4" data-block="'+B.n+'" data-bi="2" data-title="Caso 5 · Medidas del grafo" data-theme="light" style="--c:'+B.c+'"><div class="crumb rv" style="--i:0">'+B.n+' · Caso 5 · Medidas</div>'+thread(2)+
+ '<h2 class="rv" style="--i:1">¿Qué significa que un nodo sea <em>relevante</em>?</h2><p class="lead rv" style="--i:2">Las seis medidas de centralidad más usadas en redes: cada una responde otra pregunta.</p>'+
+ '<div class="body" style="top:160px;bottom:40px"><div class="gmed">'+ks.map(function(k,i){var m=GF.M[k];return '<div class="gmc sa rv" style="--i:'+(3+i)+'"><svg viewBox="0 0 140 76" class="gmv">'+S[k]+'</svg><h4>'+m[0]+'</h4><p class="qq">'+m[1]+'</p><p><b>Cómo se calcula</b>'+m[2]+'</p><p><b>Cómo leerla</b>'+m[3]+'</p><div class="ld">Líderes (personaje · tópico): <b data-ld="'+k+'">—</b></div></div>';}).join('')+'</div>'+
+ '<div class="strip rv" style="--i:10;position:static;margin-top:10px"><b>LECTURA</b><span>Ninguna medida es «la correcta»: se comparan. Grado alto con intermediación baja = popular, pero no puente.</span></div></div></section>';
 }
 function thread(bi){
  return '<div class="thread" style="--c:'+BLOCKS[bi].c+'">'+BLOCKS.map(function(b,i){return '<span class="'+(i===bi?'on':i<bi?'done':'')+'">'+b.s+'</span>';}).join('')+'</div>';
@@ -405,7 +425,7 @@ function bridge(b){
 var stream='';
 stream+=document.getElementById('tplTheory').innerHTML;
 CASES.forEach(function(x){
- stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medios();
+ stream+=ficha(x)+(x.id==='k4'||x.id==='k5'?'':evid(x));if(x.id==='k1')stream+=conjoint();if(x.id==='k2')stream+=mirror()+mirror2();if(x.id==='k4')stream+=impacto();if(x.id==='k5')stream+=grafo()+medidas()+medios();
  BRIDGES.forEach(function(b){if(b.after===x.id)stream+=bridge(b);});
 });
 var mount=document.getElementById('casesMount');
@@ -502,7 +522,7 @@ var BART={
 
 
 /* ================= Fotos libres y créditos ================= */
-/*PH_START*/var PH={"esc1": {"t": "PRESS CONFERENCE 2016-07-19", "a": "EU2016 SK", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:PRESS_CONFERENCE_2016-07-19_Informal_Meeting_of_Ministers_Responsible_for_Competitiveness_(28410298625).jpg", "w": "Rueda de prensa", "p": "center"}, "esc2": {"t": "Albany wind farm", "a": "Leon Brooks", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Albany_wind_farm_against_the_sunset_western_Australia.jpg", "w": "Parque eólico al atardecer", "p": "center"}, "esc3": {"t": "FEMA City Council meeting", "a": "Marvin Nauman / FEMA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:FEMA_-_32884_-_FEMA_Community_Relations_worker_speaks_at_City_Council_meeting_in_Oklahoma.jpg", "w": "Reunión de un concejo municipal", "p": "center"}, "esc4": {"t": "Southern Monterrey skyline", "a": "Rick González", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Southern_Monterrey_skyline.jpg", "w": "Horizonte de Monterrey", "p": "center"}, "q1": {"t": "REMA 1000 Supermarket interior grocery store Tønsberg, Norway 2017-11-03 cashier", "a": "Wolfmann", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:REMA_1000_Supermarket_interior_grocery_store_T%C3%B8nsberg,_Norway_2017-11-03_cashier_checkout_a.jpg", "w": "Caja de supermercado", "p": "center"}, "q2": {"t": "Moscow, Paveletskaya Plaza Feb.2025 - turkey 01.jpg", "a": "Retired electrician", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Moscow,_Paveletskaya_Plaza_Feb.2025_-_turkey_01.jpg", "w": "Precios en un anaquel con etiquetas electrónicas", "p": "center"}, "q3": {"t": "Storefronts on Bridgeway, Sausalito-L1003865.jpg", "a": "Frank Schulenburg", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Storefronts_on_Bridgeway,_Sausalito-L1003865.jpg", "w": "Locales comerciales en una calle", "p": "center"}, "q4": {"t": "DSC06451 Explosion Hazard Folding Sign, Wiener Netze, 2023-10.jpg", "a": "Aciarium", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:DSC06451_Explosion_Hazard_Folding_Sign,_Wiener_Netze,_2023-10.jpg", "w": "Señal de advertencia de peligro", "p": "center"}, "q5": {"t": "2016-09-11 19 30 20 Sunset at the NEXRAD WSR-88D Doppler Radar at the National W", "a": "Famartin", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:2016-09-11_19_30_20_Sunset_at_the_NEXRAD_WSR-88D_Doppler_Radar_at_the_National_Weather_Service%27s_Baltimore-Washington_Weather_Forecast_Office_in_Sterling,_Loudoun_County,_Virginia.jpg", "w": "Radar meteorológico al atardecer", "p": "center"}, "q6": {"t": "Kabul City Factory Smoke.jpg", "a": "Pm4gis", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Kabul_City_Factory_Smoke.jpg", "w": "Vista aérea de chimeneas y humo industrial", "p": "center"}, "k1": {"t": "The interior of an Advance Auto Parts store in Murphy, North Carolina 06.jpg", "a": "Harrison Keely", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:The_interior_of_an_Advance_Auto_Parts_store_in_Murphy,_North_Carolina_06.jpg", "w": "Interior de una refaccionaria", "p": "center"}, "k3": {"t": "Sclater Street Yard market, Brick Lane Market London E1 o.jpg", "a": "Acabashi", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Sclater_Street_Yard_market,_Brick_Lane_Market_London_E1_o.jpg", "w": "Mercado callejero", "p": "center"}, "k5": {"t": "Man reading a newspaper at a café terrace in Athens, Greece - 1979.jpg", "a": "Jean-Louis Debaize / European Communitie", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:Man_reading_a_newspaper_at_a_caf%C3%A9_terrace_in_Athens,_Greece_-_1979.jpg", "w": "Lector de periódico en un café", "p": "center"}, "k6": {"t": "Traffic jam Bangkok.JPG", "a": "Sky 269", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Traffic_jam_Bangkok.JPG", "w": "Congestión vehicular", "p": "center"}, "k7": {"t": "Waste landfill in Derhachi.jpg", "a": "I.Shevtsov", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Waste_landfill_in_Derhachi.jpg", "w": "Relleno sanitario", "p": "center"}, "d4": {"t": "Solar Data Analyst at Work in Kenya.jpg", "a": "Dwalsh3", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Solar_Data_Analyst_at_Work_in_Kenya.jpg", "w": "Analista de datos en su estación de trabajo", "p": "center"}, "d5": {"t": "Earth's City Lights by DMSP, 1994-1995 (large).jpg", "a": "Data: Marc Imhoff/NASA GSFC, Christopher", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Earth%27s_City_Lights_by_DMSP,_1994-1995_(large).jpg", "w": "Imagen satelital: luces nocturnas de la Tierra", "p": "center"}, "s1": {"t": "Cockpit Motion Facility.jpg", "a": "NASA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Cockpit_Motion_Facility.jpg", "w": "Simulador de vuelo", "p": "center"}, "s2": {"t": "This image shows VINCI (VLT INterferometer Commissioning Instrument), the \"test ", "a": "ESO", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:This_image_shows_VINCI_(VLT_INterferometer_Commissioning_Instrument),_the_%22test_camera%22_of_the_Very_Large_Telescope_Interferometer_(VLTI),_and_LEONARDO,_its_calibration_source_(vlt1_02-dez2000).jpg", "w": "Instrumentos de laboratorio de precisión", "p": "center"}, "s3": {"t": "New York Stock Exchange trading floor on Wall Street, New York, New York LCCN201", "a": "Carol M. Highsmith", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:New_York_Stock_Exchange_trading_floor_on_Wall_Street,_New_York,_New_York_LCCN2011634218.tif", "w": "Bolsa de valores de Nueva York", "p": "center"}, "d1": {"t": "Edificio del Instituto Nacional de Estadística, Geografía e Informática.JPG", "a": "Luisalvaz", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Edificio_del_Instituto_Nacional_de_Estad%C3%ADstica,_Geograf%C3%ADa_e_Inform%C3%A1tica.JPG", "w": "Edificio del INEGI, fuente oficial de estadística", "p": "center"}, "d2": {"t": "Logistics Specialist 2nd Class Jarred Stone checks cargo inventory (6172589).jpg", "a": "U.S. Navy photo by Petty Officer 2nd Cla", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Logistics_Specialist_2nd_Class_Jarred_Stone_checks_cargo_inventory_(6172589).jpg", "w": "Control de inventario: datos internos de una operación", "p": "center"}, "d3": {"t": "Deb Haaland at New Mexico Counts 2020 event in 2019. 02.jpg", "a": "Deb Haaland", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Deb_Haaland_at_New_Mexico_Counts_2020_event_in_2019._02.jpg", "w": "Evento público de participación en el censo", "p": "center"}, "cA": {"t": "Liat Portal for Foodie Disorder - Cornflakes with Milk.jpg", "a": "HaJunkiyada", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Cornflakes_with_Milk.jpg", "w": "Cereal de hojuelas con leche", "p": "center"}, "cB": {"t": "Chocolate-muesli.jpg", "a": "MartinThoma", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Chocolate-muesli.jpg", "w": "Muesli con chocolate", "p": "center"}, "cC": {"t": "Bowl of whole wheat cereal with banana.jpg", "a": "RebecaLR", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Bowl_of_whole_wheat_cereal_with_banana.jpg", "w": "Cereal integral con plátano", "p": "center"}, "v1": {"t": "Business Presentation by ZERO-Ko Student.jpg", "a": "Penguin0028", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Business_Presentation_by_ZERO-Ko_Student.jpg", "w": "Presentación de resultados ante un grupo", "p": "center"}, "k4a": {"t": "Tienda de abarrotes, Mercado Michoacán.jpg", "a": "Xanyssel", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Tienda_de_abarrotes,_Mercado_Michoac%C3%A1n.jpg", "w": "Tienda de abarrotes de barrio", "p": "center"}};/*PH_END*/
+/*PH_START*/var PH={"pAMLO": {"t": "Andrés Manuel López Obrador (agosto 2017)", "a": "Presidencia El Salvador", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9s_Manuel_L%C3%B3pez_Obrador_(agosto_2017).jpg", "w": "Andrés Manuel López Obrador", "p": "center"}, "pAnaya": {"t": "Ricardo Anaya (cropped 2)", "a": "USEmbassyMEX", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Ricardo_Anaya_(cropped_2).jpg", "w": "Ricardo Anaya", "p": "center"}, "pMeade": {"t": "Jose-Antonio-Meade (cropped)", "a": "PresidenciaMX 2012-2018", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Jose-Antonio-Meade_(cropped).jpg", "w": "José Antonio Meade", "p": "center"}, "pZavala": {"t": "Margarita Zavala 2018 (cropped)", "a": "EneasMx", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Margarita_Zavala_2018_(cropped).jpg", "w": "Margarita Zavala", "p": "center"}, "pBronco": {"t": "Jaime Rodríguez Calderón «El Bronco» (cropped)", "a": "EneasMx", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Jaime_Heliodoro_Rodr%C3%ADguez_Calder%C3%B3n_%22El_Bronco%22_(cropped).jpg", "w": "Jaime Rodríguez «El Bronco»", "p": "center"}, "esc1": {"t": "PRESS CONFERENCE 2016-07-19", "a": "EU2016 SK", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:PRESS_CONFERENCE_2016-07-19_Informal_Meeting_of_Ministers_Responsible_for_Competitiveness_(28410298625).jpg", "w": "Rueda de prensa", "p": "center"}, "esc2": {"t": "Albany wind farm", "a": "Leon Brooks", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Albany_wind_farm_against_the_sunset_western_Australia.jpg", "w": "Parque eólico al atardecer", "p": "center"}, "esc3": {"t": "FEMA City Council meeting", "a": "Marvin Nauman / FEMA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:FEMA_-_32884_-_FEMA_Community_Relations_worker_speaks_at_City_Council_meeting_in_Oklahoma.jpg", "w": "Reunión de un concejo municipal", "p": "center"}, "esc4": {"t": "Southern Monterrey skyline", "a": "Rick González", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Southern_Monterrey_skyline.jpg", "w": "Horizonte de Monterrey", "p": "center"}, "q1": {"t": "REMA 1000 Supermarket interior grocery store Tønsberg, Norway 2017-11-03 cashier", "a": "Wolfmann", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:REMA_1000_Supermarket_interior_grocery_store_T%C3%B8nsberg,_Norway_2017-11-03_cashier_checkout_a.jpg", "w": "Caja de supermercado", "p": "center"}, "q2": {"t": "Moscow, Paveletskaya Plaza Feb.2025 - turkey 01.jpg", "a": "Retired electrician", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Moscow,_Paveletskaya_Plaza_Feb.2025_-_turkey_01.jpg", "w": "Precios en un anaquel con etiquetas electrónicas", "p": "center"}, "q3": {"t": "Storefronts on Bridgeway, Sausalito-L1003865.jpg", "a": "Frank Schulenburg", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Storefronts_on_Bridgeway,_Sausalito-L1003865.jpg", "w": "Locales comerciales en una calle", "p": "center"}, "q4": {"t": "DSC06451 Explosion Hazard Folding Sign, Wiener Netze, 2023-10.jpg", "a": "Aciarium", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:DSC06451_Explosion_Hazard_Folding_Sign,_Wiener_Netze,_2023-10.jpg", "w": "Señal de advertencia de peligro", "p": "center"}, "q5": {"t": "2016-09-11 19 30 20 Sunset at the NEXRAD WSR-88D Doppler Radar at the National W", "a": "Famartin", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:2016-09-11_19_30_20_Sunset_at_the_NEXRAD_WSR-88D_Doppler_Radar_at_the_National_Weather_Service%27s_Baltimore-Washington_Weather_Forecast_Office_in_Sterling,_Loudoun_County,_Virginia.jpg", "w": "Radar meteorológico al atardecer", "p": "center"}, "q6": {"t": "Kabul City Factory Smoke.jpg", "a": "Pm4gis", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Kabul_City_Factory_Smoke.jpg", "w": "Vista aérea de chimeneas y humo industrial", "p": "center"}, "k1": {"t": "The interior of an Advance Auto Parts store in Murphy, North Carolina 06.jpg", "a": "Harrison Keely", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:The_interior_of_an_Advance_Auto_Parts_store_in_Murphy,_North_Carolina_06.jpg", "w": "Interior de una refaccionaria", "p": "center"}, "k3": {"t": "Sclater Street Yard market, Brick Lane Market London E1 o.jpg", "a": "Acabashi", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Sclater_Street_Yard_market,_Brick_Lane_Market_London_E1_o.jpg", "w": "Mercado callejero", "p": "center"}, "k5": {"t": "Man reading a newspaper at a café terrace in Athens, Greece - 1979.jpg", "a": "Jean-Louis Debaize / European Communitie", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:Man_reading_a_newspaper_at_a_caf%C3%A9_terrace_in_Athens,_Greece_-_1979.jpg", "w": "Lector de periódico en un café", "p": "center"}, "k6": {"t": "Traffic jam Bangkok.JPG", "a": "Sky 269", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Traffic_jam_Bangkok.JPG", "w": "Congestión vehicular", "p": "center"}, "k7": {"t": "Waste landfill in Derhachi.jpg", "a": "I.Shevtsov", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Waste_landfill_in_Derhachi.jpg", "w": "Relleno sanitario", "p": "center"}, "d4": {"t": "Solar Data Analyst at Work in Kenya.jpg", "a": "Dwalsh3", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Solar_Data_Analyst_at_Work_in_Kenya.jpg", "w": "Analista de datos en su estación de trabajo", "p": "center"}, "d5": {"t": "Earth's City Lights by DMSP, 1994-1995 (large).jpg", "a": "Data: Marc Imhoff/NASA GSFC, Christopher", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Earth%27s_City_Lights_by_DMSP,_1994-1995_(large).jpg", "w": "Imagen satelital: luces nocturnas de la Tierra", "p": "center"}, "s1": {"t": "Cockpit Motion Facility.jpg", "a": "NASA", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Cockpit_Motion_Facility.jpg", "w": "Simulador de vuelo", "p": "center"}, "s2": {"t": "This image shows VINCI (VLT INterferometer Commissioning Instrument), the \"test ", "a": "ESO", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:This_image_shows_VINCI_(VLT_INterferometer_Commissioning_Instrument),_the_%22test_camera%22_of_the_Very_Large_Telescope_Interferometer_(VLTI),_and_LEONARDO,_its_calibration_source_(vlt1_02-dez2000).jpg", "w": "Instrumentos de laboratorio de precisión", "p": "center"}, "s3": {"t": "New York Stock Exchange trading floor on Wall Street, New York, New York LCCN201", "a": "Carol M. Highsmith", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:New_York_Stock_Exchange_trading_floor_on_Wall_Street,_New_York,_New_York_LCCN2011634218.tif", "w": "Bolsa de valores de Nueva York", "p": "center"}, "d1": {"t": "Edificio del Instituto Nacional de Estadística, Geografía e Informática.JPG", "a": "Luisalvaz", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Edificio_del_Instituto_Nacional_de_Estad%C3%ADstica,_Geograf%C3%ADa_e_Inform%C3%A1tica.JPG", "w": "Edificio del INEGI, fuente oficial de estadística", "p": "center"}, "d2": {"t": "Logistics Specialist 2nd Class Jarred Stone checks cargo inventory (6172589).jpg", "a": "U.S. Navy photo by Petty Officer 2nd Cla", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Logistics_Specialist_2nd_Class_Jarred_Stone_checks_cargo_inventory_(6172589).jpg", "w": "Control de inventario: datos internos de una operación", "p": "center"}, "d3": {"t": "Deb Haaland at New Mexico Counts 2020 event in 2019. 02.jpg", "a": "Deb Haaland", "l": "dominio público", "u": "https://commons.wikimedia.org/wiki/File:Deb_Haaland_at_New_Mexico_Counts_2020_event_in_2019._02.jpg", "w": "Evento público de participación en el censo", "p": "center"}, "cA": {"t": "Liat Portal for Foodie Disorder - Cornflakes with Milk.jpg", "a": "HaJunkiyada", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Cornflakes_with_Milk.jpg", "w": "Cereal de hojuelas con leche", "p": "center"}, "cB": {"t": "Chocolate-muesli.jpg", "a": "MartinThoma", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Chocolate-muesli.jpg", "w": "Muesli con chocolate", "p": "center"}, "cC": {"t": "Bowl of whole wheat cereal with banana.jpg", "a": "RebecaLR", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Bowl_of_whole_wheat_cereal_with_banana.jpg", "w": "Cereal integral con plátano", "p": "center"}, "v1": {"t": "Business Presentation by ZERO-Ko Student.jpg", "a": "Penguin0028", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Business_Presentation_by_ZERO-Ko_Student.jpg", "w": "Presentación de resultados ante un grupo", "p": "center"}, "k4a": {"t": "Tienda de abarrotes, Mercado Michoacán.jpg", "a": "Xanyssel", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Tienda_de_abarrotes,_Mercado_Michoac%C3%A1n.jpg", "w": "Tienda de abarrotes de barrio", "p": "center"}};/*PH_END*/
 var PHMAP={'¿Cómo vender más?':'q1','¿A qué precio?':'q2','¿Dónde abrir?':'q3','¿Qué puede salir mal?':'q4','¿Qué pasará?':'q5','¿Qué impacto dejamos?':'q6','Oficiales':'d1','Del sector':'d2','Encuestas':'d3','Digitales':'d4','Geoespaciales':'d5'};
 function phCredit(k){var x=PH[k];return x?'Foto: '+x.a+' · '+x.l:'';}
 [].forEach.call(document.querySelectorAll('.card h3'),function(h){
@@ -916,98 +936,157 @@ document.addEventListener('mousemove',function(e){
  draw();
 })();
 
-// 10) Grafo de discurso: personajes y tópicos
+// 10) Grafo 3D de discurso: personajes y tópicos
 (function(){
- var svg=document.getElementById('gfSvg');if(!svg)return;
- var D=GF,N=[],idx={},E=[],NS='http://www.w3.org/2000/svg';
- D.C.forEach(function(n){idx[n]=N.length;N.push({id:n,k:'c'});});
- D.T.forEach(function(n){idx[n]=N.length;N.push({id:n,k:'t'});});
+ var cv=document.getElementById('gfCv');if(!cv)return;
+ var D=GF,N=[],idx={},E=[],ctx=cv.getContext('2d');
+ var PHO={'AMLO':'pAMLO','Anaya':'pAnaya','Meade':'pMeade','Zavala':'pZavala','El Bronco':'pBronco'};
+ D.C.forEach(function(nm){idx[nm]=N.length;var o={id:nm,k:'c',img:new Image()};o.img.src='assets/ph-'+PHO[nm]+'.jpg';N.push(o);});
+ D.T.forEach(function(nm){idx[nm]=N.length;N.push({id:nm,k:'t'});});
  D.C.forEach(function(c){for(var t in D.W[c])E.push({a:idx[c],b:idx[t],w:D.W[c][t]});});
- var n=N.length;
- // disposición por fuerzas (determinista)
- var seed=7;function r(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
- N.forEach(function(o,i){var a=i/n*6.283;o.x=Math.cos(a)*170+(r()-.5)*30;o.y=Math.sin(a)*90+(r()-.5)*30;o.vx=o.vy=0;});
- for(var it=0;it<700;it++){
-  var cool=1-it/700,i,j;
-  N.forEach(function(o){o.fx=-o.x*.004;o.fy=-o.y*.012;});
-  for(i=0;i<n;i++)for(j=i+1;j<n;j++){var dx=N[i].x-N[j].x,dy=N[i].y-N[j].y,d2=dx*dx+dy*dy+.5,d=Math.sqrt(d2),f=14000/d2;
-   if(d<64)f+=(64-d)*.5;N[i].fx+=dx/d*f;N[i].fy+=dy/d*f;N[j].fx-=dx/d*f;N[j].fy-=dy/d*f;}
-  E.forEach(function(e){var A=N[e.a],Bn=N[e.b],dx=Bn.x-A.x,dy=Bn.y-A.y,d=Math.sqrt(dx*dx+dy*dy)+.01,Ls=35+(1-e.w)*280,f=(d-Ls)*.035*(.35+e.w);
-   A.fx+=dx/d*f;A.fy+=dy/d*f;Bn.fx-=dx/d*f;Bn.fy-=dy/d*f;});
-  N.forEach(function(o){o.vx=(o.vx+o.fx)*.62;o.vy=(o.vy+o.fy)*.62;o.x+=o.vx*cool;o.y+=o.vy*cool;});
+ var n=N.length,i,j;
+ // disposición 3D por fuerzas (determinista)
+ var seed=11;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+ N.forEach(function(o){o.x=rnd()-.5;o.y=rnd()-.5;o.z=rnd()-.5;o.vx=o.vy=o.vz=0;});
+ for(var it=0;it<900;it++){
+  var cool=1-it/900;
+  N.forEach(function(o){o.fx=-o.x*.018;o.fy=-o.y*.018;o.fz=-o.z*.018;});
+  for(i=0;i<n;i++)for(j=i+1;j<n;j++){var dx=N[i].x-N[j].x,dy=N[i].y-N[j].y,dz=N[i].z-N[j].z,d2=dx*dx+dy*dy+dz*dz+.002,d=Math.sqrt(d2),f=.14/d2;
+   N[i].fx+=dx/d*f;N[i].fy+=dy/d*f;N[i].fz+=dz/d*f;N[j].fx-=dx/d*f;N[j].fy-=dy/d*f;N[j].fz-=dz/d*f;}
+  E.forEach(function(e){var A=N[e.a],B=N[e.b],dx=B.x-A.x,dy=B.y-A.y,dz=B.z-A.z,d=Math.sqrt(dx*dx+dy*dy+dz*dz)+.001,Ls=.18+(1-e.w)*1.1,f=(d-Ls)*.09*(.3+e.w);
+   A.fx+=dx/d*f;A.fy+=dy/d*f;A.fz+=dz/d*f;B.fx-=dx/d*f;B.fy-=dy/d*f;B.fz-=dz/d*f;});
+  N.forEach(function(o){o.vx=(o.vx+o.fx)*.7;o.vy=(o.vy+o.fy)*.7;o.vz=(o.vz+o.fz)*.7;o.x+=o.vx*cool;o.y+=o.vy*cool;o.z+=o.vz*cool;});
  }
- var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;N.forEach(function(o){x0=Math.min(x0,o.x);x1=Math.max(x1,o.x);y0=Math.min(y0,o.y);y1=Math.max(y1,o.y);});
- N.forEach(function(o){o.X=62+(o.x-x0)/(x1-x0)*616;o.Y=44+(o.y-y0)/(y1-y0)*236;});
- // métricas
+ var mx=0,cx0=0,cy0=0,cz0=0,rs=[];N.forEach(function(o){cx0+=o.x/n;cy0+=o.y/n;cz0+=o.z/n;});
+ N.forEach(function(o){o.x-=cx0;o.y-=cy0;o.z-=cz0;rs.push(Math.sqrt(o.x*o.x+o.y*o.y+o.z*o.z));});rs.sort(function(a,b){return a-b;});mx=rs[Math.floor(rs.length*.75)]*1.05;
+ N.forEach(function(o){o.x/=mx;o.y/=mx;o.z/=mx;});
+ // ---------- medidas de centralidad ----------
  var thr=0,met='fuerza',sel=idx['AMLO'],M={};
- function btw(adj){var C=[],s,i;for(i=0;i<n;i++)C[i]=0;
-  for(s=0;s<n;s++){var S=[],P=[],sg=[],d=[],dn=[];for(i=0;i<n;i++){P[i]=[];sg[i]=0;d[i]=Infinity;dn[i]=false;}
-   sg[s]=1;d[s]=0;
-   for(;;){var u=-1,m=Infinity;for(i=0;i<n;i++)if(!dn[i]&&d[i]<m){m=d[i];u=i;}if(u<0)break;dn[u]=true;S.push(u);
-    adj[u].forEach(function(e){var v=e[0],nd=d[u]+e[1];if(nd<d[v]-1e-9){d[v]=nd;sg[v]=sg[u];P[v]=[u];}else if(Math.abs(nd-d[v])<=1e-9&&!dn[v]){sg[v]+=sg[u];P[v].push(u);}});}
-   var dl=[];for(i=0;i<n;i++)dl[i]=0;
-   while(S.length){var w=S.pop();P[w].forEach(function(v){dl[v]+=sg[v]/sg[w]*(1+dl[w]);});if(w!==s)C[w]+=dl[w];}}
-  return C.map(function(c){return c/2;});}
- function compute(){
-  var adj=[],deg=[],str=[],i;for(i=0;i<n;i++){adj[i]=[];deg[i]=0;str[i]=0;}
-  E.forEach(function(e){if(e.w<thr)return;adj[e.a].push([e.b,1/e.w]);adj[e.b].push([e.a,1/e.w]);deg[e.a]++;deg[e.b]++;str[e.a]+=e.w;str[e.b]+=e.w;});
-  var pr=[],q,k;for(i=0;i<n;i++)pr[i]=1/n;
-  for(k=0;k<60;k++){q=[];for(i=0;i<n;i++)q[i]=.15/n;
-   E.forEach(function(e){if(e.w<thr)return;q[e.b]+=.85*pr[e.a]*e.w/(str[e.a]||1);q[e.a]+=.85*pr[e.b]*e.w/(str[e.b]||1);});pr=q;}
-  M={grado:deg,fuerza:str,inter:btw(adj),pr:pr.map(function(v){return v*100;})};
+ function dijk(adj,s){var d=[],dn=[],P=[],sg=[],S=[],k;for(k=0;k<n;k++){d[k]=Infinity;dn[k]=false;P[k]=[];sg[k]=0;}d[s]=0;sg[s]=1;
+  for(;;){var u=-1,m=Infinity;for(k=0;k<n;k++)if(!dn[k]&&d[k]<m){m=d[k];u=k;}if(u<0)break;dn[u]=true;S.push(u);
+   adj[u].forEach(function(e){var v=e[0],nd=d[u]+e[1];if(nd<d[v]-1e-9){d[v]=nd;sg[v]=sg[u];P[v]=[u];}else if(Math.abs(nd-d[v])<=1e-9&&!dn[v]){sg[v]+=sg[u];P[v].push(u);}});}
+  return {d:d,P:P,sg:sg,S:S};}
+ function compute(th){
+  var adj=[],deg=[],str=[],k;for(k=0;k<n;k++){adj[k]=[];deg[k]=0;str[k]=0;}
+  E.forEach(function(e){if(e.w<th)return;adj[e.a].push([e.b,1/e.w]);adj[e.b].push([e.a,1/e.w]);deg[e.a]++;deg[e.b]++;str[e.a]+=e.w;str[e.b]+=e.w;});
+  var btw=[],clo=[];for(k=0;k<n;k++){btw[k]=0;clo[k]=0;}
+  for(var s=0;s<n;s++){var R=dijk(adj,s),dl=[],sum=0,rch=0;for(k=0;k<n;k++){dl[k]=0;if(k!==s&&R.d[k]<Infinity){sum+=R.d[k];rch++;}}
+   clo[s]=sum>0?(rch/(n-1))*(rch/sum):0;
+   var S=R.S.slice();while(S.length){var w=S.pop();R.P[w].forEach(function(v){dl[v]+=R.sg[v]/R.sg[w]*(1+dl[w]);});if(w!==s)btw[w]+=dl[w];}}
+  btw=btw.map(function(v){return v/2;});
+  var pr=[],q,it2;for(k=0;k<n;k++)pr[k]=1/n;
+  for(it2=0;it2<60;it2++){q=[];for(k=0;k<n;k++)q[k]=.15/n;
+   E.forEach(function(e){if(e.w<th)return;q[e.b]+=.85*pr[e.a]*e.w/(str[e.a]||1);q[e.a]+=.85*pr[e.b]*e.w/(str[e.b]||1);});pr=q;}
+  var ev=[];for(k=0;k<n;k++)ev[k]=1;
+  for(it2=0;it2<80;it2++){q=ev.slice();E.forEach(function(e){if(e.w<th)return;q[e.a]+=e.w*ev[e.b];q[e.b]+=e.w*ev[e.a];});var m2=Math.max.apply(null,q)||1;ev=q.map(function(v){return v/m2;});}
+  var iso=[];for(k=0;k<n;k++)if(!deg[k])ev[k]=0;
+  return {grado:deg,fuerza:str,cercania:clo,inter:btw,propio:ev,pr:pr.map(function(v){return v*100;})};
  }
- function fmt(m,v){return m==='grado'?String(v):m==='fuerza'?v.toFixed(2):v.toFixed(1);}
- function norm(m,i){var a=M[m],mx=Math.max.apply(null,a)||1;return a[i]/mx;}
- function rank(m,i){var a=M[m],c=1;a.forEach(function(v){if(v>a[i]+1e-9)c++;});return c;}
- function shape(k,rad,cls){return k==='c'?'<circle r="'+rad+'" class="'+cls+'"/>':'<rect x="'+(-rad)+'" y="'+(-rad)+'" width="'+2*rad+'" height="'+2*rad+'" rx="'+(rad*.36).toFixed(1)+'" class="'+cls+'"/>';}
- // dibujo base
- var h='<g id="gfE">';
- E.forEach(function(e,i){h+='<line class="ge" data-e="'+i+'" x1="'+N[e.a].X.toFixed(1)+'" y1="'+N[e.a].Y.toFixed(1)+'" x2="'+N[e.b].X.toFixed(1)+'" y2="'+N[e.b].Y.toFixed(1)+'"/>';});
- h+='</g><g id="gfN">';
- N.forEach(function(o,i){h+='<g class="gn '+o.k+'" data-n="'+i+'" transform="translate('+o.X.toFixed(1)+' '+o.Y.toFixed(1)+')"><g class="nd">'+'<circle class="ring" r="20"/>'+shape(o.k,20,'shp')+'</g><text class="lb" text-anchor="middle">'+o.id+'</text></g>';});
- svg.innerHTML=h+'</g>';
- var gE=[].slice.call(svg.querySelectorAll('.ge')),gN=[].slice.call(svg.querySelectorAll('.gn'));
- function nbrs(i){var a=[];E.forEach(function(e,q){if(e.w<thr)return;if(e.a===i)a.push([e.b,e.w,q]);else if(e.b===i)a.push([e.a,e.w,q]);});return a.sort(function(x,y){return y[1]-x[1];});}
- function cos(a,b){var s=0,na=0,nb=0;D.T.forEach(function(t){var x=D.W[a][t]||0,y=D.W[b][t]||0;s+=x*y;na+=x*x;nb+=y*y;});return s/Math.sqrt(na*nb);}
+ function fmt(m,v){return m==='grado'?String(v):(m==='inter'||m==='pr')?v.toFixed(1):v.toFixed(2);}
+ function norm(m,k){var a=M[m],mxv=Math.max.apply(null,a)||1;return a[k]/mxv;}
+ function rank(m,k){var a=M[m],c=1;a.forEach(function(v){if(v>a[k]+1e-9)c++;});return c;}
+ // líderes (lámina de medidas)
+ (function(){var m0=compute(0);[].forEach.call(document.querySelectorAll('[data-ld]'),function(el){var a=m0[el.dataset.ld],b=0,t=D.C.length;a.forEach(function(v,k){if(k<D.C.length&&v>a[b])b=k;if(k>=D.C.length&&v>a[t])t=k;});el.textContent=N[b].id+' · '+N[t].id;});})();
+ function nbrs(k){var a=[];E.forEach(function(e,q){if(e.w<thr)return;if(e.a===k)a.push([e.b,e.w,q]);else if(e.b===k)a.push([e.a,e.w,q]);});return a.sort(function(x,y){return y[1]-x[1];});}
+ function cos(a,b){var s=0,na=0,nb2=0;D.T.forEach(function(t){var x=D.W[a][t]||0,y=D.W[b][t]||0;s+=x*y;na+=x*x;nb2+=y*y;});return s/Math.sqrt(na*nb2);}
+ // ---------- cámara 3D ----------
+ var yaw=.6,pit=-.28,zoom=1,auto=true,drag=null,hv=-1,W=0,H=0,dpr=1,P=[];
+ var slide=cv.closest('.slide');
+ function rot(o){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pit),sp=Math.sin(pit);var x1=o.x*cy+o.z*sy,z1=-o.x*sy+o.z*cy,y2=o.y*cp-z1*sp,z2=o.y*sp+z1*cp;return [x1,y2,z2];}
+ function size(){var w=cv.clientWidth,h=cv.clientHeight,d=window.devicePixelRatio||1;if(w!==W||h!==H||d!==dpr){W=w;H=h;dpr=d;cv.width=W*dpr;cv.height=H*dpr;}}
+ function proj(){var S=Math.min(W*.44,H*.50)*zoom*.74,SX=Math.min(W*.40,H)*zoom*.80,f=3.4;P=N.map(function(o,k){var r=rot(o),s=f/(f-r[2]);var base=o.k==='c'?15:9,rad=(base+(o.k==='c'?17:14)*norm(met,k))*s*(.85+.15*zoom);return {k:k,x:W/2+r[0]*SX*s,y:H/2+r[1]*S*s,z:r[2],s:s,r:rad};});}
+ function rrect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+ function guides(){ // tres aros tenues para dar sensación de volumen
+  ctx.save();ctx.lineWidth=1;
+  [0,1,2].forEach(function(ax){ctx.beginPath();for(var t=0;t<=64;t++){var a=t/64*6.2832,c=Math.cos(a)*1.08,s2=Math.sin(a)*1.08,o=ax===0?{x:c,y:0,z:s2}:ax===1?{x:0,y:c,z:s2}:{x:c,y:s2,z:0};
+    var r=rot(o),sc=3.4/(3.4-r[2]),S=Math.min(W*.44,H*.50)*zoom*.74,px=W/2+r[0]*Math.min(W*.40,H)*zoom*.80*sc,py=H/2+r[1]*S*sc;t?ctx.lineTo(px,py):ctx.moveTo(px,py);}
+   ctx.strokeStyle='rgba(120,160,255,.10)';ctx.stroke();});
+  ctx.restore();}
+ function frame(ts){
+  requestAnimationFrame(frame);
+  if(!slide.classList.contains('active'))return;
+  size();if(!W)return;
+  if(auto&&!drag)yaw+=.0035;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+  var g=ctx.createRadialGradient(W*.5,H*.45,20,W*.5,H*.5,Math.max(W,H)*.65);g.addColorStop(0,'#16346B');g.addColorStop(.55,'#0F2447');g.addColorStop(1,'#08142B');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  guides();proj();
+  var onS={},hl={};nbrs(sel).forEach(function(q){onS[q[2]]=1;});if(hv>=0)nbrs(hv).forEach(function(q){hl[q[2]]=1;hl['n'+q[0]]=1;});if(hv>=0)hl['n'+hv]=1;
+  var dim=hv>=0;
+  // aristas
+  E.forEach(function(e,q){if(e.w<thr)return;var A=P[e.a],B=P[e.b],dz=(A.z+B.z)/2,dep=.55+.45*((dz+1)/2),isS=!!onS[q],isH=!!hl[q];
+   ctx.save();ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineCap='round';ctx.lineWidth=(.7+e.w*6.5)*((A.s+B.s)/2);
+   if(isS){ctx.strokeStyle='rgba(90,160,255,'+(.95*dep+.05)+')';ctx.setLineDash([9,8]);ctx.lineDashOffset=-ts/45;ctx.shadowColor='#3B7BFF';ctx.shadowBlur=10;}
+   else if(isH){ctx.strokeStyle='rgba(255,255,255,.85)';}
+   else{ctx.strokeStyle='rgba(150,178,235,'+((dim?.05:.16)+(dim?0:.30)*e.w)*dep+')';}
+   ctx.stroke();ctx.restore();});
+  // nodos (de atrás hacia delante)
+  var ord=P.slice().sort(function(a,b){return a.z-b.z;});
+  ord.forEach(function(p){var o=N[p.k],dep=.6+.4*((p.z+1)/2),faded=dim&&!hl['n'+p.k],iso=!M.grado[p.k];
+   ctx.save();ctx.globalAlpha=(faded?.22:1)*(iso?.35:1)*Math.min(1,dep+.1);
+   var r=p.r;
+   if(p.k===sel){var ph=(ts/900)%1;ctx.beginPath();ctx.arc(p.x,p.y,r*(1.2+ph*.8),0,6.2832);ctx.strokeStyle='rgba(120,180,255,'+(.8*(1-ph))+')';ctx.lineWidth=2.5;ctx.stroke();}
+   ctx.shadowColor=o.k==='c'?'rgba(70,130,255,.8)':'rgba(245,165,36,.65)';ctx.shadowBlur=(p.k===sel||p.k===hv)?26:14;
+   if(o.k==='c'){
+    ctx.beginPath();ctx.arc(p.x,p.y,r+3,0,6.2832);ctx.fillStyle=p.k===sel?'#7FB0FF':'#fff';ctx.fill();ctx.shadowBlur=0;
+    ctx.save();ctx.beginPath();ctx.arc(p.x,p.y,r,0,6.2832);ctx.clip();
+    if(o.img.complete&&o.img.naturalWidth)ctx.drawImage(o.img,p.x-r,p.y-r,2*r,2*r);else{ctx.fillStyle='#2F6BFF';ctx.fillRect(p.x-r,p.y-r,2*r,2*r);}
+    ctx.restore();
+    ctx.beginPath();ctx.arc(p.x,p.y,r+3,0,6.2832);ctx.strokeStyle='#2F6BFF';ctx.lineWidth=2.5;ctx.stroke();
+   }else{
+    var gr=ctx.createLinearGradient(p.x-r,p.y-r,p.x+r,p.y+r);gr.addColorStop(0,'#FFD98A');gr.addColorStop(1,'#E8920C');
+    rrect(p.x-r,p.y-r,2*r,2*r,r*.38);ctx.fillStyle=gr;ctx.fill();ctx.shadowBlur=0;ctx.lineWidth=p.k===sel?3:1.5;ctx.strokeStyle=p.k===sel?'#fff':'rgba(255,255,255,.55)';ctx.stroke();
+   }
+   ctx.shadowBlur=0;
+   var fs=Math.max(10.5,(o.k==='c'?13:11.5)*p.s*(.9+.1*zoom));ctx.font=(o.k==='c'||p.k===sel?'600 ':'400 ')+fs.toFixed(1)+'px -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+   ctx.lineJoin='round';ctx.lineWidth=4;ctx.strokeStyle='rgba(8,20,43,.9)';ctx.strokeText(o.id,p.x,p.y+r+(o.k==='c'?6:4));ctx.fillStyle=o.k==='c'?'#fff':'#FFE2AE';ctx.fillText(o.id,p.x,p.y+r+(o.k==='c'?6:4));
+   ctx.restore();});
+ }
+ function pick(e){var b=cv.getBoundingClientRect(),mx2=(e.clientX-b.left)*(W/b.width),my=(e.clientY-b.top)*(H/b.height),best=-1,bz=-9;
+  P.forEach(function(p){var dx=mx2-p.x,dy=my-p.y,hit=Math.sqrt(dx*dx+dy*dy)<=p.r+4;if(hit&&p.z>bz){bz=p.z;best=p.k;}});return best;}
+ cv.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY,m:0};cv.setPointerCapture(e.pointerId);cv.classList.add('grab');});
+ cv.addEventListener('pointermove',function(e){
+  if(drag){var dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.m+=Math.abs(dx)+Math.abs(dy);drag.x=e.clientX;drag.y=e.clientY;var b=cv.getBoundingClientRect(),k=W/b.width;yaw+=dx*k*.008;pit=Math.max(-1.4,Math.min(1.4,pit+dy*k*.008));}
+  else{var h=pick(e);if(h!==hv){hv=h;cv.style.cursor=h>=0?'pointer':'grab';}}});
+ cv.addEventListener('pointerup',function(e){var moved=drag&&drag.m>5;drag=null;cv.classList.remove('grab');if(!moved){var h=pick(e);if(h>=0){sel=h;upd();}}});
+ cv.addEventListener('pointerleave',function(){hv=-1;});
+ cv.addEventListener('wheel',function(e){e.preventDefault();e.stopPropagation();zoom=Math.max(.6,Math.min(2.4,zoom*(e.deltaY<0?1.1:.91)));},{passive:false});
+ // ---------- panel y controles ----------
+ var rotB=document.getElementById('gfRot'),rstB=document.getElementById('gfRst');
+ rotB.classList.add('on');
+ rotB.onclick=function(){auto=!auto;rotB.classList.toggle('on',auto);};
+ rstB.onclick=function(){yaw=.6;pit=-.28;zoom=1;};
  function upd(){
-  compute();
-  document.getElementById('gfDef').innerHTML='<b>'+D.M[met][0]+':</b> '+D.M[met][1];
+  M=compute(thr);
+  document.getElementById('gfDef').innerHTML='<b>'+D.M[met][0]+':</b> '+D.M[met][1]+' <span>'+D.M[met][2]+' (más medidas en la siguiente lámina)</span>';
   document.getElementById('gfTv').textContent=thr.toFixed(2);
-  var on={};nbrs(sel).forEach(function(q){on[q[2]]=1;});
-  E.forEach(function(e,i){var L=gE[i];L.style.strokeWidth=(.8+e.w*8).toFixed(2)+'px';L.classList.toggle('off',e.w<thr);L.classList.toggle('on',!!on[i]);});
-  gN.forEach(function(g,i){var s=.42+.95*norm(met,i),rad=20*s;
-   g.querySelector('.nd').style.transform='scale('+s.toFixed(3)+')';
-   g.querySelector('.lb').style.transform='translateY('+(rad+15).toFixed(1)+'px)';
-   g.classList.toggle('sel',i===sel);g.classList.toggle('iso',M.grado[i]===0);});
   panel();
  }
+ function lbl(id,y,top){var p=id.length>13?id.replace(/ (?=[^ ]*$)/,'|').split('|'):[id];if(id.indexOf(' con ')>0)p=id.split(' con ').map(function(x,q){return q?'con '+x:x;});if(id.indexOf(' (')>0)p=id.split(' (').map(function(x,q){return q?'('+x:x;});return '<text class="lb" text-anchor="middle">'+p.map(function(x,q){return '<tspan x="0" y="'+(y+(top?(q-p.length+1):q)*12).toFixed(1)+'">'+x+'</tspan>';}).join('')+'</text>';}
+ function shapeSvg(o,rad,cls,k){rad=+rad;
+  if(o.k==='c'){var id='gfc'+k+'_'+Math.round(rad*10);return '<g class="'+cls+'"><clipPath id="'+id+'"><circle r="'+rad+'"/></clipPath><circle r="'+(rad+2.5)+'" class="rim"/><image href="assets/ph-'+PHO[o.id]+'.jpg" x="'+(-rad)+'" y="'+(-rad)+'" width="'+2*rad+'" height="'+2*rad+'" clip-path="url(#'+id+')" preserveAspectRatio="xMidYMid slice"/></g>';}
+  return '<rect x="'+(-rad)+'" y="'+(-rad)+'" width="'+2*rad+'" height="'+2*rad+'" rx="'+(rad*.38).toFixed(1)+'" class="shp t"/>';}
  function panel(){
-  var o=N[sel],nb=nbrs(sel),m=nb.length,cx=200,cy=116,i,s='<svg viewBox="0 0 400 232" class="gfego">',pos=[];
-  nb.forEach(function(q,j){var a=-Math.PI/2+j/Math.max(m,1)*2*Math.PI;pos.push([cx+Math.cos(a)*148,cy+Math.sin(a)*78]);});
-  nb.forEach(function(q,j){s+='<line class="el" pathLength="1" style="stroke-width:'+(1+q[1]*8).toFixed(1)+'px;animation-delay:'+(j*70)+'ms" x1="'+cx+'" y1="'+cy+'" x2="'+pos[j][0].toFixed(1)+'" y2="'+pos[j][1].toFixed(1)+'"/>';});
-  nb.forEach(function(q,j){s+='<text class="ew" x="'+((cx+pos[j][0])/2).toFixed(1)+'" y="'+((cy+pos[j][1])/2+3).toFixed(1)+'" text-anchor="middle">'+q[1].toFixed(2)+'</text>';});
-  nb.forEach(function(q,j){var t=N[q[0]],sc=.42+.95*norm(met,q[0]),rad=20*sc*.62,top=pos[j][1]<cy-30;
-   s+='<g class="eg pop" style="animation-delay:'+(120+j*70)+'ms" transform="translate('+pos[j][0].toFixed(1)+' '+pos[j][1].toFixed(1)+')">'+shape(t.k,rad.toFixed(1),'shp '+t.k)+'<text class="lb" text-anchor="middle" y="'+(top?-(rad+6):rad+14).toFixed(1)+'">'+t.id+'</text></g>';});
-  var rc=20*(.42+.95*norm(met,sel))*.8;
-  s+='<g transform="translate('+cx+' '+cy+')"><circle class="ring2" r="'+rc.toFixed(1)+'"/>'+shape(o.k,rc.toFixed(1),'shp '+o.k+' c0')+'<text class="lb c0t" text-anchor="middle" y="4">'+(o.id.length>9?'':o.id)+'</text></g>';
-  if(m===0)s+='<text x="200" y="212" text-anchor="middle" class="ew">Sin conexiones con esta cercanía mínima</text>';
+  var o=N[sel],nb=nbrs(sel),m=nb.length,cx=200,cy=104,s='<svg viewBox="0 0 400 208" class="gfego">',pos=[];
+  nb.forEach(function(q,jj){var a=-Math.PI/2+jj/Math.max(m,1)*2*Math.PI;pos.push([cx+Math.cos(a)*(m>6?150:140),cy+Math.sin(a)*(m>6?72:68)]);});
+  nb.forEach(function(q,jj){s+='<line class="el" pathLength="1" style="stroke-width:'+(1+q[1]*8).toFixed(1)+'px;animation-delay:'+(jj*60)+'ms" x1="'+cx+'" y1="'+cy+'" x2="'+pos[jj][0].toFixed(1)+'" y2="'+pos[jj][1].toFixed(1)+'"/>';});
+  nb.forEach(function(q,jj){s+='<text class="ew" x="'+((cx*.42+pos[jj][0]*.58)).toFixed(1)+'" y="'+((cy*.42+pos[jj][1]*.58)+3).toFixed(1)+'" text-anchor="middle">'+q[1].toFixed(2)+'</text>';});
+  nb.forEach(function(q,jj){var t=N[q[0]],rad=(t.k==='c'?13:9)+8*norm(met,q[0]),top=pos[jj][1]<cy-30;
+   s+='<g class="eg pop" style="animation-delay:'+(100+jj*60)+'ms" transform="translate('+pos[jj][0].toFixed(1)+' '+pos[jj][1].toFixed(1)+')">'+shapeSvg(t,rad.toFixed(1),'ph',q[0])+lbl(t.id,top?-(rad+6):rad+13,top)+'</g>';});
+  var rc=(o.k==='c'?22:15)+10*norm(met,sel);
+  s+='<g transform="translate('+cx+' '+cy+')"><circle class="ring2" r="'+(rc+2).toFixed(1)+'"/>'+shapeSvg(o,rc.toFixed(1),'ph',sel)+'</g>';
+  if(m===0)s+='<text x="200" y="196" text-anchor="middle" class="ew">Sin conexiones con esta cercanía mínima</text>';
   s+='</svg>';
-  var chips=['grado','fuerza','inter','pr'].map(function(k){return '<div class="chip'+(k===met?' cur':'')+'"><small>'+D.M[k][0].split(' (')[0]+'</small><b>'+fmt(k,M[k][sel])+'</b><i>#'+rank(k,sel)+' de '+n+'</i></div>';}).join('');
+  var chips=Object.keys(D.M).map(function(k){return '<div class="chip'+(k===met?' cur':'')+'"><small>'+D.M[k][0]+'</small><b>'+fmt(k,M[k][sel])+'</b><i>#'+rank(k,sel)+' de '+n+'</i></div>';}).join('');
   var rd='';
-  if(o.k==='c'){var cs=D.C.filter(function(c){return c!==o.id;}).map(function(c){return [c,cos(o.id,c)];}).sort(function(a,b){return b[1]-a[1];}),mx=cs[0],mn=cs[cs.length-1];
-   rd='<p><span class="dt g"></span>Discurso más <b>cercano</b>: <b>'+mx[0]+'</b> <em>('+mx[1].toFixed(2)+')</em></p><p><span class="dt r"></span>Discurso que más <b>contrasta</b>: <b>'+mn[0]+'</b> <em>('+mn[1].toFixed(2)+')</em></p><p class="mu">Similitud coseno de los pesos con cada tópico (1 = mismo discurso, 0 = nada en común).</p>';}
-  else{rd='<p><span class="dt g"></span>Lo abordan sobre todo: <b>'+(nb.slice(0,3).map(function(q){return N[q[0]].id;}).join(', ')||'—')+'</b></p><p><span class="dt r"></span>'+(m>1?'Une discursos de <b>'+m+'</b> personajes: es terreno compartido.':'Tópico casi exclusivo de un personaje.')+'</p><p class="mu">Un tópico muy compartido es campo de disputa; uno exclusivo, bandera propia.</p>';}
+  if(o.k==='c'){var cs=D.C.filter(function(c){return c!==o.id;}).map(function(c){return [c,cos(o.id,c)];}).sort(function(a,b){return b[1]-a[1];}),mxx=cs[0],mnn=cs[cs.length-1];
+   rd='<p><span class="dt g"></span>Discurso más <b>cercano</b>: <b>'+mxx[0]+'</b> <em>('+mxx[1].toFixed(2)+')</em></p><p><span class="dt r"></span>Discurso que más <b>contrasta</b>: <b>'+mnn[0]+'</b> <em>('+mnn[1].toFixed(2)+')</em></p><p class="mu">Similitud coseno entre sus pesos por tópico (1 = mismo discurso, 0 = nada en común).</p>';}
+  else{rd='<p><span class="dt g"></span>Lo abordan sobre todo: <b>'+(nb.slice(0,3).map(function(q){return N[q[0]].id;}).join(', ')||'—')+'</b></p><p><span class="dt r"></span>'+(m>1?'Une los discursos de <b>'+m+'</b> personajes: terreno compartido.':'Tópico casi exclusivo de un personaje.')+'</p><p class="mu">Un tópico muy compartido es campo de disputa; uno exclusivo, bandera propia.</p>';}
   document.getElementById('gfPanel').innerHTML='<div class="gft"><span class="sw2 '+o.k+'"></span><div><small>SUBGRAFO DE</small><b>'+o.id+'</b></div><em>'+(o.k==='c'?'Personaje':'Tópico')+' · '+m+' conexiones</em></div>'+s+'<div class="chips">'+chips+'</div><div class="gfrd">'+rd+'</div>';
  }
- function hov(i){svg.classList.toggle('hv',i>=0);var on={};if(i>=0){nbrs(i).forEach(function(q){on[q[0]]=1;on['e'+q[2]]=1;});on[i]=1;}
-  gN.forEach(function(g,k){g.classList.toggle('nb',!!on[k]);});gE.forEach(function(L,q){L.classList.toggle('hl',!!on['e'+q]);});}
- svg.addEventListener('click',function(e){var g=e.target.closest('.gn');if(g){sel=+g.dataset.n;upd();}});
- svg.addEventListener('mouseover',function(e){var g=e.target.closest('.gn');hov(g?+g.dataset.n:-1);});
- svg.addEventListener('mouseleave',function(){hov(-1);});
  document.getElementById('gfM').value=met;
  document.getElementById('gfM').onchange=function(){met=this.value;upd();};
  document.getElementById('gfT').oninput=function(){thr=this.value/100;upd();};
- upd();
+ upd();requestAnimationFrame(frame);
 })();
 
 addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(!isNaN(n))go(n-1);});
