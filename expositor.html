@@ -58,7 +58,7 @@ body.todas{overflow:auto;height:auto}
 <div class="main">
   <div class="deck">
     <div class="frame"><iframe id="fr" src="index.html#1" title="Presentación" allow="fullscreen"></iframe></div>
-    <div class="ctl"><button id="prev" type="button">← Anterior</button><span class="num" id="num">1 / 63</span><input id="goto" type="number" min="1" max="63" placeholder="ir a…" aria-label="Ir a lámina"><button id="next" type="button" class="pri">Siguiente →</button></div>
+    <div class="ctl"><button id="prev" type="button">← Anterior</button><span class="num" id="num">1 / 65</span><input id="goto" type="number" min="1" max="65" placeholder="ir a…" aria-label="Ir a lámina"><button id="next" type="button" class="pri">Siguiente →</button></div>
   </div>
   <aside class="notes" id="notes"></aside>
 </div>
@@ -66,7 +66,7 @@ body.todas{overflow:auto;height:auto}
 <script src="notas.js"></script>
 <script>
 (function(){
-var fr=document.getElementById('fr'),N=63,HID={23:1,42:1,61:1},cur=1,titles={};
+var fr=document.getElementById('fr'),N=65,HID={23:1,43:1,63:1},cur=1,titles={};
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function bloque(n){var B=window.BLOQUES,i;for(i=0;i<B.length;i++)if(n>=B[i].d&&n<=B[i].h)return i;return 0;}
 function objetivo(n){var B=window.BLOQUES,i=bloque(n),fin=B[i].min+(i>0?0:0);var a=0,k;for(k=0;k<=i;k++)a+=B[k].min;return a;}

@@ -761,3 +761,34 @@ canvas.gfs{display:block;width:100%;height:338px;border:0;border-radius:16px;cur
 @keyframes rotPh{0%,25%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 #rot p{font-size:19px;font-weight:300;line-height:1.4;max-width:300px;margin:0 auto 22px}#rot b{font-weight:500}
 #rot button{background:#fff;color:#08142B;border:0;border-radius:99px;padding:11px 24px;font-size:14px;font-family:inherit;cursor:pointer}
+
+/* Caso 5 · del PageRank a los buscadores de hoy */
+.gtl{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:14px;padding-top:6px}
+.gtl:before{content:"";position:absolute;left:3%;right:3%;top:58px;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal),var(--violet),var(--amber),var(--coral),var(--green),var(--navy));border-radius:3px;opacity:.55}
+.gti{position:relative;display:flex;flex-direction:column;gap:8px;padding:0 4px}
+.gti .gy{font-size:30px;font-weight:300;letter-spacing:-.02em;color:var(--c);line-height:1}
+.gti .gd{display:block;width:16px;height:16px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 0 0 2px var(--c);margin:8px 0 6px}
+.gti h4{margin:0;font-size:18px;font-weight:600;color:var(--ink)}
+.gti p{margin:0;font-size:14px;line-height:1.45;color:var(--mute);font-weight:300}
+.gnote{margin-top:34px;padding:16px 20px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:16px;line-height:1.5;font-weight:300;color:var(--ink)}
+.gnote b{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-right:12px;font-weight:600}
+/* Comprensión vs. precisión */
+.bbw{display:grid;grid-template-columns:1fr 1fr;gap:26px;height:100%}
+.bbc{display:flex;flex-direction:column;gap:12px;padding:20px 24px;border-radius:18px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--c);min-height:0}
+.bbh{display:flex;flex-direction:column;gap:2px}.bbh b{font-size:21px;font-weight:600;color:var(--ink)}.bbh small{font-size:14px;color:var(--c);font-weight:400}
+.bbs{width:100%;height:190px;flex:none}
+.bbks{display:flex;flex-direction:column;gap:6px}
+.bbk{display:grid;grid-template-columns:120px 1fr 44px;align-items:center;gap:10px;font-size:14px}.bbk span{color:var(--mute)}
+.bbk .t{height:8px;border-radius:99px;background:#EEF2F8;overflow:hidden}.bbk .t i{display:block;height:100%;border-radius:99px}.bbk b{text-align:right;font-weight:600}
+.bbq{font-size:14.5px;line-height:1.4;color:var(--mute);font-style:italic;padding:2px 0}
+.bbp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:auto}
+.bbp h5{margin:0 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.bbp ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.4;font-weight:300}.bbp li{margin:0 0 4px}
+
+.bbw{gap:22px}.bbc{gap:8px;padding:14px 20px 12px}.bbh b{font-size:19px}.bbh small{font-size:13px}
+.bbs{height:128px}.bbks{gap:4px}.bbk{font-size:13px}.bbq{font-size:13px;line-height:1.3;padding:0}
+.bbp{gap:14px}.bbp h5{font-size:10px;margin-bottom:2px}.bbp ul{font-size:13px;line-height:1.3;padding-left:16px}.bbp li{margin:0 0 2px}
+
+.mm{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.mmc{padding:14px 18px;border-radius:14px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--c)}
+.mmc h5{margin:0 0 4px;font-size:15px;font-weight:600;color:var(--c)}.mmc p{margin:0 0 4px;font-size:14px;line-height:1.4;font-weight:300}.mmc small{font-size:12.5px;color:var(--mute)}
